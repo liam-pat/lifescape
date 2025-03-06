@@ -1,0 +1,10 @@
+services:
+  lifescape:
+    image: node:20
+    container_name: lifescape-dev
+    volumes:
+      - "./:/lifescape"
+    working_dir: "/lifescape"
+    command: npm run dev -- --host
+    ports:
+      - 4321:4321

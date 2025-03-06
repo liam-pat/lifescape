@@ -1,0 +1,140 @@
+import Layout from './Layout.astro';
+import { format } from 'date-fns';
+import { zhTW } from 'date-fns/locale';
+
+const { frontmatter } = Astro.props;
+
+<Layout title={frontmatter.title}>
+  <main class="max-w-2xl mx-auto px-3 py-3">
+    <article class="bg-white rounded shadow-sm">
+      <div class="px-3 py-2">
+        <h1 class="text-xs font-bold text-gray-900 mb-1">
+          {frontmatter.title}
+        </h1>
+        
+        <div class="flex items-center text-xs text-gray-500 mb-1">
+          <time datetime={frontmatter.date.toISOString()}>
+            {format(frontmatter.date, 'yyyy年M月d日', { locale: zhTW })}
+          </time>
+          {frontmatter.author && (
+            <span class="mx-1">·</span>
+            <span>{frontmatter.author}</span>
+          )}
+          {frontmatter.rating && (
+            <span class="mx-1">·</span>
+            <span>評分：{frontmatter.rating}</span>
+          )}
+        </div>
+
+        {frontmatter.tags && (
+          <div class="flex flex-wrap gap-1 mb-1">
+            {frontmatter.tags.map((tag: string) => (
+              <span class="px-1 py-0.5 bg-gray-50 text-xs text-gray-600 rounded-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {frontmatter.description && (
+          <p class="text-gray-600 text-xs italic mb-2 border-l border-gray-200 pl-2">
+            {frontmatter.description}
+          </p>
+        )}
+
+        <div class="article-content">
+          <slot />
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .article-content {
+    color: #374151 !important;
+    font-size: 0.688rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .article-content :global(*) {
+    font-size: 0.688rem !important;
+  }
+
+  .article-content :global(h2) {
+    color: #111827 !important;
+    margin-top: 0.8em !important;
+    margin-bottom: 0.3em !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+  }
+
+  .article-content :global(h3) {
+    color: #111827 !important;
+    margin-top: 0.6em !important;
+    margin-bottom: 0.2em !important;
+    font-size: 0.688rem !important;
+    font-weight: 600 !important;
+  }
+
+  .article-content :global(p) {
+    margin-top: 0.2em !important;
+    margin-bottom: 0.2em !important;
+    line-height: 1.4 !important;
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin-top: 0.2em !important;
+    margin-bottom: 0.2em !important;
+    padding-left: 1em !important;
+  }
+
+  .article-content :global(li) {
+    margin-top: 0.1em !important;
+    margin-bottom: 0.1em !important;
+    padding-left: 0.2em !important;
+  }
+
+  .article-content :global(blockquote) {
+    margin: 0.3em 0 !important;
+    padding-left: 0.4em !important;
+    border-left: 1px solid #e5e7eb !important;
+    font-style: italic !important;
+  }
+
+  .article-content :global(a) {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+  }
+
+  .article-content :global(code) {
+    padding: 0.1em 0.2em !important;
+    background-color: #f3f4f6 !important;
+    border-radius: 0.2em !important;
+  }
+
+  .article-content :global(pre) {
+    margin: 0.3em 0 !important;
+    padding: 0.4em !important;
+    border-radius: 0.2em !important;
+    background-color: #1f2937 !important;
+    overflow-x: auto !important;
+  }
+
+  .article-content :global(pre code) {
+    padding: 0 !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    color: #e5e7eb !important;
+  }
+
+  .article-content :global(img) {
+    margin: 0.3em 0 !important;
+  }
+
+  .article-content :global(hr) {
+    margin: 0.3em 0 !important;
+    border-color: #e5e7eb !important;
+  }
+</style> 

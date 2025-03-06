@@ -1,33 +1,34 @@
-# Astro Starter Kit: Minimal
+# My Life & Reading Blog
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A personal blog built with Astro to share life experiences and book notes.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## 🚀 Project Overview
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This is a personal blog website built with Astro and Tailwind CSS. It features:
 
-## 🚀 Project Structure
+- A clean, responsive design with dark mode support
+- Content collections for life experiences and book reviews
+- Full-text search functionality
+- RSS feed support
 
-Inside of your Astro project, you'll see the following folders and files:
+## 📂 Project Structure
 
 ```text
 /
-├── public/
+├── public/              # Static assets
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/      # Reusable UI components
+│   ├── content/         # Content collections (life and reading)
+│   │   ├── life/        # Life experience posts
+│   │   └── reading/     # Book review posts
+│   ├── layouts/         # Page layouts
+│   └── pages/           # Page routes
+│       ├── life/        # Life section pages
+│       ├── reading/     # Reading section pages
+│       ├── about.astro  # About page
+│       └── index.astro  # Home page
 └── package.json
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🧞 Commands
 
@@ -39,9 +40,25 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `docker-compose up -d`    | Start the production container                   |
+| `docker-compose down`     | Stop the production container                    |
 
-## 👀 Want to learn more?
+## 🔧 Technologies Used
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Astro](https://astro.build/) - The web framework for content-driven websites
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Docker](https://www.docker.com/) - For containerization and deployment
+- [Pagefind](https://pagefind.app/) - Static site search library
+
+## 📝 Content Management
+
+Content is managed through Markdown files in the `src/content/` directory:
+
+- **Life posts**: Add new life experience posts to `src/content/life/`
+- **Reading posts**: Add new book reviews to `src/content/reading/`
+
+Each post should include frontmatter with metadata such as title, date, tags, and description.
+
+## 🌙 Dark Mode
+
+The site includes a dark mode toggle that respects user preferences and saves the selection to localStorage.

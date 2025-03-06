@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="关于我">
+  <div class="bg-black py-10 mb-8">
+    <div class="max-w-4xl mx-auto px-4">
+      <h1 class="text-white text-4xl md:text-5xl font-bold mb-4">About Me</h1>
+      <div class="h-28 md:h-16">
+        <p class="text-gray-300 text-xl md:text-2xl font-medium typewriter">
+          <span class="typewriter-text">每个人都会经历这个阶段，看见一座山，就想知道山后面是什么。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <article class="prose lg:prose-xl dark:prose-invert mx-auto">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-4 dark:text-white">欢迎来到 VERION.ME</h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-4">
+            这是一个分享生活 & 读书心得的空间。
+          </p>
+          <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
+            <li>對人生的感悟</li>
+            <li>讀書思考 & 心得</li>
+            <li>个人每個階段的成长</li>
+          </ul>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-4 dark:text-white">為什麼會存在？</h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-4">
+            想記錄自己人生每一個階段的思考、感悟。
+          </p>
+          <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
+            <li>整理思绪，深化理解</li>
+            <li>记录成长，留下足迹</li>
+            <li>二次閱讀，找回上次理解</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-semibold mb-4 dark:text-white">Contact Me</h2>
+          <p class="text-gray-700 dark:text-gray-300">
+            Email: <a href="mailto:me@version.me" class="text-blue-500 hover:text-blue-600">me@version.me</a>
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  /* 确保列表样式在暗色模式下正确显示 */
+  .dark .prose ul > li::marker {
+    color: #9ca3af;
+  }
+</style> 

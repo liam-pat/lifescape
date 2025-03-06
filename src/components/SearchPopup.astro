@@ -1,0 +1,268 @@
+---
+// Define the interface for the window object
+interface Window {
+  openSearchPopup?: () => void;
+  PagefindUI?: any;
+  pagefind?: any;
+}
+
+// Define the interface for the Pagefind module
+interface PagefindModule {
+  SearchUI: new (options: any) => any;
+}
+---
+
+<div id="search-popup" class="fixed inset-0 z-50 hidden">
+  <!-- Backdrop with blur effect -->
+  <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" id="search-backdrop"></div>
+  
+  <!-- Search container positioned at 1/4 from the top -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+      <!-- Search input -->
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="search-input" 
+            class="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-700 border-none rounded-md focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none dark:text-white"
+            placeholder="Searching..."
+            autocomplete="off"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 absolute left-3 top-2.5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          <button id="search-close" class="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Search results -->
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4">
+        <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+          <p>Input keywords to search</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 預加載 Pagefind 腳本 -->
+<script is:inline src="/pagefind/pagefind.js"></script>
+
+<script is:inline>
+  // We'll load Pagefind when the search is opened to avoid loading it unnecessarily
+  let pagefindLoaded = false;
+  let pagefindInstance = null;
+
+  // Elements
+  const searchPopup = document.getElementById('search-popup');
+  const searchBackdrop = document.getElementById('search-backdrop');
+  const searchInput = document.getElementById('search-input');
+  const searchClose = document.getElementById('search-close');
+  const searchResults = document.getElementById('search-results');
+
+  // Function to load Pagefind
+  async function loadPagefind() {
+    if (!pagefindLoaded) {
+      try {
+        console.log('開始加載 Pagefind...');
+        
+        // 初始化 Pagefind
+        if (window.pagefind) {
+          console.log('Using window.pagefind');
+          pagefindInstance = window.pagefind;
+        } else {
+          console.log('Loading pagefind from module');
+          pagefindInstance = await import('/pagefind/pagefind.js');
+        }
+        
+        // 初始化搜索
+        await pagefindInstance.init();
+        console.log('Pagefind 初始化完成');
+        
+        // 添加輸入事件監聽器
+        if (searchInput) {
+          searchInput.addEventListener('input', debounce(handleSearch, 300));
+        }
+        
+        pagefindLoaded = true;
+      } catch (error) {
+        console.error('Error loading Pagefind:', error);
+        if (searchResults) {
+          searchResults.innerHTML = `
+            <div class="text-center text-red-500 dark:text-red-400 py-8">
+              <p>搜尋功能載入失敗</p>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">${error.message || '未知錯誤'}</p>
+              <button id="debug-button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">顯示調試信息</button>
+            </div>
+          `;
+          
+          // 添加調試按鈕事件
+          setTimeout(() => {
+            const debugButton = document.getElementById('debug-button');
+            if (debugButton) {
+              debugButton.addEventListener('click', () => {
+                const debugInfo = {
+                  pagefindLoaded,
+                  pagefindInstance: !!pagefindInstance,
+                  windowPagefind: !!window.pagefind,
+                  navigator: navigator.userAgent
+                };
+                
+                alert('調試信息: ' + JSON.stringify(debugInfo, null, 2));
+              });
+            }
+          }, 100);
+        }
+      }
+    }
+  }
+  
+  // 防抖函數
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+  
+  // 處理搜索
+  async function handleSearch() {
+    if (!pagefindInstance || !searchInput || !searchResults) return;
+    
+    const query = searchInput.value.trim();
+    
+    if (!query) {
+      searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>輸入關鍵字開始搜尋</p></div>';
+      return;
+    }
+    
+    searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>搜尋中...</p></div>';
+    
+    try {
+      console.log('搜索詞:', query);
+      const search = await pagefindInstance.search(query);
+      console.log('搜索結果:', search);
+      
+      if (search.results.length === 0) {
+        searchResults.innerHTML = `<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>找不到符合「${query}」的結果</p></div>`;
+        return;
+      }
+      
+      let resultsHTML = `<div class="mb-4 text-gray-500 dark:text-gray-400">找到 ${search.results.length} 個符合「${query}」的結果</div>`;
+      
+      for (const result of search.results) {
+        const data = await result.data();
+        resultsHTML += `
+          <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0">
+            <h3 class="text-lg font-semibold mb-2">
+              <a href="${data.url}" class="text-blue-600 dark:text-blue-400 hover:underline">${data.meta.title || '無標題'}</a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">${data.excerpt}</p>
+            <div class="flex gap-2">
+              ${data.meta.tags ? data.meta.tags.split(',').map(tag => 
+                `<span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs px-2 py-0.5 rounded-full">${tag.trim()}</span>`
+              ).join('') : ''}
+            </div>
+          </div>
+        `;
+      }
+      
+      searchResults.innerHTML = resultsHTML;
+      
+    } catch (error) {
+      console.error('搜索錯誤:', error);
+      searchResults.innerHTML = `<div class="text-center text-red-500 dark:text-red-400 py-8"><p>搜尋過程中發生錯誤</p><p class="text-sm">${error.message || '未知錯誤'}</p></div>`;
+    }
+  }
+
+  // Function to open search popup
+  function openSearchPopup() {
+    if (searchPopup) {
+      searchPopup.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      
+      // Load Pagefind when search is opened
+      loadPagefind().then(() => {
+        // Focus the search input after Pagefind is loaded
+        if (searchInput) {
+          searchInput.focus();
+        }
+      });
+    }
+  }
+
+  // Function to close search popup
+  function closeSearchPopup() {
+    if (searchPopup) {
+      searchPopup.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      
+      // Clear the search input
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      
+      // Reset search results
+      if (searchResults) {
+        searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>輸入關鍵字開始搜尋</p></div>';
+      }
+    }
+  }
+
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    // Close search when clicking on backdrop
+    searchBackdrop?.addEventListener('click', closeSearchPopup);
+    
+    // Close search when clicking close button
+    searchClose?.addEventListener('click', closeSearchPopup);
+    
+    // Close search when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchPopup && !searchPopup.classList.contains('hidden')) {
+        closeSearchPopup();
+      }
+    });
+    
+    // Expose the openSearchPopup function to the global scope
+    // so it can be called from other components
+    window.openSearchPopup = openSearchPopup;
+  });
+</script>
+
+<style>
+  /* Custom styles for search results */
+  #search-results a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  #search-results a:hover {
+    text-decoration: underline;
+  }
+  
+  .dark #search-results a {
+    color: #60a5fa;
+  }
+  
+  #search-results p {
+    margin: 0.5rem 0;
+  }
+</style>
+
+<script is:inline>
+  // Make TypeScript happy with the global function
+  if (!window.openSearchPopup) {
+    window.openSearchPopup = function() {};
+  }
+</script> 

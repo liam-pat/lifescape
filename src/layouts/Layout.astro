@@ -1,0 +1,278 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+import SearchPopup from '../components/SearchPopup.astro';
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="生活与阅读分享">
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+		<!-- LXGW WenKai Screen 字體 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreenr.css" />
+		<title>{title}</title>
+		<script is:inline>
+			// 设置默认主题为日间模式
+			if (!('theme' in localStorage)) {
+				localStorage.theme = 'light';
+				document.documentElement.classList.remove('dark');
+			} else if (localStorage.theme === 'dark') {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+
+			// 声明全局搜索函数
+			window.openSearchPopup = window.openSearchPopup || function() {
+				console.log('Search popup function not yet initialized');
+			};
+		</script>
+		<style is:global>
+			/* Typewriter effect styles - 改進版本 */
+			.typewriter {
+				display: block;
+				max-width: 100%;
+				line-height: 1.5;
+				min-height: 3em; /* 固定最小高度 */
+				position: relative;
+			}
+
+			.typewriter-text {
+				display: inline;
+				position: relative;
+				margin: 0;
+				white-space: pre-wrap;
+				overflow-wrap: break-word;
+				visibility: hidden; /* 初始隱藏文字 */
+			}
+
+			.typewriter-text.typing {
+				visibility: visible; /* 打字時顯示文字 */
+			}
+
+			.typewriter-cursor {
+				display: inline-block;
+				width: 2px;
+				height: 1em;
+				background-color: currentColor;
+				margin-left: 1px;
+				vertical-align: text-bottom;
+				animation: blink-caret 0.75s step-end infinite;
+			}
+			
+			.typewriter-cursor.hide {
+				display: none; /* 隱藏光標 */
+			}
+
+			@keyframes blink-caret {
+				from, to { opacity: 0; }
+				50% { opacity: 1; }
+			}
+
+			@media (max-width: 768px) {
+				.typewriter {
+					min-height: 6em; /* 增加移動端的最小高度，確保有足夠空間顯示多行文字 */
+				}
+				
+				.typewriter-text {
+					width: 100%;
+					font-size: 0.9em; /* 稍微縮小字體大小，以適應更多文字 */
+				}
+			}
+		</style>
+	</head>
+	<body class="bg-[#E8E8E8] dark:bg-gray-900 min-h-screen font-wenkai">
+		<nav class="bg-white dark:bg-gray-800 shadow-sm">
+			<div class="max-w-4xl mx-auto px-4">
+				<div class="flex justify-between h-14">
+					<div class="flex items-center">
+						<a href="/" class="text-lg font-semibold text-gray-800 dark:text-white">
+							version.me
+						</a>
+					</div>
+
+					{/* 桌面版导航 */}
+					<div class="hidden md:flex md:items-center md:space-x-6">
+						<a href="/life" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+							Life
+						</a>
+						<a href="/reading" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+							Reading
+						</a>
+						<a href="/about" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+							ME
+						</a>
+						<a href="/rss.xml" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="RSS Feed">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+								<path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
+								<path d="M4 9a1 1 0 000 2c3.314 0 6 2.686 6 6a1 1 0 102 0c0-4.418-3.582-8-8-8z" />
+								<circle cx="3.5" cy="16.5" r="1.5" />
+							</svg>
+							<span class="ml-1">RSS</span>
+						</a>
+						<!-- 搜索按钮 -->
+						<button id="search-button" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+							</svg>
+							<span class="ml-1">Search</span>
+						</button>
+					</div>
+
+					{/* 手機版菜單按鈕 */}
+					<div class="flex items-center md:hidden">
+						<!-- 搜索按钮（移动版） -->
+						<button id="search-button-mobile" class="p-2 mr-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+							</svg>
+						</button>
+						<button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none" aria-expanded="false">
+							<svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+							</svg>
+						</button>
+					</div>
+				</div>
+
+				{/* 手機版下拉菜單 */}
+				<div class="mobile-menu hidden md:hidden">
+					<div class="pt-2 pb-3 space-y-1">
+						<a href="/life" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+							Life
+						</a>
+						<a href="/reading" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+							Reading
+						</a>
+						<a href="/about" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+							ME
+						</a>
+						<a href="/rss.xml" class="flex items-center px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
+								<path d="M4 9a1 1 0 000 2c3.314 0 6 2.686 6 6a1 1 0 102 0c0-4.418-3.582-8-8-8z" />
+								<circle cx="3.5" cy="16.5" r="1.5" />
+							</svg>
+							<span class="ml-2">RSS</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<slot />
+
+		<footer class="bg-white dark:bg-gray-800 mt-12 py-6">
+			<div class="max-w-4xl mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+				<p>&copy; 2025 VERSION.ME</p>
+			</div>
+		</footer>
+
+		<!-- 主题切换按钮 -->
+		<button id="theme-toggle" class="fixed bottom-6 right-6 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow">
+			<!-- 亮色模式图标 -->
+			<svg class="w-6 h-6 text-gray-800 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+			</svg>
+			<!-- 暗色模式图标 -->
+			<svg class="hidden w-6 h-6 text-gray-200 dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+			</svg>
+		</button>
+
+		<!-- 搜索弹窗组件 -->
+		<SearchPopup />
+
+		<script is:inline>
+			// 手機版菜單切換
+			document.addEventListener('DOMContentLoaded', () => {
+				const button = document.querySelector('.mobile-menu-button');
+				const menu = document.querySelector('.mobile-menu');
+
+				// 處理打字機效果 - 改進版本
+				const typewriterTexts = document.querySelectorAll('.typewriter-text');
+				typewriterTexts.forEach(text => {
+					const fullText = text.textContent || '';
+					let currentText = '';
+					let index = 0;
+					
+					// 創建光標元素
+					const cursor = document.createElement('span');
+					cursor.className = 'typewriter-cursor';
+					
+					// 清空原始文字並添加光標
+					text.textContent = '';
+					text.parentNode.insertBefore(cursor, text.nextSibling);
+					
+					// 延遲開始打字
+					setTimeout(() => {
+						// 添加 typing 類以顯示文字
+						text.classList.add('typing');
+						
+						// 設置打字間隔
+						const typingInterval = setInterval(() => {
+							if (index < fullText.length) {
+								currentText += fullText.charAt(index);
+								text.textContent = currentText;
+								index++;
+							} else {
+								clearInterval(typingInterval);
+								
+								// 打字完成後 2 秒鐘隱藏光標
+								setTimeout(() => {
+									cursor.classList.add('hide');
+								}, 2000);
+							}
+						}, 100); // 固定速度，可調整
+					}, 500);
+				});
+
+				button?.addEventListener('click', () => {
+					menu?.classList.toggle('hidden');
+					const expanded = button.getAttribute('aria-expanded') === 'true';
+					button.setAttribute('aria-expanded', (!expanded).toString());
+				});
+
+				// 主题切换功能
+				const themeToggle = document.getElementById('theme-toggle');
+				
+				// 切换主题
+				themeToggle?.addEventListener('click', () => {
+					if (document.documentElement.classList.contains('dark')) {
+						document.documentElement.classList.remove('dark');
+						localStorage.theme = 'light';
+					} else {
+						document.documentElement.classList.add('dark');
+						localStorage.theme = 'dark';
+					}
+				});
+
+				// 搜索功能
+				const searchButton = document.getElementById('search-button');
+				const searchButtonMobile = document.getElementById('search-button-mobile');
+				
+				// 点击搜索按钮打开搜索弹窗
+				searchButton?.addEventListener('click', () => {
+					if (typeof window.openSearchPopup === 'function') {
+						window.openSearchPopup();
+					}
+				});
+				
+				// 移动版搜索按钮
+				searchButtonMobile?.addEventListener('click', () => {
+					if (typeof window.openSearchPopup === 'function') {
+						window.openSearchPopup();
+					}
+				});
+			});
+		</script>
+	</body>
+</html> 

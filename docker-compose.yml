@@ -1,0 +1,12 @@
+services:
+  lifescape:
+    build: 
+      context: .
+      target: production
+    container_name: lifescape-prod
+    restart: unless-stopped
+    ports:
+      - "4321:4321"
+    environment:
+      - NODE_ENV=production
+    command: npm run preview -- --host

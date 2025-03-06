@@ -1,0 +1,9 @@
+{
+  "excludeSelectors": ["nav", "footer", ".mobile-menu", ".search-popup"],
+  "rootSelector": "body",
+  "chineseLanguageSupport": true,
+  "indexBodyContent": true,
+  "customSelectors": {
+    "article": ["article", ".prose"]
+  }
+} 
