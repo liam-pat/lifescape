@@ -1,9 +1,9 @@
 services:
   lifescape:
-    build: 
+    build:
       context: .
       target: production
-    container_name: lifescape-prod
+    container_name: lifescape
     restart: unless-stopped
     ports:
       - "4321:4321"

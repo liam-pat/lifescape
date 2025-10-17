@@ -2,6 +2,8 @@ services:
   lifescape:
     image: node:20
     container_name: lifescape-dev
+    labels:
+      - dev.orbstack.domains=life.orb.local
     volumes:
       - "./:/lifescape"
     working_dir: "/lifescape"
