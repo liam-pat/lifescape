@@ -183,9 +183,10 @@ const { Content } = await entry.render();
       document.body.style.overflow = ''; // 恢复背景滚动
     });
 
-    // 阻止点击图片时关闭模态框
-    modalImg.addEventListener('click', (e) => {
-      e.stopPropagation();
+    // 点击放大后的图片也可以关闭模态框（切换显示状态）
+    modalImg.addEventListener('click', () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = ''; // 恢复背景滚动
     });
 
     // ESC 键关闭模态框

@@ -21,10 +21,10 @@ export default defineConfig({
     }
   },
   server: {
-    host: true, 
+    host: true,
     allowedHosts: [
       'localhost',
-      'lifescape.lifescape.orb.local',
+      'life.orb.local',
       'life.biyongyao.com'
     ]
   }
