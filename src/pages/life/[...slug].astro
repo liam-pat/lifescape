@@ -22,7 +22,7 @@ const seriesEntries = hasCurrentInSeries
   : [entry, ...latestSeriesEntries];
 
 const tocItems = headings.filter((heading) => heading.depth >= 1 && heading.depth <= 4);
-const tocIndent = (depth) => {
+const tocIndent = (depth: number) => {
   if (depth === 1) return 'toc-depth-1';
   if (depth === 2) return 'toc-depth-2';
   if (depth === 3) return 'toc-depth-3';
