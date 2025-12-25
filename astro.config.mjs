@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeLazyImages from './src/lib/rehype-lazy-images.mjs';
 
 export default defineConfig({
   site: 'https://life.biyongyao.com',
@@ -13,7 +14,8 @@ export default defineConfig({
       [rehypeExternalLinks, { 
         target: '_blank',
         rel: ['nofollow', 'noopener', 'noreferrer']
-      }]
+      }],
+      rehypeLazyImages
     ],
     shikiConfig: {
       theme: 'github-light',
