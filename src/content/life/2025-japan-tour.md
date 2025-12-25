@@ -9,7 +9,7 @@ tags: ["life"]
 
 ## VISA 
 
-> 3 multple VISA 貼紙; 單次簽是電子簽，注意區別～～
+> multiple 貼紙; 單次簽是電子簽，注意區別～～
 
 * 3 年簽（778RMB TB GZ送簽）
 * 資料 **大洋圖文** 打印 + 彩印 （打印全小程序自助，基本沒有資料泄露風險）
@@ -18,15 +18,30 @@ tags: ["life"]
 
 ## Payment Methods
 
-* **cash** 用藍獅子在 711 拿了 50k，手續費很貴。09/26 **50k => 2657HKD**, 10/17 匯率是 **50k => 2587HKD**, 匯率+滙豐手續費 損失 70HKD，用 unionpay 會更好。
-* **visa credit card** 因為 HK & China Mainland 簽發的 visa OSAKA 有免費寄行李的活動。
-* **unionpay credit card** 也很少刷，為了防止盜刷，基本用 Applepay, 但很多商家不支持 Applepay，招行有 unionpay 1% 返現。
-* **ICOCA** 一般買飲料，地下鐵都用它，可直接添加到 Apple wallet～
-* **ALIPAY** 大丸之類的商場可直接 alipay, 我用 alipay 比較多，alipay 磚石匯率跟 wechatpay 差不多～～
+* **Cash** 
+    1. 藍獅子換匯, 711 拿了 50k
+    2. 09/26 **50k => 2657HKD**, 
+    3. 10/17 匯率是 **50k => 2587HKD**, 
+    4. 匯率+滙豐手續費 損失 70HKD，用 unionpay 會更好。
+* **VISA CC** 
+    * China HK & China Mainland visa , OSAKA 有免費寄行李的活動。
+* **UnionPay CC** 
+    * 商家不支持 Applepay，
+    * 招行有 unionpay 1% 返現。
+* **ICOCA** 添加到 Apple wallet
+    * 飲料
+    * 地下鐵
+* **Alipay** 
+    * 大丸之類的商場可直接 alipay
+    * alipay 磚石匯率跟 wechatpay 差不多～～
 
-![visa_pay_benefit](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/visapaybenefit.jpg)
-![union_pay_benefit](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/unionpaybenefit.jpg)
-![japan-atm](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanatm.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/visapaybenefit.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/unionpaybenefit.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanatm.jpg" width="200"></td>
+  </tr>
+</table>
 
 ## Traffic
 
@@ -35,14 +50,22 @@ tags: ["life"]
 > klook 豪華關西游, JR 3日，送地鐵一日券
 
 * GZ 直飛 OSAKA，至於 HK 飛便宜，看不出來，南航餐食覺得比國泰好～
-* JR PASS 多城市環遊，建議買多日券，可兌換 JR 指定席，新手可見車就上；有兩次指定坐，一次因為趕時間放棄了，一次 JR 停運，用阪急單日券替換～
+* JR PASS 多城市環遊，建議買多日券，有兩次指定坐
+    * 可兌換 JR 指定席，新手可見車就上；
+    * JR 停運，用阪急單日券替換～
 * 京都地鐵: **任何京都地鐵站** 可兌，可能需母票，就是 JR 全票那張，京都 city walk 可以使用到～
-* 阪急電車: **阪急梅田 | 京都河原町 | 烏丸** 可兌，若 JR 正常運營，這張票的沒什麼用，JR 基本覆蓋了
+* 阪急電車
+    * 兌換地點 **阪急梅田 | 京都河原町 | 烏丸** 
+    * 若 JR 正常運營，這張票的沒什麼用，JR 基本覆蓋了
 * 京阪電車: 去宇治有用, 我沒用上
 
-![japan_jr_ticket](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanjrticket.jpg)
-![japan_hankyu](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanhankyu.jpg)
-![japan_kyoto_subway](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japankyotosubway.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanjrticket.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanhankyu.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japankyotosubway.jpg" width="200"></td>
+  </tr>
+</table>
 
 ## Shopping
 
@@ -54,8 +77,12 @@ tags: ["life"]
 * 大丸 / 難波 / 吉之島 / 鬆本清 / grand front / 愛電王 / donki / 友都八喜
 * 機場免稅店買最多，精緻的女孩子可能在關西機場不够時間買買買～
 
-![japan_shoe_01](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe01.jpg)
-![japan_shoe_02](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe02.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe01.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe02.jpg" width="300"></td>
+  </tr>
+</table>
 
 ## Brunch
 
@@ -66,11 +93,23 @@ tags: ["life"]
 * 飲品 (貢茶 + manner)
 * cafe (taoca coffee & mel coffee) 
 
-![2025-japan-dinner1](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner1.jpg)
-![2025-japan-dinner2](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner2.jpg)
-![2025-japan-herewego-dinner](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanherewegodinner.jpg)
-![2025-japan-kobe-beff](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobebeff.jpg)
-![2025-japan-cafe](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japancafe.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner1.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner2.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanherewegodinner.jpg" width="200"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japancafe.jpg" width="300"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobebeff.jpg" width="300"></td>
+  </tr>
+</table>
 
 ## 遊玩
 
@@ -79,11 +118,20 @@ tags: ["life"]
 * 伏見稻荷大社 -> 京都塔 -> 海洋館
 * 清水寺 -> 三年坂二年坂 -> 高台寺 -> 祇园 -> 鸭川 -> 南禅寺 
 
-![2025-japan-kyoto-scene1](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene1.jpg)
-![2025-japan-kyoto-scene2](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene2.jpg)
-![2025-japan-kyoto-scene3](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene3.jpg)
-![2025-japan-kyoto-scene4](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene4.jpg)
-![2025-japan-kyoto-scene5](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene5.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene1.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene5.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene4.jpg" width="200"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene3.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene2.jpg" width="300"></td>
+  </tr>
+</table>
 
 ### Osaka
 
@@ -92,10 +140,20 @@ tags: ["life"]
 * 梅田综合百货
 * 寶可夢中心
 
-![2025-japan-osaka-scene1](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene1.jpg)
-![2025-japan-osaka-scene2](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene2.jpg)
-![2025-japan-osaka-scene3](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene3.jpg)
-![2025-japan-osaka-scene4](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene4.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene2.jpg" width="300"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene3.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene4.jpg" width="300"></td>
+  </tr>
+</table>
+
 ![2025-japan-osaka-scene5](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene5.jpg)
 
 
@@ -105,18 +163,34 @@ tags: ["life"]
 
 > **-200RMB** 没必要买任天堂园区保证券，我买了根本用不上
 
-* 手環都可以，若是覺得有時間有餘力去玩的，買全新，自己解鎖隱藏，租的別人都給你解鎖完了～
+* 手環
+    * 買全新，自己解鎖隱藏，
+    * 租, 可能都解鎖完了～
 * 沒有什麼是推薦的，喜歡玩什麼就去玩～
 
-![2025-japan-usj-scene1](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene1.jpg)
-![2025-japan-usj-scene2](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene2.jpg)
-![2025-japan-usj-scene3](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene3.jpg)
-![2025-japan-usj-scene4](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene4.jpg)
-![2025-japan-usj-scene5](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene5.jpg)
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene2.jpg" width="300"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene3.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene4.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene5.jpg" width="200"></td>
+  </tr>
+</table>
 
 ### KOBE
 
 > KOBE 太適合 city walk, 走了半個下午，黑了一圈
 
-![2025-japan-kobe-scene1](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene1.jpg)
-![2025-japan-kobe-scene2](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene2.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene2.jpg" width="300"></td>
+  </tr>
+</table>
