@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeRaw from 'rehype-raw';
 import rehypeLazyImages from './src/lib/rehype-lazy-images.mjs';
 
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
   ],
   markdown: {
     rehypePlugins: [
+      rehypeRaw,
       [rehypeExternalLinks, { 
         target: '_blank',
         rel: ['nofollow', 'noopener', 'noreferrer']
