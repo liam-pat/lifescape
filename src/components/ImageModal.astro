@@ -1,0 +1,306 @@
+---
+---
+
+<div data-image-modal class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out">
+	<img data-modal-image class="object-contain" src="" alt="" />
+	<div data-modal-meta class="image-meta" aria-live="polite">
+		<span data-modal-meta-text></span>
+	</div>
+</div>
+
+<style>
+  [data-image-modal] {
+    display: flex;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    padding: 1.5rem;
+    transition: opacity 200ms ease, visibility 0ms linear 200ms;
+  }
+
+  [data-image-modal].is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 220ms ease;
+  }
+
+  [data-image-modal] [data-modal-image] {
+    max-width: min(92vw, 1200px);
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    transform: scale(0.96);
+    transition: transform 220ms ease;
+    will-change: transform;
+  }
+
+  [data-image-modal].is-open [data-modal-image] {
+    transform: scale(1);
+  }
+
+  [data-image-modal] [data-modal-meta] {
+    position: absolute;
+    left: 50%;
+    bottom: 1.1rem;
+    transform: translate(-50%, 6px);
+    background: rgba(255, 255, 255, 0.92);
+    color: #111827;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.6rem;
+    max-width: min(92vw, 900px);
+    white-space: nowrap;
+    overflow-x: auto;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  [data-image-modal] [data-modal-meta].is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  [data-image-modal] .image-meta__key {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    [data-image-modal] {
+      padding: 0.75rem;
+    }
+
+    [data-image-modal] [data-modal-image] {
+      max-width: 94vw;
+      max-height: 84vh;
+    }
+
+    [data-image-modal] [data-modal-meta] {
+      bottom: 0.7rem;
+      max-width: 94vw;
+    }
+  }
+</style>
+
+<script>
+  // 获取所有文章中的图片
+  const images = document.querySelectorAll('.prose img');
+  const modal = document.querySelector('[data-image-modal]') as HTMLDivElement | null;
+  const modalImg = modal?.querySelector('[data-modal-image]') as HTMLImageElement | null;
+  const metaBox = modal?.querySelector('[data-modal-meta]') as HTMLDivElement | null;
+  const metaText = modal?.querySelector('[data-modal-meta-text]') as HTMLSpanElement | null;
+  const exifCache = new Map<string, ExifData | null>();
+  let activeSrc = '';
+
+  if (modal && modalImg) {
+    const setMetaText = (text: string | null, visible: boolean) => {
+      if (!metaBox || !metaText) return;
+      metaText.textContent = text || '';
+      metaBox.classList.toggle('is-visible', visible);
+    };
+
+    const setMetaFields = (fields: { key: string; value: string }[], visible: boolean) => {
+      if (!metaBox || !metaText) return;
+      metaText.textContent = '';
+      const fragment = document.createDocumentFragment();
+      fields
+        .filter((field) => field.value)
+        .forEach((field, index) => {
+          if (index > 0) {
+            fragment.appendChild(document.createTextNode(' · '));
+          }
+          const key = document.createElement('span');
+          key.className = 'image-meta__key';
+          key.textContent = field.key;
+          const value = document.createElement('strong');
+          value.textContent = field.value;
+          fragment.append(key, document.createTextNode(' '), value);
+        });
+      metaText.appendChild(fragment);
+      metaBox.classList.toggle('is-visible', visible);
+    };
+
+    const openModal = (img: HTMLImageElement) => {
+      activeSrc = img.src;
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden'; // 防止背景滚动
+      setMetaText('Reading metadata...', true);
+      loadExif(activeSrc).then((meta) => {
+        if (activeSrc !== img.src) return;
+        if (!meta) {
+          setMetaText('Metadata unavailable', true);
+          return;
+        }
+        const fields = formatMetaFields(meta);
+        if (fields.length === 0) {
+          setMetaText('Metadata unavailable', true);
+          return;
+        }
+        setMetaFields(fields, true);
+      });
+    };
+
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = ''; // 恢复背景滚动
+      activeSrc = '';
+      setMetaText(null, false);
+    };
+
+    // 为每个图片添加点击事件
+    images.forEach(img => {
+      if (img instanceof HTMLImageElement) {
+        img.addEventListener('click', () => {
+          openModal(img);
+        });
+      }
+    });
+
+    // 点击模态框关闭
+    modal.addEventListener('click', () => {
+      closeModal();
+    });
+
+    // 点击放大后的图片也可以关闭模态框（切换显示状态）
+    modalImg.addEventListener('click', () => {
+      closeModal();
+    });
+
+    // ESC 键关闭模态框
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+  }
+
+  type ExifData = {
+    make?: string;
+    model?: string;
+    lens?: string;
+    focal?: number;
+    focal35?: number;
+    fNumber?: number;
+    iso?: number;
+    exposureTime?: number;
+    exposureBias?: number;
+    date?: string | Date;
+  };
+
+  const loadExif = async (src: string) => {
+    if (exifCache.has(src)) return exifCache.get(src) || null;
+    const normalized = src.split('?')[0].toLowerCase();
+    if (!normalized.endsWith('.jpg') && !normalized.endsWith('.jpeg')) {
+      exifCache.set(src, null);
+      return null;
+    }
+    try {
+      const { parse } = await import('exifr');
+      const raw = await parse(src, {
+        pick: [
+          'Make',
+          'Model',
+          'LensModel',
+          'FocalLength',
+          'FocalLengthIn35mmFilm',
+          'FNumber',
+          'ExposureTime',
+          'ISO',
+          'ExposureBiasValue',
+          'DateTimeOriginal'
+        ]
+      });
+      if (!raw) {
+        exifCache.set(src, null);
+        return null;
+      }
+      const isoValue = Array.isArray(raw.ISO) ? raw.ISO[0] : raw.ISO;
+      const meta: ExifData = {
+        make: raw.Make,
+        model: raw.Model,
+        lens: raw.LensModel,
+        focal: raw.FocalLength,
+        focal35: raw.FocalLengthIn35mmFilm,
+        fNumber: raw.FNumber,
+        exposureTime: raw.ExposureTime,
+        exposureBias: raw.ExposureBiasValue,
+        iso: typeof isoValue === 'number' ? Math.round(isoValue) : undefined,
+        date: raw.DateTimeOriginal
+      };
+      exifCache.set(src, meta);
+      return meta;
+    } catch {
+      exifCache.set(src, null);
+      return null;
+    }
+  };
+
+  const formatMetaFields = (meta: ExifData) => {
+    const camera = [meta.make, meta.model].filter(Boolean).join(' ').trim();
+    const aperture = formatAperture(meta.fNumber);
+    const focal = formatFocal(meta.focal, meta.focal35);
+    const focalAperture = [focal, aperture].filter(Boolean).join(' ');
+    return [
+      { key: 'Cam', value: camera },
+      { key: 'Lens', value: meta.lens || '' },
+      { key: 'F', value: focalAperture },
+      { key: 'ISO', value: typeof meta.iso === 'number' ? `${meta.iso}` : '' },
+      { key: 'S', value: formatExposureTime(meta.exposureTime) },
+      { key: 'EV', value: formatExposureBias(meta.exposureBias) },
+      { key: 'Time', value: formatDateTime(meta.date) }
+    ];
+  };
+
+  const formatFocal = (focal?: number, focal35?: number) => {
+    if (typeof focal35 === 'number') return `${Math.round(focal35)} mm`;
+    if (typeof focal === 'number') {
+      const rounded = focal >= 10 ? focal.toFixed(1) : focal.toFixed(2);
+      return `${rounded.replace(/\.0+$/, '')} mm`;
+    }
+    return '';
+  };
+
+  const formatAperture = (fNumber?: number) => {
+    if (typeof fNumber !== 'number') return '';
+    const formatted = fNumber.toFixed(1).replace(/\.0$/, '');
+    return `f/${formatted}`;
+  };
+
+  const formatExposureTime = (exposure?: number) => {
+    if (typeof exposure !== 'number' || exposure <= 0) return '';
+    if (exposure >= 1) {
+      return `${exposure.toFixed(2).replace(/\.0+$/, '')} s`;
+    }
+    const denom = Math.round(1 / exposure);
+    if (denom > 0) return `1/${denom} s`;
+    return '';
+  };
+
+  const formatExposureBias = (bias?: number) => {
+    if (typeof bias !== 'number') return '';
+    const formatted = bias.toFixed(1).replace(/\.0$/, '');
+    const sign = bias > 0 ? '+' : '';
+    return `${sign}${formatted}`;
+  };
+
+  const formatDateTime = (date?: string | Date) => {
+    if (!date) return '';
+    if (date instanceof Date && !Number.isNaN(date.getTime())) {
+      const pad = (value: number) => String(value).padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    }
+    if (typeof date !== 'string') return '';
+    const parts = date.split(' ');
+    if (parts.length !== 2) return date;
+    return `${parts[0].replace(/:/g, '-')} ${parts[1]}`;
+  };
+</script>

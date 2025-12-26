@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import ImageModal from '../../components/ImageModal.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('life');
@@ -108,10 +109,8 @@ const tocIndent = (depth: number) => {
     </div>
   </main>
 
-  <!-- 图片放大模态框 -->
-  <div id="imageModal" class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out">
-    <img id="modalImage" class="object-contain" src="" alt="" />
-  </div>
+	<!-- 图片放大模态框 -->
+	<ImageModal />
 </Layout>
 
 <script is:inline>
@@ -386,39 +385,6 @@ const tocIndent = (depth: number) => {
     transform: scale(1.02);
   }
 
-  #imageModal {
-    display: flex;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    padding: 1.5rem;
-    transition: opacity 200ms ease, visibility 0ms linear 200ms;
-  }
-
-  #imageModal.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: opacity 220ms ease;
-  }
-
-  #modalImage {
-    max-width: min(92vw, 1200px);
-    max-height: 88vh;
-    width: auto;
-    height: auto;
-    border-radius: 0.75rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-    transform: scale(0.96);
-    transition: transform 220ms ease;
-    will-change: transform;
-  }
-
-  #imageModal.is-open #modalImage {
-    transform: scale(1);
-  }
-
   /* 横屏图片 - 保持较大尺寸 */
   .prose :global(img[alt*="landscape"]),
   .prose :global(img[alt*="横屏"]) {
@@ -469,15 +435,6 @@ const tocIndent = (depth: number) => {
   }
 
   @media (max-width: 768px) {
-    #imageModal {
-      padding: 0.75rem;
-    }
-
-    #modalImage {
-      max-width: 94vw;
-      max-height: 84vh;
-    }
-
     .prose :global(img) {
       width: 100%;
       max-width: 100%;
@@ -591,44 +548,3 @@ const tocIndent = (depth: number) => {
     }
   }
 </style>
-
-<script>
-  // 获取所有文章中的图片
-  const images = document.querySelectorAll('.prose img');
-  const modal = document.getElementById('imageModal') as HTMLDivElement;
-  const modalImg = document.getElementById('modalImage') as HTMLImageElement;
-
-  if (modal && modalImg) {
-    // 为每个图片添加点击事件
-    images.forEach(img => {
-      if (img instanceof HTMLImageElement) {
-        img.addEventListener('click', () => {
-          modalImg.src = img.src;
-          modalImg.alt = img.alt;
-          modal.classList.add('is-open');
-          document.body.style.overflow = 'hidden'; // 防止背景滚动
-        });
-      }
-    });
-
-    // 点击模态框关闭
-    modal.addEventListener('click', () => {
-      modal.classList.remove('is-open');
-      document.body.style.overflow = ''; // 恢复背景滚动
-    });
-
-    // 点击放大后的图片也可以关闭模态框（切换显示状态）
-    modalImg.addEventListener('click', () => {
-      modal.classList.remove('is-open');
-      document.body.style.overflow = ''; // 恢复背景滚动
-    });
-
-    // ESC 键关闭模态框
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-        modal.classList.remove('is-open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-</script> 
