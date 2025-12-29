@@ -37,9 +37,14 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/visapaybenefit.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/unionpaybenefit.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanatm.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanatm.jpg" width="600"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/visapaybenefit.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/unionpaybenefit.jpg" width="300"></td>
   </tr>
 </table>
 
@@ -61,7 +66,6 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanjrticket.jpg" width="200"></td>
     <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanhankyu.jpg" width="200"></td>
     <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japankyotosubway.jpg" width="200"></td>
   </tr>
@@ -80,6 +84,11 @@ tags: ["life"]
 <table>
   <tr>
     <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe01.jpg" width="300"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
     <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe02.jpg" width="300"></td>
   </tr>
 </table>
