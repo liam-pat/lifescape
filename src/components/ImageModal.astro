@@ -45,8 +45,8 @@
   [data-image-modal] [data-modal-meta] {
     position: absolute;
     left: 50%;
-    bottom: 1.1rem;
-    transform: translate(-50%, 6px);
+    bottom: calc(1.1rem - 6px);
+    transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.92);
     color: #111827;
     font-size: 0.75rem;
@@ -59,12 +59,12 @@
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition: opacity 200ms ease, bottom 200ms ease;
   }
 
   [data-image-modal] [data-modal-meta].is-visible {
     opacity: 1;
-    transform: translate(-50%, 0);
+    bottom: 1.1rem;
   }
 
   [data-image-modal] .image-meta__key {
@@ -90,217 +90,100 @@
 </style>
 
 <script>
-  // 获取所有文章中的图片
+  import { getExifData, formatExifData } from '../lib/exif';
+
+  // 獲取所有文章中的圖片
   const images = document.querySelectorAll('.prose img');
   const modal = document.querySelector('[data-image-modal]') as HTMLDivElement | null;
   const modalImg = modal?.querySelector('[data-modal-image]') as HTMLImageElement | null;
   const metaBox = modal?.querySelector('[data-modal-meta]') as HTMLDivElement | null;
   const metaText = modal?.querySelector('[data-modal-meta-text]') as HTMLSpanElement | null;
-  const exifCache = new Map<string, ExifData | null>();
+  
   let activeSrc = '';
 
-  if (modal && modalImg) {
-    const setMetaText = (text: string | null, visible: boolean) => {
-      if (!metaBox || !metaText) return;
-      metaText.textContent = text || '';
-      metaBox.classList.toggle('is-visible', visible);
+  if (modal && modalImg && metaBox && metaText) {
+    const setMetaState = (text: string, isVisible: boolean) => {
+      metaText.textContent = text;
+      // 清空任何動態添加的子元素（如 key-value pairs），只保留文本
+      while (metaText.firstElementChild) {
+        metaText.firstElementChild.remove();
+      }
+      metaBox.classList.toggle('is-visible', isVisible);
     };
 
-    const setMetaFields = (fields: { key: string; value: string }[], visible: boolean) => {
-      if (!metaBox || !metaText) return;
+    const displayMetaFields = (fields: { key: string; value: string }[]) => {
       metaText.textContent = '';
       const fragment = document.createDocumentFragment();
+      
       fields
         .filter((field) => field.value)
         .forEach((field, index) => {
-          if (index > 0) {
-            fragment.appendChild(document.createTextNode(' · '));
-          }
+          if (index > 0) fragment.appendChild(document.createTextNode(' · '));
+          
           const key = document.createElement('span');
           key.className = 'image-meta__key';
           key.textContent = field.key;
+          
           const value = document.createElement('strong');
           value.textContent = field.value;
+          
           fragment.append(key, document.createTextNode(' '), value);
         });
+        
       metaText.appendChild(fragment);
-      metaBox.classList.toggle('is-visible', visible);
+      metaBox.classList.add('is-visible');
     };
 
-    const openModal = (img: HTMLImageElement) => {
+    const openModal = async (img: HTMLImageElement) => {
       activeSrc = img.src;
       modalImg.src = img.src;
       modalImg.alt = img.alt;
       modal.classList.add('is-open');
-      document.body.style.overflow = 'hidden'; // 防止背景滚动
-      setMetaText('Reading metadata...', true);
-      loadExif(activeSrc).then((meta) => {
-        if (activeSrc !== img.src) return;
-        if (!meta) {
-          setMetaText('Metadata unavailable', true);
-          return;
-        }
-        const fields = formatMetaFields(meta);
-        if (fields.length === 0) {
-          setMetaText('Metadata unavailable', true);
-          return;
-        }
-        setMetaFields(fields, true);
-      });
+      document.body.style.overflow = 'hidden';
+
+      setMetaState('Reading metadata...', true);
+
+      const meta = await getExifData(activeSrc);
+      
+      // 防止在異步加載期間切換了圖片或關閉了模態框
+      if (activeSrc !== img.src || !modal.classList.contains('is-open')) return;
+
+      if (!meta) {
+        setMetaState('Metadata unavailable', true);
+        return;
+      }
+
+      const fields = formatExifData(meta);
+      if (fields.length === 0) {
+        setMetaState('Metadata unavailable', true);
+        return;
+      }
+
+      displayMetaFields(fields);
     };
 
     const closeModal = () => {
       modal.classList.remove('is-open');
-      document.body.style.overflow = ''; // 恢复背景滚动
+      document.body.style.overflow = '';
       activeSrc = '';
-      setMetaText(null, false);
+      // 延遲隱藏 meta，配合 CSS 漸變
+      setTimeout(() => setMetaState('', false), 200);
     };
 
-    // 为每个图片添加点击事件
+    // 事件綁定
     images.forEach(img => {
       if (img instanceof HTMLImageElement) {
-        img.addEventListener('click', () => {
-          openModal(img);
-        });
+        img.addEventListener('click', () => openModal(img));
       }
     });
 
-    // 点击模态框关闭
-    modal.addEventListener('click', () => {
-      closeModal();
-    });
+    modal.addEventListener('click', closeModal);
+    modalImg.addEventListener('click', closeModal);
 
-    // 点击放大后的图片也可以关闭模态框（切换显示状态）
-    modalImg.addEventListener('click', () => {
-      closeModal();
-    });
-
-    // ESC 键关闭模态框
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
         closeModal();
       }
     });
   }
-
-  type ExifData = {
-    make?: string;
-    model?: string;
-    lens?: string;
-    focal?: number;
-    focal35?: number;
-    fNumber?: number;
-    iso?: number;
-    exposureTime?: number;
-    exposureBias?: number;
-    date?: string | Date;
-  };
-
-  const loadExif = async (src: string) => {
-    if (exifCache.has(src)) return exifCache.get(src) || null;
-    const normalized = src.split('?')[0].toLowerCase();
-    if (!normalized.endsWith('.jpg') && !normalized.endsWith('.jpeg')) {
-      exifCache.set(src, null);
-      return null;
-    }
-    try {
-      const { parse } = await import('exifr');
-      const raw = await parse(src, {
-        pick: [
-          'Make',
-          'Model',
-          'LensModel',
-          'FocalLength',
-          'FocalLengthIn35mmFilm',
-          'FNumber',
-          'ExposureTime',
-          'ISO',
-          'ExposureBiasValue',
-          'DateTimeOriginal'
-        ]
-      });
-      if (!raw) {
-        exifCache.set(src, null);
-        return null;
-      }
-      const isoValue = Array.isArray(raw.ISO) ? raw.ISO[0] : raw.ISO;
-      const meta: ExifData = {
-        make: raw.Make,
-        model: raw.Model,
-        lens: raw.LensModel,
-        focal: raw.FocalLength,
-        focal35: raw.FocalLengthIn35mmFilm,
-        fNumber: raw.FNumber,
-        exposureTime: raw.ExposureTime,
-        exposureBias: raw.ExposureBiasValue,
-        iso: typeof isoValue === 'number' ? Math.round(isoValue) : undefined,
-        date: raw.DateTimeOriginal
-      };
-      exifCache.set(src, meta);
-      return meta;
-    } catch {
-      exifCache.set(src, null);
-      return null;
-    }
-  };
-
-  const formatMetaFields = (meta: ExifData) => {
-    const camera = [meta.make, meta.model].filter(Boolean).join(' ').trim();
-    const aperture = formatAperture(meta.fNumber);
-    const focal = formatFocal(meta.focal, meta.focal35);
-    const focalAperture = [focal, aperture].filter(Boolean).join(' ');
-    return [
-      { key: 'Cam', value: camera },
-      { key: 'Lens', value: meta.lens || '' },
-      { key: 'F', value: focalAperture },
-      { key: 'ISO', value: typeof meta.iso === 'number' ? `${meta.iso}` : '' },
-      { key: 'S', value: formatExposureTime(meta.exposureTime) },
-      { key: 'EV', value: formatExposureBias(meta.exposureBias) },
-      { key: 'Time', value: formatDateTime(meta.date) }
-    ];
-  };
-
-  const formatFocal = (focal?: number, focal35?: number) => {
-    if (typeof focal35 === 'number') return `${Math.round(focal35)} mm`;
-    if (typeof focal === 'number') {
-      const rounded = focal >= 10 ? focal.toFixed(1) : focal.toFixed(2);
-      return `${rounded.replace(/\.0+$/, '')} mm`;
-    }
-    return '';
-  };
-
-  const formatAperture = (fNumber?: number) => {
-    if (typeof fNumber !== 'number') return '';
-    const formatted = fNumber.toFixed(1).replace(/\.0$/, '');
-    return `f/${formatted}`;
-  };
-
-  const formatExposureTime = (exposure?: number) => {
-    if (typeof exposure !== 'number' || exposure <= 0) return '';
-    if (exposure >= 1) {
-      return `${exposure.toFixed(2).replace(/\.0+$/, '')} s`;
-    }
-    const denom = Math.round(1 / exposure);
-    if (denom > 0) return `1/${denom} s`;
-    return '';
-  };
-
-  const formatExposureBias = (bias?: number) => {
-    if (typeof bias !== 'number') return '';
-    const formatted = bias.toFixed(1).replace(/\.0$/, '');
-    const sign = bias > 0 ? '+' : '';
-    return `${sign}${formatted}`;
-  };
-
-  const formatDateTime = (date?: string | Date) => {
-    if (!date) return '';
-    if (date instanceof Date && !Number.isNaN(date.getTime())) {
-      const pad = (value: number) => String(value).padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-    }
-    if (typeof date !== 'string') return '';
-    const parts = date.split(' ');
-    if (parts.length !== 2) return date;
-    return `${parts[0].replace(/:/g, '-')} ${parts[1]}`;
-  };
 </script>
