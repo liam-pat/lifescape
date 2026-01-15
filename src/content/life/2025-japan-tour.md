@@ -37,14 +37,14 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanatm.jpg" width="600"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/japanatm.jpg" width="600"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/visapaybenefit.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/unionpaybenefit.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/visapaybenefit.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/unionpaybenefit.jpg" width="300"></td>
   </tr>
 </table>
 
@@ -66,8 +66,8 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanhankyu.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japankyotosubway.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/japanhankyu.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/japankyotosubway.jpg" width="200"></td>
   </tr>
 </table>
 
@@ -83,13 +83,13 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe01.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/japanshoe01.jpg" width="300"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/japanshoe02.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/japanshoe02.jpg" width="300"></td>
   </tr>
 </table>
 
@@ -104,19 +104,19 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner1.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japandinner2.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanherewegodinner.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japandinner1.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japandinner2.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanherewegodinner.jpg" width="200"></td>
   </tr>
 </table>
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japancafe.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japancafe.jpg" width="300"></td>
   </tr>
 </table>
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobebeff.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankobebeff.jpg" width="300"></td>
   </tr>
 </table>
 
@@ -129,16 +129,16 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene1.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene5.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene4.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankyotoscene1.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankyotoscene5.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankyotoscene4.jpg" width="200"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene3.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankyotoscene2.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankyotoscene3.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankyotoscene2.jpg" width="300"></td>
   </tr>
 </table>
 
@@ -151,19 +151,19 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene1.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene2.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanosakascene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanosakascene2.jpg" width="300"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene3.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene4.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanosakascene3.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanosakascene4.jpg" width="300"></td>
   </tr>
 </table>
 
-![2025-japan-osaka-scene5](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanosakascene5.jpg)
+![2025-japan-osaka-scene5](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanosakascene5.jpg)
 
 
 ### USJ
@@ -180,16 +180,16 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene1.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene2.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanusjscene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanusjscene2.jpg" width="300"></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene3.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene4.jpg" width="200"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japanusjscene5.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanusjscene3.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanusjscene4.jpg" width="200"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japanusjscene5.jpg" width="200"></td>
   </tr>
 </table>
 
@@ -199,7 +199,7 @@ tags: ["life"]
 
 <table>
   <tr>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene1.jpg" width="300"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/10/2025japankobescene2.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankobescene1.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/10/2025japankobescene2.jpg" width="300"></td>
   </tr>
 </table>

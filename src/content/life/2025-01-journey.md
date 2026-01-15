@@ -47,7 +47,7 @@ notion 記錄了飲食清單，當季農產物，植物蛋白、動物蛋白等�
 * 休息 -- 23:30 必須上床休息，真需要毅力、
 * 運動 -- 跑步目標是 12KM weekly / 100KM monthly；有時下班走路回家，一周 1、2 次, 12KM/次
 
-![2024-food-share](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/02/2024foodshare.jpg)
+![2024-food-share](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/02/2024foodshare.jpg)
 
 ### 消費陷阱
 
@@ -116,7 +116,12 @@ notion 記錄了飲食清單，當季農產物，植物蛋白、動物蛋白等�
 * [weekly](https://weekly.biyongyao.com) 不知不覺到了 28 期，不足--框架不是自己弄的
 * [notion](https://notion.biyongyao.com) 記錄筆記
 
-![2024-new-sites](https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/usr/uploads/2025/02/2024newsites.jpg)
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/02/2025-newsite-01.jpg" width="300"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2025/02/2025-newsite-02.jpg" width="300"></td>
+  </tr>
+</table>
 
 ### Reading
 
