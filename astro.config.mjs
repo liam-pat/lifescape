@@ -4,6 +4,7 @@ import tailwind from '@astrojs/tailwind';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import rehypeLazyImages from './src/lib/rehype-lazy-images.mjs';
+import remarkBreaks from 'remark-breaks';
 
 export default defineConfig({
   site: 'https://life.biyongyao.com',
@@ -11,6 +12,7 @@ export default defineConfig({
     tailwind()
   ],
   markdown: {
+    remarkPlugins: [remarkBreaks],
     rehypePlugins: [
       rehypeRaw,
       [rehypeExternalLinks, { 

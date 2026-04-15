@@ -7,6 +7,6 @@ services:
     volumes:
       - "./:/lifescape"
     working_dir: "/lifescape"
-    command: npm run dev -- --host
+    command: sh -c "npm install && npm run dev -- --host"
     ports:
       - 4321:4321
