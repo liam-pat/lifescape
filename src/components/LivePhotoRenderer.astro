@@ -1,0 +1,298 @@
+---
+
+---
+
+<style is:global>
+  /* 容器：承接原本圖片的佈局屬性 */
+  .live-photo-container {
+    position: relative;
+    display: block; /* 改為 block 以便居中 */
+    width: 800px;
+    max-width: 90%;
+    margin: 1.5rem auto; /* 與原本 .prose img 一致 */
+    border-radius: 0.7rem; /* 與原本 .prose img 一致 */
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    cursor: zoom-in;
+    background-color: #000; /* 防止空白邊角顯示白色 */
+  }
+
+  /* 覆寫 .prose 的圖片屬性，避免雙重 margin 與 shadow */
+  .prose .live-photo-container img {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    border-radius: 0 !important; /* 圓角交給 container */
+    box-shadow: none !important;
+    cursor: zoom-in;
+    transition: opacity 0.4s ease;
+  }
+
+  /* 影片：疊在圖片上，預設隱藏 */
+  .live-photo-container .live-photo-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    border-radius: 0.7rem; /* 確保影片角與容器一致 */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  /* 當播放時，完全隱藏底下的圖片，避免 iPhone .MOV/.HEIC 尺寸不一致造成陰影滲出 */
+  .live-photo-container.is-active img {
+    opacity: 0;
+    box-shadow: none !important;
+    transition:
+      opacity 0.35s ease,
+      box-shadow 0s;
+  }
+
+  /* 禁止 container 內部圖片有 hover 縮放（避免與 LIVE 播放衝突） */
+  .live-photo-container img:hover {
+    transform: none !important;
+  }
+
+  /* live-photo-video.is-playing 已改用 inline style 控制，此 class 保留作為狀態標記 */
+
+  /* LIVE 按鈕 */
+  .live-photo-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 9999px; /* 膠囊狀 */
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .live-photo-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.05);
+  }
+
+  /* 直播圓點特效 */
+  .live-photo-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+
+  .is-playing-btn .live-photo-dot {
+    animation: live-pulse 1.5s infinite ease-in-out;
+  }
+
+  @keyframes live-pulse {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.9);
+      opacity: 0.7;
+    }
+  }
+
+  /* HDR Badge */
+  .hdr-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 9;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const initLivePhotos = () => {
+      const specialImages = document.querySelectorAll(
+        '.prose img[data-live="true"], .prose img[data-hdr="true"]',
+      );
+
+      specialImages.forEach((img) => {
+        if (img.classList.contains("live-processed")) return;
+        img.classList.add("live-processed");
+
+        const isLive = img.getAttribute("data-live") === "true";
+        const isHdr = img.getAttribute("data-hdr") === "true";
+
+        const container = document.createElement("div");
+        container.className = "live-photo-container";
+
+        if (img.parentNode) {
+          img.parentNode.insertBefore(container, img);
+          container.appendChild(img);
+          // 強制清除 margin（確保 container 頂部無空隙）
+          img.style.setProperty("margin", "0", "important");
+          img.style.setProperty("display", "block", "important");
+        }
+
+        if (isHdr) {
+          const hdrBadge = document.createElement("div");
+          hdrBadge.className = "hdr-badge";
+          hdrBadge.innerText = "HDR";
+          container.appendChild(hdrBadge);
+        }
+
+        if (isLive) {
+          const btn = document.createElement("button");
+          btn.className = "live-photo-btn";
+          btn.innerHTML = '<span class="live-photo-dot"></span>LIVE';
+          container.appendChild(btn);
+
+          const video = document.createElement("video");
+          video.className = "live-photo-video";
+          video.muted = true;
+          video.loop = false; // 播放一次後自動停止
+          video.playsInline = true;
+          // 用 inline style 確保 object-fit:cover 一定生效
+          video.style.cssText =
+            "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;transition:opacity 0.4s ease;";
+
+          const origSrc = img.getAttribute("src") || "";
+          const videoSrc = origSrc.replace(/\.[a-zA-Z0-9]+$/, ".mov");
+
+          // 用 CSS aspect-ratio 設定比例：純 CSS 計算，不依賴 offsetWidth，
+          // 在隱藏容器（Tabs/摺疊區塊）中也能正確維持比例
+          const applyAspectRatio = () => {
+            if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+              container.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+              container.style.height = ""; // 清除任何舊的固定高度
+            }
+          };
+          if (img.complete && img.naturalWidth > 0) {
+            applyAspectRatio();
+          } else {
+            img.addEventListener("load", applyAspectRatio, { once: true });
+          }
+          // ResizeObserver 只監聽 container 本身，比 window resize 更精確
+          // 保存 observer 以便在 container 移除時 disconnect
+          if (typeof ResizeObserver !== "undefined") {
+            const ro = new ResizeObserver(applyAspectRatio);
+            ro.observe(container);
+            // 當 container 從 DOM 移除時自動 disconnect（via MutationObserver）
+            new MutationObserver((_, mo) => {
+              if (!document.contains(container)) {
+                ro.disconnect();
+                mo.disconnect();
+              }
+            }).observe(document.body, { childList: true, subtree: true });
+          }
+
+          container.appendChild(video);
+
+          let isPlaying = false;
+
+          // 播放結束後自動恢復靜態圖片
+          video.addEventListener("ended", () => {
+            video.style.opacity = "0";
+            video.style.pointerEvents = "none";
+            btn.classList.remove("is-playing-btn");
+            container.classList.remove("is-active");
+            showImg();
+            isPlaying = false;
+          });
+
+          // 隱藏底圖（visibility:hidden 是唯一能讓 box-shadow 也消失的方式）
+          const hideImg = () => {
+            img.style.setProperty("opacity", "0", "important");
+            img.style.setProperty("visibility", "hidden", "important");
+            img.style.setProperty("box-shadow", "none", "important");
+          };
+          // 恢復底圖
+          const showImg = () => {
+            img.style.removeProperty("opacity");
+            img.style.removeProperty("visibility");
+            img.style.removeProperty("box-shadow");
+          };
+
+          const onPlaySuccess = () => {
+            // 用 inline style 直接顯示影片（CSS class 無法覆蓋 cssText 設定的 inline opacity）
+            video.style.opacity = "1";
+            video.style.pointerEvents = "auto";
+            btn.classList.add("is-playing-btn");
+            container.classList.add("is-active");
+            hideImg();
+            isPlaying = true;
+          };
+
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!isPlaying) {
+              if (!video.src) video.src = videoSrc;
+              video
+                .play()
+                .then(onPlaySuccess)
+                .catch(() => {
+                  video.src = origSrc.replace(/\.[a-zA-Z0-9]+$/, ".MOV");
+                  video
+                    .play()
+                    .then(onPlaySuccess)
+                    .catch(() => {
+                      video.src = origSrc.replace(/\.[a-zA-Z0-9]+$/, ".mp4");
+                      video
+                        .play()
+                        .then(onPlaySuccess)
+                        .catch((e) =>
+                          console.error("Playback failed entirely.", e),
+                        );
+                    });
+                });
+            } else {
+              video.pause();
+              video.currentTime = 0;
+              // 直接用 inline style 隱藏影片
+              video.style.opacity = "0";
+              video.style.pointerEvents = "none";
+              btn.classList.remove("is-playing-btn");
+              container.classList.remove("is-active");
+              showImg();
+              isPlaying = false;
+            }
+          });
+        }
+      });
+    };
+
+    initLivePhotos();
+    document.addEventListener("astro:page-load", initLivePhotos);
+  });
+</script>

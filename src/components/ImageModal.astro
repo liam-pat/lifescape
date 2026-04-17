@@ -2,7 +2,12 @@
 ---
 
 <div data-image-modal class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out">
-	<img data-modal-image class="object-contain" src="" alt="" />
+	<div data-modal-wrapper class="modal-image-wrapper">
+		<img data-modal-image class="object-contain" src="" alt="" />
+		<video data-modal-video class="object-contain" muted playsinline></video>
+		<div data-modal-hdr class="hdr-badge hidden">HDR</div>
+		<button data-modal-live-btn class="live-photo-btn hidden"><span class="live-photo-dot"></span>LIVE</button>
+	</div>
 	<div data-modal-meta class="image-meta" aria-live="polite">
 		<span data-modal-meta-text></span>
 	</div>
@@ -26,20 +31,50 @@
     transition: opacity 220ms ease;
   }
 
-  [data-image-modal] [data-modal-image] {
+  [data-image-modal] .modal-image-wrapper {
+    position: relative;
+    display: flex;
     max-width: min(92vw, 1200px);
     max-height: 88vh;
-    width: auto;
-    height: auto;
     border-radius: 0.75rem;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
     transform: scale(0.96);
     transition: transform 220ms ease;
     will-change: transform;
+    background: transparent;
   }
 
-  [data-image-modal].is-open [data-modal-image] {
+  [data-image-modal].is-open .modal-image-wrapper {
     transform: scale(1);
+  }
+
+  [data-image-modal] .modal-image-wrapper img,
+  [data-image-modal] .modal-image-wrapper video {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 88vh;
+    border-radius: 0.75rem;
+  }
+
+  [data-image-modal] .modal-image-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  [data-image-modal] .modal-image-wrapper video.is-playing {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .hidden {
+    display: none !important;
   }
 
   [data-image-modal] [data-modal-meta] {
@@ -77,7 +112,12 @@
       padding: 0.75rem;
     }
 
-    [data-image-modal] [data-modal-image] {
+    [data-image-modal] .modal-image-wrapper {
+      max-width: 94vw;
+      max-height: 84vh;
+    }
+    [data-image-modal] .modal-image-wrapper img,
+    [data-image-modal] .modal-image-wrapper video {
       max-width: 94vw;
       max-height: 84vh;
     }
@@ -96,10 +136,15 @@
   const images = document.querySelectorAll('.prose img');
   const modal = document.querySelector('[data-image-modal]') as HTMLDivElement | null;
   const modalImg = modal?.querySelector('[data-modal-image]') as HTMLImageElement | null;
+  const modalVideo = modal?.querySelector('[data-modal-video]') as HTMLVideoElement | null;
+  const modalHdr = modal?.querySelector('[data-modal-hdr]') as HTMLDivElement | null;
+  const modalLiveBtn = modal?.querySelector('[data-modal-live-btn]') as HTMLButtonElement | null;
   const metaBox = modal?.querySelector('[data-modal-meta]') as HTMLDivElement | null;
   const metaText = modal?.querySelector('[data-modal-meta-text]') as HTMLSpanElement | null;
   
   let activeSrc = '';
+  let currentVideoSrc = '';
+  let isVideoPlaying = false;
 
   if (modal && modalImg && metaBox && metaText) {
     const setMetaState = (text: string, isVisible: boolean) => {
@@ -138,6 +183,21 @@
       activeSrc = img.src;
       modalImg.src = img.src;
       modalImg.alt = img.alt;
+      
+      const isLive = img.getAttribute('data-live') === 'true';
+      const isHdr = img.getAttribute('data-hdr') === 'true';
+
+      if (isHdr && modalHdr) modalHdr.classList.remove('hidden');
+      else if (modalHdr) modalHdr.classList.add('hidden');
+
+      if (isLive && modalLiveBtn) {
+        modalLiveBtn.classList.remove('hidden');
+        currentVideoSrc = img.src.replace(/\.[a-zA-Z0-9]+$/, '.mov');
+      } else if (modalLiveBtn) {
+        modalLiveBtn.classList.add('hidden');
+        currentVideoSrc = '';
+      }
+      
       modal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
 
@@ -166,6 +226,17 @@
       modal.classList.remove('is-open');
       document.body.style.overflow = '';
       activeSrc = '';
+      
+      if (modalVideo) {
+        modalVideo.pause();
+        modalVideo.classList.remove('is-playing');
+        if (modalLiveBtn) modalLiveBtn.classList.remove('is-playing-btn');
+        isVideoPlaying = false;
+        // 釋放 video 資源，避免瀏覽器持續持有解碼器和 buffer 導致卡頓
+        modalVideo.removeAttribute('src');
+        modalVideo.load(); // 觸發 HTMLMediaElement reset，完整釋放資源
+      }
+      
       // 延遲隱藏 meta，配合 CSS 漸變
       setTimeout(() => setMetaState('', false), 200);
     };
@@ -179,6 +250,50 @@
 
     modal.addEventListener('click', closeModal);
     modalImg.addEventListener('click', closeModal);
+    if (modalVideo) modalVideo.addEventListener('click', closeModal);
+
+    if (modalLiveBtn && modalVideo) {
+      // 播放結束後自動恢復（與 inline LIVE 一致：播一次停止）
+      modalVideo.addEventListener('ended', () => {
+        modalVideo.classList.remove('is-playing');
+        modalLiveBtn.classList.remove('is-playing-btn');
+        isVideoPlaying = false;
+      });
+
+      modalLiveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!isVideoPlaying) {
+          if (modalVideo.src !== currentVideoSrc) {
+            modalVideo.src = currentVideoSrc;
+          }
+          modalVideo.play().then(() => {
+            modalVideo.classList.add('is-playing');
+            modalLiveBtn.classList.add('is-playing-btn');
+            isVideoPlaying = true;
+          }).catch(err => {
+            modalVideo.src = currentVideoSrc.replace(/\.[a-zA-Z0-9]+$/, '.MOV');
+            modalVideo.play().then(() => {
+               modalVideo.classList.add('is-playing');
+               modalLiveBtn.classList.add('is-playing-btn');
+               isVideoPlaying = true;
+            }).catch(e2 => {
+               modalVideo.src = currentVideoSrc.replace(/\.[a-zA-Z0-9]+$/, '.mp4');
+               modalVideo.play().then(() => {
+                  modalVideo.classList.add('is-playing');
+                  modalLiveBtn.classList.add('is-playing-btn');
+                  isVideoPlaying = true;
+               }).catch(console.error);
+            });
+          });
+        } else {
+          modalVideo.pause();
+          modalVideo.currentTime = 0;
+          modalVideo.classList.remove('is-playing');
+          modalLiveBtn.classList.remove('is-playing-btn');
+          isVideoPlaying = false;
+        }
+      });
+    }
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {

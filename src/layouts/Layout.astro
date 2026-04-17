@@ -5,6 +5,7 @@ interface Props {
 
 const { title } = Astro.props;
 import SearchPopup from '../components/SearchPopup.astro';
+import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 ---
 
 <!DOCTYPE html>
@@ -193,6 +194,7 @@ import SearchPopup from '../components/SearchPopup.astro';
 
 		<!-- 搜索弹窗组件 -->
 		<SearchPopup />
+		<LivePhotoRenderer />
 
 		<script is:inline>
 			// 手機版菜單切換

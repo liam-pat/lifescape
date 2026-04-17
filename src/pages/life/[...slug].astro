@@ -385,6 +385,17 @@ const tocIndent = (depth: number) => {
     transform: scale(1.02);
   }
 
+  /* live-photo-container 內的圖片不套用陰影和 hover 縮放，由 container 統一管理 */
+  .prose :global(.live-photo-container img),
+  .prose :global(.live-photo-container img:hover) {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   /* 横屏图片 - 保持较大尺寸 */
   .prose :global(img[alt*="landscape"]),
   .prose :global(img[alt*="横屏"]) {
