@@ -19,17 +19,31 @@
     background-color: #000; /* 防止空白邊角顯示白色 */
   }
 
+  /* 在 table td 裡時，讓 container 填滿 td，並重置 width/margin */
+  td .live-photo-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
   /* 覆寫 .prose 的圖片屬性，避免雙重 margin 與 shadow */
   .prose .live-photo-container img {
     display: block;
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     border-radius: 0 !important; /* 圓角交給 container */
     box-shadow: none !important;
     cursor: zoom-in;
     transition: opacity 0.4s ease;
+  }
+
+  /* 確保 table 裡的所有圖片都沒有上下 margin，避免有 live/沒有 live 的圖片混排時，
+     因為 margin 不一致導致 table row 被撐高。同時保留左右 margin 以維持居中對齊。 */
+  .prose table img {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   /* 影片：疊在圖片上，預設隱藏 */
@@ -41,6 +55,8 @@
     height: 100%;
     object-fit: cover !important;
     border-radius: 0.7rem; /* 確保影片角與容器一致 */
+    margin: 0 !important; /* 避免被 .prose video 的預設 margin 往下推 */
+    padding: 0 !important;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -156,10 +172,22 @@
         container.className = "live-photo-container";
 
         if (img.parentNode) {
+          // 如果在 td 裡面，把 img 的 width 屬性轉移給 td，然後用 div 填滿 td
+          if (img.parentElement.tagName === "TD") {
+            const imgWidth = img.getAttribute("width");
+            if (imgWidth) {
+              img.parentElement.style.setProperty(
+                "width",
+                imgWidth.includes("%") ? imgWidth : imgWidth + "px",
+                "important",
+              );
+            }
+          }
+
           img.parentNode.insertBefore(container, img);
           container.appendChild(img);
-          // 強制清除 margin（確保 container 頂部無空隙）
-          img.style.setProperty("margin", "0", "important");
+          // 強制清除上下 margin 以免撐高容器，但保留左右 auto 以維持居中
+          img.style.setProperty("margin", "0 auto", "important");
           img.style.setProperty("display", "block", "important");
         }
 
@@ -181,39 +209,9 @@
           video.muted = true;
           video.loop = false; // 播放一次後自動停止
           video.playsInline = true;
-          // 用 inline style 確保 object-fit:cover 一定生效
-          video.style.cssText =
-            "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;transition:opacity 0.4s ease;";
 
           const origSrc = img.getAttribute("src") || "";
           const videoSrc = origSrc.replace(/\.[a-zA-Z0-9]+$/, ".mov");
-
-          // 用 CSS aspect-ratio 設定比例：純 CSS 計算，不依賴 offsetWidth，
-          // 在隱藏容器（Tabs/摺疊區塊）中也能正確維持比例
-          const applyAspectRatio = () => {
-            if (img.naturalWidth > 0 && img.naturalHeight > 0) {
-              container.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
-              container.style.height = ""; // 清除任何舊的固定高度
-            }
-          };
-          if (img.complete && img.naturalWidth > 0) {
-            applyAspectRatio();
-          } else {
-            img.addEventListener("load", applyAspectRatio, { once: true });
-          }
-          // ResizeObserver 只監聽 container 本身，比 window resize 更精確
-          // 保存 observer 以便在 container 移除時 disconnect
-          if (typeof ResizeObserver !== "undefined") {
-            const ro = new ResizeObserver(applyAspectRatio);
-            ro.observe(container);
-            // 當 container 從 DOM 移除時自動 disconnect（via MutationObserver）
-            new MutationObserver((_, mo) => {
-              if (!document.contains(container)) {
-                ro.disconnect();
-                mo.disconnect();
-              }
-            }).observe(document.body, { childList: true, subtree: true });
-          }
 
           container.appendChild(video);
 
