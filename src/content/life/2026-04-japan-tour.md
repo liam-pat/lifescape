@@ -17,7 +17,7 @@ tags: ["life"]
 
 - 2026/3/29 - 2026/4/5 (8 晚 9 天)
 
-## 相关信息
+## 关注
 
 - **富士山能见度** <https://fuji-san.info/zh-cn/index.html>
 - **Visit Japan Web** <https://www.visa-japan.com>
@@ -32,7 +32,7 @@ tags: ["life"]
 | 入境登记                              | Visit Japan Web |
 | SIM 卡（Softbank 小白卡 15g 10 days） | 飞猪            |
 
-## 支付方式
+## 付款
 
 - **Cash**
   擔憂小商家只接受 Cash, 用 UnionPay Card 在 711Bank 兌換 30K 円，用招行拿 40k 円 是最低手續費～
@@ -51,55 +51,166 @@ tags: ["life"]
 - 711，McDonald's, 一蘭拉麵，壽司郎，OK Store，Buger King，元祖油堂
 - 超市買和牛回酒店煮，用薑燒汁蘸，味道很不錯～
 
+<table>
+  <tr>
+   <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-japan-foods-01.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-japan-foods-02.jpg" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+   <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-japan-foods-03.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-japan-foods-04.jpg" width="50%"></td>
+  </tr>
+</table>
+
 ## 遊玩
 
-### 橫濱夜港
+### 橫濱
 
 - 3/29 day 1) 成田机场 -> 川崎，2h JR, 放下行李直奔横滨～
   中华街 → 山下公园→ 大栈桥 → 红砖仓库 → 摩天轮 & 港未来→ 横滨空中缆车
 
-  <img src="/images/1590.HEIC#live" width="300">
-
 <table>
   <tr>
     <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-yokohama-01.jpg" width="50%"></td>
-    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-yokohama-02.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-yokohama-04.jpg" width="50%"></td>
   </tr>
 </table>
 
-### 東京新宿
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-yokohama-02.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-yokohama-03.heic#live">
+
+### 新宿
 
 - 3/30 day 2) 賞櫻
   新宿御苑 -> 上野公园 -> 秋葉原 -> 中目黑
 
-### 東京澀谷
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-01.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-02.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-03.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-04.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-05.heic#live">
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-sakura-06.heic#live">
+
+### 澀谷
 
 - 3/31 day 3) 購物
   涩谷 -> 池袋東武 -> 中目黑
 
-### 東京銀座
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shibuya-01.jpg#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shibuya-02.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shibuya-04.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shibuya-05.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shibuya-03.heic#live">
+
+### 浅草
 
 - 4/01 day 4) city walk
-  银座 -> OK Store -> 川崎 Lefront
+  银座 -> 浅草寺 -> OK Store -> 川崎 Lefront
 
-### Disney Sea
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-asakusa-01.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-asakusa-02.jpg" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-asakusa-03.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-asakusa-04.jpg" width="50%"></td>
+  </tr>
+</table>
+
+### 迪士尼
 
 - 4/02 day 5) 迪士尼一日游
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-disneysea-01.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-disneysea-02.jpg" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-disneysea-03.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-disneysea-04.jpg" width="50%"></td>
+  </tr>
+</table>
+
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-disneysea-05.jpg">
+
 
 ### 鎌倉
 
 - 4/03 day 6) 鎌倉 city walk
   镰仓高校前站 → 七里滨站 ➔ 镰仓站 （小町通商业街 & 鹤冈八幡宫）→ 藤泽
 
-### 東京池袋
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-03.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-02.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+   <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-01.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-04.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-05.heic#live">
+
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-kamakura-06.heic#live">
+
+### 表参道
 
 - 4/04 day 7) shopping
   東武百貨 -> 表参道
 
-### 東京千鳥淵
+<table>
+  <tr>
+   <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-omotesando-01.jpg" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-omotesando-02.jpg" width="50%"></td>
+  </tr>
+</table>
+
+
+### 千鳥淵
 
 - 4/05 day 8) 賞櫻
   千鸟渊公园 -> 芝给水公园
+
+<table>
+  <tr>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-chidorigafuchi-01.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-chidorigafuchi-02.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+   <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-chidorigafuchi-03.heic#live" width="50%"></td>
+    <td><img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-chidorigafuchi-04.heic#live" width="50%"></td>
+  </tr>
+</table>
+
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-chidorigafuchi-05.heic#live">
 
 ## 花费
 
@@ -126,7 +237,7 @@ tags: ["life"]
 - Uniqlo，MUJI, COCA 都值得買，自己也有買 T-shirt，價格不貴，質量不錯, 45-90 RMB 之間, 不過是 make in China 的～
 - HOKA, Salomon 買的時候以為多便宜，一計算，也沒便宜很多，BUT 款式是限定款 & 新款，國內買不到或者沒上～
 
-| item                        | deduction               | final price                | tax refund        | activity (非常境外游) | discount            |
+| item                        | deduction               | final price                | tax refund        | discount (非常境外游) | bank refund            |
 | :-------------------------- | :---------------------- | :------------------------- | :---------------- | :-------------------- | :------------------ |
 | Arc'teryx beta Jacket       | 2955.76 RMB             | 2604.24 RMB                | 6210 JPY (现金退) | 1000 - 30             | ApplePay 1% VISA 1% |
 | HOKA 两双                   | 1903.88 /2 = 951.94 RMB | 1845.8 /2 = 922.9 RMB / 双 | 已免税            | 500 - 20              | ApplePay 1% VISA 1% |
@@ -136,7 +247,9 @@ tags: ["life"]
 | Salomon 4 月新款绿色        | 950.22 RMB              | 863.22 RMB                 | 2006 JPY (现金退) | -                     | -                   |
 | mont\*bell 多件             | 2000-3000 RMB           | -                          | 退税 10%          | 东武 5% off           | ApplePay 1% VISA 1% |
 
-## 体验官
+<img src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/life/2026/04/202604-shoes-display.jpg">
+
+## 体验
 
 - **商務艙**
   南航商務艙 T2 境外 Lounge 還是不錯，早班機，可以在裡面吃個早餐，瞇一會；
