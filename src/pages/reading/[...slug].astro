@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ImageModal from '../../components/ImageModal.astro';
+import { formatShanghaiDate } from '../../lib/date';
 
 export async function getStaticPaths() {
   const entries = await getCollection('reading');
@@ -65,7 +66,7 @@ const tocIndent = (depth: number) => {
               <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400 text-sm md:text-base">
                 <div class="flex flex-wrap items-center gap-2 md:gap-4">
                   <time datetime={entry.data.date.toISOString()} class="shrink-0">
-                    {entry.data.date.toLocaleDateString()}
+                    {formatShanghaiDate(entry.data.date)}
                   </time>
                   {entry.data.tags && (
                     <div class="flex flex-wrap gap-1.5 md:gap-2">

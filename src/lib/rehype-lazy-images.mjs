@@ -23,7 +23,8 @@ export default function rehypeLazyImages() {
             // 在 hast 中，data-* 屬性需改為 camelCase
             if (hasLive) {
               node.properties.dataLive = 'true';
-            } else if (hasHdr) {
+            }
+            if (hasHdr) {
               node.properties.dataHdr = 'true';
             }
 

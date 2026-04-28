@@ -65,6 +65,101 @@ interface PagefindModule {
   const searchClose = document.getElementById('search-close');
   const searchResults = document.getElementById('search-results');
 
+  function createMessageBlock(message, tone = 'normal') {
+    const wrapper = document.createElement('div');
+    wrapper.className = `text-center py-8 ${
+      tone === 'error'
+        ? 'text-red-500 dark:text-red-400'
+        : 'text-gray-500 dark:text-gray-400'
+    }`;
+
+    const text = document.createElement('p');
+    text.textContent = message;
+    wrapper.appendChild(text);
+    return wrapper;
+  }
+
+  function setResultsMessage(message, tone = 'normal') {
+    if (!searchResults) return;
+    searchResults.replaceChildren(createMessageBlock(message, tone));
+  }
+
+  function setResultsError(message, error) {
+    if (!searchResults) return;
+
+    const wrapper = createMessageBlock(message, 'error');
+    const detail = document.createElement('p');
+    detail.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
+    detail.textContent = error instanceof Error ? error.message : '未知錯誤';
+    wrapper.appendChild(detail);
+    searchResults.replaceChildren(wrapper);
+  }
+
+  function normalizeResultUrl(url) {
+    if (typeof url !== 'string') return '#';
+    const candidate = url.trim();
+    if (
+      candidate.startsWith('/') ||
+      candidate.startsWith('./') ||
+      candidate.startsWith('../') ||
+      /^https?:\/\//i.test(candidate)
+    ) {
+      return candidate;
+    }
+    return '#';
+  }
+
+  function createTagPill(tag) {
+    const pill = document.createElement('span');
+    pill.className = 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs px-2 py-0.5 rounded-full';
+    pill.textContent = tag;
+    return pill;
+  }
+
+  function renderSearchResults(results, query) {
+    if (!searchResults) return;
+
+    const fragment = document.createDocumentFragment();
+    const summary = document.createElement('div');
+    summary.className = 'mb-4 text-gray-500 dark:text-gray-400';
+    summary.textContent = `找到 ${results.length} 個符合「${query}」的結果`;
+    fragment.appendChild(summary);
+
+    results.forEach((data) => {
+      const item = document.createElement('div');
+      item.className = 'mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0';
+
+      const heading = document.createElement('h3');
+      heading.className = 'text-lg font-semibold mb-2';
+
+      const link = document.createElement('a');
+      link.className = 'text-blue-600 dark:text-blue-400 hover:underline';
+      link.href = normalizeResultUrl(data?.url);
+      link.textContent = typeof data?.meta?.title === 'string' && data.meta.title.trim()
+        ? data.meta.title
+        : '無標題';
+      heading.appendChild(link);
+
+      const excerpt = document.createElement('p');
+      excerpt.className = 'text-gray-600 dark:text-gray-300 text-sm mb-2';
+      excerpt.textContent = typeof data?.excerpt === 'string' ? data.excerpt : '';
+
+      const tags = document.createElement('div');
+      tags.className = 'flex gap-2';
+      const rawTags = typeof data?.meta?.tags === 'string' ? data.meta.tags : '';
+      rawTags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .forEach((tag) => tags.appendChild(createTagPill(tag)));
+
+      item.append(heading, excerpt, tags);
+      fragment.appendChild(item);
+    });
+
+    searchResults.replaceChildren(fragment);
+  }
+
   // Function to load Pagefind
   async function loadPagefind() {
     if (!pagefindLoaded) {
@@ -92,32 +187,28 @@ interface PagefindModule {
         pagefindLoaded = true;
       } catch (error) {
         console.error('Error loading Pagefind:', error);
-        if (searchResults) {
-          searchResults.innerHTML = `
-            <div class="text-center text-red-500 dark:text-red-400 py-8">
-              <p>搜尋功能載入失敗</p>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">${error.message || '未知錯誤'}</p>
-              <button id="debug-button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">顯示調試信息</button>
-            </div>
-          `;
-          
-          // 添加調試按鈕事件
-          setTimeout(() => {
-            const debugButton = document.getElementById('debug-button');
-            if (debugButton) {
-              debugButton.addEventListener('click', () => {
-                const debugInfo = {
-                  pagefindLoaded,
-                  pagefindInstance: !!pagefindInstance,
-                  windowPagefind: !!window.pagefind,
-                  navigator: navigator.userAgent
-                };
-                
-                alert('調試信息: ' + JSON.stringify(debugInfo, null, 2));
-              });
-            }
-          }, 100);
-        }
+        if (!searchResults) return;
+
+        const wrapper = createMessageBlock('搜尋功能載入失敗', 'error');
+        const detail = document.createElement('p');
+        detail.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
+        detail.textContent = error instanceof Error ? error.message : '未知錯誤';
+
+        const debugButton = document.createElement('button');
+        debugButton.className = 'mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600';
+        debugButton.textContent = '顯示調試信息';
+        debugButton.addEventListener('click', () => {
+          const debugInfo = {
+            pagefindLoaded,
+            pagefindInstance: !!pagefindInstance,
+            windowPagefind: !!window.pagefind,
+            navigator: navigator.userAgent
+          };
+          alert('調試信息: ' + JSON.stringify(debugInfo, null, 2));
+        });
+
+        wrapper.append(detail, debugButton);
+        searchResults.replaceChildren(wrapper);
       }
     }
   }
@@ -142,11 +233,11 @@ interface PagefindModule {
     const query = searchInput.value.trim();
     
     if (!query) {
-      searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>輸入關鍵字開始搜尋</p></div>';
+      setResultsMessage('輸入關鍵字開始搜尋');
       return;
     }
     
-    searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>搜尋中...</p></div>';
+    setResultsMessage('搜尋中...');
     
     try {
       console.log('搜索詞:', query);
@@ -154,34 +245,15 @@ interface PagefindModule {
       console.log('搜索結果:', search);
       
       if (search.results.length === 0) {
-        searchResults.innerHTML = `<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>找不到符合「${query}」的結果</p></div>`;
+        setResultsMessage(`找不到符合「${query}」的結果`);
         return;
       }
-      
-      let resultsHTML = `<div class="mb-4 text-gray-500 dark:text-gray-400">找到 ${search.results.length} 個符合「${query}」的結果</div>`;
-      
-      for (const result of search.results) {
-        const data = await result.data();
-        resultsHTML += `
-          <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0">
-            <h3 class="text-lg font-semibold mb-2">
-              <a href="${data.url}" class="text-blue-600 dark:text-blue-400 hover:underline">${data.meta.title || '無標題'}</a>
-            </h3>
-            <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">${data.excerpt}</p>
-            <div class="flex gap-2">
-              ${data.meta.tags ? data.meta.tags.split(',').map(tag => 
-                `<span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs px-2 py-0.5 rounded-full">${tag.trim()}</span>`
-              ).join('') : ''}
-            </div>
-          </div>
-        `;
-      }
-      
-      searchResults.innerHTML = resultsHTML;
-      
+
+      const resultData = await Promise.all(search.results.map((result) => result.data()));
+      renderSearchResults(resultData, query);
     } catch (error) {
       console.error('搜索錯誤:', error);
-      searchResults.innerHTML = `<div class="text-center text-red-500 dark:text-red-400 py-8"><p>搜尋過程中發生錯誤</p><p class="text-sm">${error.message || '未知錯誤'}</p></div>`;
+      setResultsError('搜尋過程中發生錯誤', error);
     }
   }
 
@@ -214,7 +286,7 @@ interface PagefindModule {
       
       // Reset search results
       if (searchResults) {
-        searchResults.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8"><p>輸入關鍵字開始搜尋</p></div>';
+        setResultsMessage('輸入關鍵字開始搜尋');
       }
     }
   }
