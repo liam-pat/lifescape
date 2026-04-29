@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ImageModal from '../../components/ImageModal.astro';
+import ReadingProgress from '../../components/ReadingProgress.astro';
 import { formatShanghaiDate } from '../../lib/date';
 
 export async function getStaticPaths() {
@@ -131,6 +132,9 @@ const tocIndent = (depth: number) => {
       )}
     </div>
   </main>
+
+  <!-- 阅读进度条 -->
+  <ReadingProgress />
 
 	<!-- 图片放大模态框 -->
 	<ImageModal />

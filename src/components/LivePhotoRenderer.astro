@@ -172,14 +172,18 @@
         container.className = "live-photo-container";
 
         if (img.parentNode) {
-          // 如果在 td 裡面，把 img 的 width 屬性轉移給 td，然後用 div 填滿 td
-          if (img.parentElement.tagName === "TD") {
-            const imgWidth = img.getAttribute("width");
-            if (imgWidth) {
+          // 繼承原始圖片的 width 屬性到 container 上
+          const imgWidth = img.getAttribute("width");
+          if (imgWidth) {
+            container.style.width = imgWidth.includes("%") ? imgWidth : imgWidth + "px";
+            container.style.maxWidth = "100%"; // 覆蓋預設的 90%
+            
+            // 如果在 td 裡面，順便也幫 td 設寬度
+            if (img.parentElement.tagName === "TD") {
               img.parentElement.style.setProperty(
                 "width",
                 imgWidth.includes("%") ? imgWidth : imgWidth + "px",
-                "important",
+                "important"
               );
             }
           }
@@ -189,6 +193,11 @@
           // 強制清除上下 margin 以免撐高容器，但保留左右 auto 以維持居中
           img.style.setProperty("margin", "0 auto", "important");
           img.style.setProperty("display", "block", "important");
+          
+          // 若在 td 中，減小 container 預設的 margin 避免版面過高
+          if (container.parentElement && container.parentElement.tagName === "TD") {
+             container.style.margin = "0.5rem auto";
+          }
         }
 
         if (isHdr) {

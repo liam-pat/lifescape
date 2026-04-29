@@ -1,0 +1,70 @@
+---
+---
+<!-- 容器增加微弱的背景和模糊，營造玻璃質感 -->
+<div id="reading-progress-container" class="fixed top-0 left-0 w-full h-1.5 z-[100] pointer-events-none bg-white/20 dark:bg-black/20 backdrop-blur-sm">
+  <!-- 使用 transform 而非 width 以確保 60fps 流暢度 -->
+  <div id="reading-progress-bar" class="h-full bg-gradient-to-r from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-400 shadow-[0_0_8px_rgba(147,51,234,0.6)] origin-left will-change-transform scale-x-0 transition-transform duration-100 ease-out"></div>
+</div>
+
+<script is:inline>
+  (function() {
+    window.readingProgressState = window.readingProgressState || {
+      bar: null,
+      article: null,
+      ticking: false
+    };
+
+    const updateProgress = () => {
+      const state = window.readingProgressState;
+      
+      // 確保在所有路徑下最後都重置 ticking 標記，避免 Deadlock
+      if (!state.bar || !state.article) {
+        state.ticking = false;
+        return;
+      }
+
+      const rect = state.article.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const totalScrollableHeight = rect.height - viewportHeight;
+      
+      if (totalScrollableHeight <= 0) {
+        state.bar.style.transform = rect.bottom <= viewportHeight ? 'scaleX(1)' : 'scaleX(0)';
+      } else {
+        const currentScroll = -rect.top;
+        const progress = currentScroll / totalScrollableHeight;
+        const clampedProgress = Math.max(0, Math.min(1, progress));
+        state.bar.style.transform = `scaleX(${clampedProgress})`;
+      }
+      
+      state.ticking = false;
+    };
+
+    const requestTick = () => {
+      const state = window.readingProgressState;
+      if (!state.ticking) {
+        requestAnimationFrame(updateProgress);
+        state.ticking = true;
+      }
+    };
+
+    const init = () => {
+      window.readingProgressState.bar = document.getElementById('reading-progress-bar');
+      // 默认寻找 article 标签，也可以根据需要调整选择器
+      window.readingProgressState.article = document.querySelector('article');
+      
+      if (window.readingProgressState.bar) {
+        requestTick();
+      }
+    };
+
+    if (!window.readingProgressInitialized) {
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', requestTick, { passive: true });
+      window.readingProgressInitialized = true;
+    }
+
+    document.addEventListener('astro:page-load', init);
+    init();
+  })();
+</script>
+
