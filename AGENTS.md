@@ -1,56 +1,29 @@
-# AGENTS Guide (Lifescape)
+# Repository Guidelines
 
-This file defines the default execution rules for AI agents working in this repository.
+## Commands
+- `npm install`: install dependencies.
+- `npm run build`: build the site and generate Pagefind search (`dist/` output).
+- `docker-compose -f docker-compose.local.yml up -d`: start local dev container (preferred).
+- `docker-compose -f docker-compose.local.yml restart`: restart after config changes.
+- `docker-compose down`: stop containers.
+- `docker-compose up -d`: run the production container.
 
-## 1) Runtime & Verification: Container First (Required)
+## Local Development & Testing
+1. Run `npm run build` to catch build errors first.
+2. Run `docker-compose -f docker-compose.local.yml up -d` to start the local container.
+3. Open **http://life.orb.local** for UI verification.
 
-- MUST use:
-  - `docker-compose -f docker-compose.local.yml up -d`
-- MUST verify in browser at:
-  - `http://life.orb.local`
-- MUST verify responsive behavior (Mobile/Desktop) after any UI changes.
-- MUST NOT default to host-level `npm run dev` / `npm run build`.
-- Host `npm` commands are allowed only when container mode is unavailable or explicitly requested.
+Key notes:
+- The container runs `npm run dev --host` (hot reload). Code changes take effect on save — **no restart needed**.
+- If you change `package.json`, `astro.config.mjs`, or `tailwind.config.mjs`, **restart the container** (`docker-compose -f docker-compose.local.yml restart`).
+- Do NOT use `npm run dev` or `npm run preview` for UI acceptance; they are fallbacks only.
 
-## 2) High-Impact Paths
+## Coding Style & Naming Conventions
+- Follow existing formatting: 2-space indent in `.mjs/.ts/.json`, tabs in `.astro` markup.
+- Keep Astro components small and reusable; prefer Tailwind utility classes over bespoke CSS.
+- Collection slugs derive from filenames; avoid uppercase or spaces.
 
-- App code: `src/`
-- Content: `src/content/life/`, `src/content/reading/`
-- Content schema: `src/content/config.ts`
-- Runtime config: `astro.config.mjs`, `tailwind.config.mjs`, `docker-compose*.yml`
-- Build output: `dist/` (do not edit directly)
-
-## 3) Content Model Rules
-
-- Source of truth: `src/content/config.ts`
-- Detailed examples and writing guide: `README.md` Section `5. Content Model`
-- If schema changes, update related markdown frontmatter accordingly.
-
-## 4) Code Style & Efficiency
-
-- Keep existing style:
-  - 2-space indent in `.mjs/.ts/.json`
-  - tabs in `.astro` markup
-- Prefer small reusable Astro components.
-- Prefer Tailwind utility classes over ad-hoc CSS unless needed.
-- Slugs come from filenames; avoid uppercase and spaces.
-- **Search First**: Before implementing new utilities, search `src/lib/` to reuse existing logic (e.g., date formatting, EXIF parsing).
-
-## 5) Commit Message Convention
-
-- Source of truth: `README.md` Section `9. Git Commit Message Convention`
-- Use Conventional Commit style defined there.
-- Do not introduce a conflicting local style in agent outputs.
-
-## 6) Config Change Reminder
-
-If adding a new domain or host, update both:
-
-- `site` in `astro.config.mjs`
-- `server.allowedHosts` in `astro.config.mjs`
-
-## 7) Safe Execution & Guardrails
-
-- **No Guessing**: Before complex refactoring or bug fixing, prioritize using `console.log` or temporary test logic to verify assumptions. DO NOT attempt to fix bugs via "guessing" on production paths.
-- **Config Guard**: DO NOT modify global base configurations in `tailwind.config.mjs` or `astro.config.mjs` unless explicitly requested.
-- **Search Refresh**: If modifying content rendering, remember that Pagefind search index requires `npm run build` to update.
+## Git Commit & Pull Request Guidelines
+- Use Conventional Commit prefixes: `feat:`, `fix:`, etc.
+- PRs should include a brief summary, linked issue (if any), and screenshots for UI changes.
+- Include verification steps (e.g., `npm run build`).
