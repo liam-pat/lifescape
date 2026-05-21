@@ -13,47 +13,1061 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
   </div>
-  <main class="max-w-7xl mx-auto px-4 py-8">
-    <article class="prose lg:prose-xl dark:prose-invert mx-auto">
-      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
-        <section class="mb-8">
-          <h2 class="text-2xl font-semibold mb-4 dark:text-white">欢迎来到 VERION.ME</h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-4">
-            这是一个分享生活 & 读书心得的空间。
-          </p>
-          <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
-            <li>對人生的感悟</li>
-            <li>讀書思考 & 心得</li>
-            <li>个人每個階段的成长</li>
-          </ul>
-        </section>
 
-        <section class="mb-8">
-          <h2 class="text-2xl font-semibold mb-4 dark:text-white">為什麼會存在？</h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-4">
-            想記錄自己人生每一個階段的思考、感悟。
-          </p>
-          <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
-            <li>整理思绪，深化理解</li>
-            <li>记录成长，留下足迹</li>
-            <li>二次閱讀，找回上次理解</li>
-          </ul>
-        </section>
+  <main class="max-w-7xl mx-auto px-4 py-8 overflow-x-hidden">
+    <!-- Centered single-column layout -->
+    <div class="flex flex-col items-center">
 
-        <section>
-          <h2 class="text-2xl font-semibold mb-4 dark:text-white">Contact Me</h2>
-          <p class="text-gray-700 dark:text-gray-300">
-            Email: <a href="mailto:me@version.me" class="text-blue-500 hover:text-blue-600">me@version.me</a>
-          </p>
-        </section>
-      </div>
-    </article>
+      <!-- Scene: perspective root (mouse events here) -->
+      <div class="card-scene-outer" id="card-scene-outer">
+
+        <div class="card-tilt-inner" id="card-tilt-inner">
+
+          <!-- Lanyard ribbon -->
+          <div class="lanyard-ribbon">
+            <span class="lanyard-text">VERSION.ME</span>
+          </div>
+
+          <!-- Metal clip -->
+          <div class="lanyard-clip">
+            <div class="clip-ring"></div>
+          </div>
+
+          <div class="card-wrapper" id="card-wrapper">
+
+            <!-- ===== CARD FRONT ===== -->
+            <div class="badge-card card-front">
+              <div class="holo-layer"></div>
+              <div class="glare-layer"></div>
+
+              <!-- Slot bar -->
+              <div class="card-slot-bar">
+                <div class="slot-hole"></div>
+              </div>
+
+              <!-- Header strip -->
+              <div class="card-header-strip">
+                <span class="org-name">VERSION.ME</span>
+                <span class="card-year">2024</span>
+              </div>
+
+              <!-- Top row: avatar left + name/info right -->
+              <div class="card-top-row">
+                <img
+                  src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/public/life/favicon.ico"
+                  alt="Avatar"
+                  class="card-avatar"
+                  onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2240%22 r=%2228%22 fill=%22%237c3aed%22/><ellipse cx=%2250%22 cy=%2285%22 rx=%2238%22 ry=%2225%22 fill=%22%237c3aed%22/></svg>'"
+                />
+                <div class="card-top-info">
+                  <div class="card-name">Packie</div>
+                  <div class="card-title">Creator · Developer</div>
+                  <div class="card-id-badge">VER-2024-001</div>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="card-divider"></div>
+
+              <!-- About sections -->
+              <div class="card-about">
+                <div class="about-section">
+                  <div class="about-heading">
+                    <span class="about-dot wechat-dot"></span>
+                    欢迎来到 VERSION.ME
+                  </div>
+                  <p class="about-desc">这是一个分享生活 &amp; 读书心得的空间。</p>
+                  <ul class="about-list">
+                    <li>對人生的感悟</li>
+                    <li>讀書思考 &amp; 心得</li>
+                    <li>个人每個階段的成长</li>
+                  </ul>
+                </div>
+
+                <div class="about-section">
+                  <div class="about-heading">
+                    <span class="about-dot alipay-dot"></span>
+                    為什麼會存在？
+                  </div>
+                  <ul class="about-list">
+                    <li>整理思绪，深化理解</li>
+                    <li>记录成长，留下足迹</li>
+                    <li>二次閱讀，找回上次理解</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Bottom: chip + site row -->
+              <div class="card-bottom-row">
+                <div class="card-chip-mini">
+                  <svg viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="30" rx="4" fill="url(#chipGrad2)"/>
+                    <line x1="0" y1="10" x2="40" y2="10" stroke="#b8860b" stroke-width="0.8"/>
+                    <line x1="0" y1="20" x2="40" y2="20" stroke="#b8860b" stroke-width="0.8"/>
+                    <line x1="13" y1="0" x2="13" y2="30" stroke="#b8860b" stroke-width="0.8"/>
+                    <line x1="27" y1="0" x2="27" y2="30" stroke="#b8860b" stroke-width="0.8"/>
+                    <rect x="13" y="10" width="14" height="10" rx="2" fill="#d4a017" opacity="0.6"/>
+                    <defs>
+                      <linearGradient id="chipGrad2" x1="0" y1="0" x2="40" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#f5c842"/>
+                        <stop offset="50%" stop-color="#d4a017"/>
+                        <stop offset="100%" stop-color="#b8860b"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="card-site-text">life.biyongyao.com</div>
+              </div>
+
+              <!-- Flip icon -->
+              <button id="btn-flip-front" class="card-flip-icon" type="button" title="翻转工卡">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M1 4v6h6"/>
+                  <path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
+                  </svg>
+                </button>
+              </div><!-- end card-front -->
+
+              <!-- ===== CARD BACK ===== -->
+              <div class="badge-card card-back">
+                <div class="holo-layer"></div>
+                <div class="glare-layer"></div>
+
+                <!-- Back header -->
+                <div class="card-header-strip">
+                  <span class="org-name">VERSION.ME</span>
+                  <span class="card-year">支付</span>
+                </div>
+
+                <!-- Payment content -->
+                <div class="back-content">
+                  <p class="back-title">请我喝杯咖啡 ☕</p>
+
+                  <!-- Payment tabs -->
+                  <div class="pay-tabs">
+                    <button id="btn-wechat" class="pay-tab pay-tab-wechat-active" type="button">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.11.24-.245 0-.06-.023-.12-.04-.177l-.324-1.233a.491.491 0 0 1 .177-.554 5.89 5.89 0 0 0 2.5-4.615c.043-3.478-3.049-6.075-6.86-6.13zm-3.308 2.818c.536 0 .969.44.969.984a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.544.433-.984.969-.984zm6.615 0c.536 0 .969.44.969.984a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.544.433-.984.969-.984z"/></svg>
+                      微信
+                    </button>
+                    <button id="btn-alipay" class="pay-tab" type="button">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M21.422 15.358c-2.693-1.022-4.528-1.728-5.496-2.096a12.518 12.518 0 0 0 1.638-4.598H21v-1.5h-4.5V5.908h-1.656v1.256H9.188v1.5h5.656c-.243 1.266-.672 2.47-1.266 3.564C11.4 11.4 8.882 10.212 7.31 9.596c-2.167-.87-3.54-.192-4.195 1.154-.6 1.248-.3 3.204 2.49 4.674C7.23 16.42 9.2 17.01 11.156 17.05c-1.068 1.326-2.4 2.4-4.02 3.096L8.19 21.6c1.956-.9 3.618-2.22 4.908-3.876 2.376.78 5.082 1.794 6.288 2.382.288.144.564.216.828.216 1.188 0 2.004-.888 2.4-1.836.552-1.32.306-2.508-1.192-3.128zm-9.48.936c-1.764 0-3.456-.492-4.5-1.032-1.65-.864-2.208-2.016-1.776-2.94.252-.528.726-.756 1.32-.756.384 0 .81.096 1.284.288 1.476.588 3.72 1.62 5.988 2.928-.624.348-1.416.512-2.316.512z"/></svg>
+                      支付宝
+                    </button>
+                    <button id="btn-crypto" class="pay-tab" type="button">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zM14.204 7.8l-.89-2.57-1.497.52.87 2.51a14.27 14.27 0 0 0-1.17.41l-.87-2.5-1.5.52.89 2.57c-.29.13-.58.26-.85.4l-.01-.01-2.07.72.5 1.6s1.11-.4 1.09-.37c.61-.21.91.16.99.44l1.09 3.14c.06.01.14.03.23.06l-.23-.06c-.01.03-.01.05 0 .07l-1.08 3.12c-.1.29-.37.67-1.01.48.02.03-1.09.38-1.09.38l-.33 1.67 2.06-.71c.37-.13.74-.26 1.1-.39l.9 2.59 1.5-.52-.89-2.57c.39-.12.79-.25 1.16-.38l.88 2.55 1.5-.52-.9-2.59c2.47-.97 4.14-2.72 3.72-5.03-.33-1.84-1.57-2.69-3.01-2.89.68-.59 1.05-1.48.77-2.72zm-1.13 6.32c.44 1.27-.77 2.48-3.08 3.27l-1.1-3.18c2.31-.79 3.74-.37 4.18.91zm-1.1-3.62c.39 1.13-.64 2.19-2.63 2.86l-1-2.89c1.99-.67 3.24-.27 3.63.03z"/></svg>
+                      加密
+                    </button>
+                  </div>
+
+                  <!-- QR codes -->
+                  <div class="qr-container">
+                    <div id="qr-wechat" class="qr-box">
+                      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="qr-svg">
+                        <rect width="200" height="200" fill="white"/>
+                        <rect x="10" y="10" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="22" y="22" width="36" height="36" fill="black"/>
+                        <rect x="130" y="10" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="142" y="22" width="36" height="36" fill="black"/>
+                        <rect x="10" y="130" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="22" y="142" width="36" height="36" fill="black"/>
+                        <rect x="80" y="10" width="8" height="8" fill="black"/>
+                        <rect x="92" y="10" width="8" height="8" fill="black"/>
+                        <rect x="104" y="10" width="8" height="8" fill="black"/>
+                        <rect x="116" y="10" width="8" height="8" fill="black"/>
+                        <rect x="80" y="22" width="8" height="8" fill="black"/>
+                        <rect x="104" y="22" width="8" height="8" fill="black"/>
+                        <rect x="80" y="34" width="8" height="8" fill="black"/>
+                        <rect x="92" y="34" width="8" height="8" fill="black"/>
+                        <rect x="116" y="34" width="8" height="8" fill="black"/>
+                        <rect x="80" y="46" width="8" height="8" fill="black"/>
+                        <rect x="104" y="46" width="8" height="8" fill="black"/>
+                        <rect x="80" y="58" width="8" height="8" fill="black"/>
+                        <rect x="92" y="58" width="8" height="8" fill="black"/>
+                        <rect x="104" y="58" width="8" height="8" fill="black"/>
+                        <rect x="80" y="80" width="8" height="8" fill="black"/>
+                        <rect x="104" y="80" width="8" height="8" fill="black"/>
+                        <rect x="128" y="80" width="8" height="8" fill="black"/>
+                        <rect x="152" y="80" width="8" height="8" fill="black"/>
+                        <rect x="10" y="92" width="8" height="8" fill="black"/>
+                        <rect x="58" y="92" width="8" height="8" fill="black"/>
+                        <rect x="92" y="92" width="8" height="8" fill="black"/>
+                        <rect x="152" y="92" width="8" height="8" fill="black"/>
+                        <rect x="182" y="92" width="8" height="8" fill="black"/>
+                        <rect x="10" y="104" width="8" height="8" fill="black"/>
+                        <rect x="46" y="104" width="8" height="8" fill="black"/>
+                        <rect x="80" y="104" width="8" height="8" fill="black"/>
+                        <rect x="140" y="104" width="8" height="8" fill="black"/>
+                        <rect x="164" y="104" width="8" height="8" fill="black"/>
+                        <rect x="80" y="130" width="8" height="8" fill="black"/>
+                        <rect x="128" y="130" width="8" height="8" fill="black"/>
+                        <rect x="176" y="130" width="8" height="8" fill="black"/>
+                        <rect x="92" y="142" width="8" height="8" fill="black"/>
+                        <rect x="116" y="142" width="8" height="8" fill="black"/>
+                        <rect x="80" y="154" width="8" height="8" fill="black"/>
+                        <rect x="104" y="154" width="8" height="8" fill="black"/>
+                        <rect x="176" y="154" width="8" height="8" fill="black"/>
+                        <rect x="92" y="166" width="8" height="8" fill="black"/>
+                        <rect x="140" y="166" width="8" height="8" fill="black"/>
+                        <rect x="80" y="178" width="8" height="8" fill="black"/>
+                        <rect x="152" y="178" width="8" height="8" fill="black"/>
+                        <circle cx="100" cy="100" r="18" fill="#07C160"/>
+                        <text x="100" y="106" text-anchor="middle" fill="white" font-size="18" font-family="sans-serif">微</text>
+                      </svg>
+                      <p class="qr-label">微信扫码付款</p>
+                    </div>
+
+                    <div id="qr-alipay" class="qr-box" style="display:none">
+                      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="qr-svg">
+                        <rect width="200" height="200" fill="white"/>
+                        <rect x="10" y="10" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="22" y="22" width="36" height="36" fill="black"/>
+                        <rect x="130" y="10" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="142" y="22" width="36" height="36" fill="black"/>
+                        <rect x="10" y="130" width="60" height="60" fill="none" stroke="black" stroke-width="6"/>
+                        <rect x="22" y="142" width="36" height="36" fill="black"/>
+                        <rect x="80" y="10" width="8" height="8" fill="black"/>
+                        <rect x="104" y="10" width="8" height="8" fill="black"/>
+                        <rect x="80" y="22" width="8" height="8" fill="black"/>
+                        <rect x="92" y="22" width="8" height="8" fill="black"/>
+                        <rect x="116" y="22" width="8" height="8" fill="black"/>
+                        <rect x="104" y="34" width="8" height="8" fill="black"/>
+                        <rect x="80" y="46" width="8" height="8" fill="black"/>
+                        <rect x="92" y="46" width="8" height="8" fill="black"/>
+                        <rect x="116" y="46" width="8" height="8" fill="black"/>
+                        <rect x="80" y="58" width="8" height="8" fill="black"/>
+                        <rect x="116" y="58" width="8" height="8" fill="black"/>
+                        <rect x="34" y="80" width="8" height="8" fill="black"/>
+                        <rect x="92" y="80" width="8" height="8" fill="black"/>
+                        <rect x="140" y="80" width="8" height="8" fill="black"/>
+                        <rect x="164" y="80" width="8" height="8" fill="black"/>
+                        <rect x="10" y="92" width="8" height="8" fill="black"/>
+                        <rect x="46" y="92" width="8" height="8" fill="black"/>
+                        <rect x="80" y="92" width="8" height="8" fill="black"/>
+                        <rect x="128" y="92" width="8" height="8" fill="black"/>
+                        <rect x="164" y="92" width="8" height="8" fill="black"/>
+                        <rect x="34" y="104" width="8" height="8" fill="black"/>
+                        <rect x="92" y="104" width="8" height="8" fill="black"/>
+                        <rect x="116" y="104" width="8" height="8" fill="black"/>
+                        <rect x="152" y="104" width="8" height="8" fill="black"/>
+                        <rect x="116" y="130" width="8" height="8" fill="black"/>
+                        <rect x="80" y="142" width="8" height="8" fill="black"/>
+                        <rect x="128" y="142" width="8" height="8" fill="black"/>
+                        <rect x="152" y="142" width="8" height="8" fill="black"/>
+                        <rect x="92" y="154" width="8" height="8" fill="black"/>
+                        <rect x="164" y="154" width="8" height="8" fill="black"/>
+                        <rect x="80" y="166" width="8" height="8" fill="black"/>
+                        <rect x="140" y="166" width="8" height="8" fill="black"/>
+                        <rect x="116" y="178" width="8" height="8" fill="black"/>
+                        <rect x="176" y="178" width="8" height="8" fill="black"/>
+                        <circle cx="100" cy="100" r="18" fill="#1677FF"/>
+                        <text x="100" y="106" text-anchor="middle" fill="white" font-size="14" font-family="sans-serif" font-weight="bold">支</text>
+                      </svg>
+                      <p class="qr-label">支付宝扫码付款</p>
+                    </div>
+                    <div id="qr-crypto" class="crypto-box" style="display:none">
+                      <!-- BTC logo -->
+                      <div class="crypto-logo">
+                        <svg viewBox="0 0 24 24" fill="#F7931A" width="28" height="28"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zM14.204 7.8l-.89-2.57-1.497.52.87 2.51a14.27 14.27 0 0 0-1.17.41l-.87-2.5-1.5.52.89 2.57c-.29.13-.58.26-.85.4l-.01-.01-2.07.72.5 1.6s1.11-.4 1.09-.37c.61-.21.91.16.99.44l1.09 3.14c.06.01.14.03.23.06l-.23-.06c-.01.03-.01.05 0 .07l-1.08 3.12c-.1.29-.37.67-1.01.48.02.03-1.09.38-1.09.38l-.33 1.67 2.06-.71c.37-.13.74-.26 1.1-.39l.9 2.59 1.5-.52-.89-2.57c.39-.12.79-.25 1.16-.38l.88 2.55 1.5-.52-.9-2.59c2.47-.97 4.14-2.72 3.72-5.03-.33-1.84-1.57-2.69-3.01-2.89.68-.59 1.05-1.48.77-2.72zm-1.13 6.32c.44 1.27-.77 2.48-3.08 3.27l-1.1-3.18c2.31-.79 3.74-.37 4.18.91zm-1.1-3.62c.39 1.13-.64 2.19-2.63 2.86l-1-2.89c1.99-.67 3.24-.27 3.63.03z"/></svg>
+                        <span class="crypto-name">Bitcoin (BTC)</span>
+                      </div>
+                      <p class="crypto-label">转账地址</p>
+                      <div class="crypto-addr-row">
+                        <span id="btc-addr" class="crypto-addr">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+                        <button id="btn-copy-addr" class="copy-btn" type="button" title="复制地址">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="pay-note">扫码后输入任意金额即可 💜</p>
+                </div>
+
+                <!-- Small flip icon button (bottom-right corner of back) -->
+                <button id="btn-flip-back" class="card-flip-icon" type="button" title="翻转工卡">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M23 4v6h-6"/>
+                    <path d="M20.49 15a9 9 0 1 1-.49-3.51"/>
+                  </svg>
+                </button>
+              </div><!-- end card-back -->
+
+            </div><!-- end card-wrapper -->
+          </div><!-- end card-tilt-inner -->
+        </div><!-- end card-scene-outer -->
+
+      </div><!-- end right col -->
+
+    </div><!-- end grid -->
   </main>
 </Layout>
 
 <style>
-  /* 确保列表样式在暗色模式下正确显示 */
+  /* ===== Scene ===== */
+  .card-scene-outer {
+    /* Provides the 3D perspective for the tilt-inner */
+    perspective: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+  }
+
+  /*
+    card-tilt-inner:
+    - Contains both lanyard AND card-wrapper
+    - JS writes tilt transform here
+    - CSS sway animation here (overridden by JS on hover)
+    - NO preserve-3d: lanyard clip stays flat 2D, no tearing during flip
+  */
+  .card-tilt-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* NO transform-style: preserve-3d here — clip must stay flat */
+    transform-origin: top center;
+    animation: lanyard-sway 4s ease-in-out infinite;
+    transition: transform 0.12s ease-out;
+  }
+
+  /* When JS is tilting or card is flipping, pause the CSS sway animation */
+  .card-tilt-inner.tilting,
+  .card-tilt-inner.flipping {
+    animation-play-state: paused;
+  }
+
+  @keyframes lanyard-sway {
+    0%, 100% { transform: rotateZ(-1deg); }
+    50%       { transform: rotateZ(1deg);  }
+  }
+
+  /* ===== Lanyard ===== */
+  .lanyard-ribbon {
+    width: 28px;
+    height: 120px;
+    background: linear-gradient(to bottom, #6d28d9, #7c3aed, #8b5cf6);
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: inset 2px 0 4px rgba(0,0,0,0.2), inset -2px 0 4px rgba(0,0,0,0.2);
+  }
+
+  .lanyard-text {
+    font-size: 7px;
+    font-weight: 700;
+    color: rgba(196,181,253,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    writing-mode: vertical-rl;
+  }
+
+  /* ===== Lanyard Clip ===== */
+  .lanyard-clip {
+    width: 32px;
+    height: 20px;
+    background: linear-gradient(135deg, #d1d5db, #9ca3af, #6b7280);
+    border-radius: 4px;
+    margin-top: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .clip-ring {
+    width: 14px;
+    height: 10px;
+    border: 2.5px solid #4b5563;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  /* ===== Card Wrapper ===== */
+  .card-wrapper {
+    width: 300px;
+    height: 520px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    margin-top: -2px;
+  }
+
+  .card-wrapper.is-flipped {
+    transform: perspective(900px) rotateY(180deg);
+  }
+
+  /* ===== Card Faces ===== */
+  .badge-card {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(145deg, #1e1b4b, #2d1b69, #1a1a3e);
+    box-shadow:
+      0 25px 60px rgba(0,0,0,0.5),
+      0 8px 20px rgba(109,40,217,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    border: 1px solid rgba(139,92,246,0.3);
+    /* Make card a flex column so content fills top-to-bottom */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Decorative radial glow in upper portion of card */
+  .card-front::before {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 
+    Key fix for tab click issue:
+    The back face is rotated away and visually hidden, but it still
+    intercepts pointer events. Disable pointer-events on the face
+    that is currently NOT showing.
+  */
+  .card-front {
+    pointer-events: auto;
+  }
+  .card-back {
+    transform: rotateY(180deg);
+    pointer-events: none;
+    /* back face also flex column */
+    display: flex;
+    flex-direction: column;
+  }
+  /* When flipped: front is hidden, disable its events; back is visible, enable events */
+  .card-wrapper.is-flipped .card-front {
+    pointer-events: none;
+  }
+  .card-wrapper.is-flipped .card-back {
+    pointer-events: auto;
+  }
+
+  /* ===== Holographic layers ===== */
+  .holo-layer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 0%,
+      rgba(255,100,255,0.05) 20%,
+      rgba(100,200,255,0.08) 40%,
+      rgba(255,255,100,0.05) 60%,
+      rgba(100,255,150,0.08) 80%,
+      transparent 100%
+    );
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .glare-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--glare-x, 50%) var(--glare-y, 30%),
+      rgba(255,255,255,0.12) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 2;
+    border-radius: inherit;
+  }
+
+  .card-scene-outer:hover .holo-layer {
+    opacity: 1;
+  }
+
+  /* ===== Slot bar ===== */
+  .card-slot-bar {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    height: 24px;
+    background: rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(139,92,246,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slot-hole {
+    width: 18px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(139,92,246,0.5);
+  }
+
+  /* ===== Header strip ===== */
+  .card-header-strip {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    height: 32px;
+    background: linear-gradient(90deg, #6d28d9, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+  }
+
+  .org-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .card-year {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+
+  /* ===== Compact front layout ===== */
+
+  /* Top row: avatar left, info right */
+  .card-top-row {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 16px 0;
+  }
+
+  .card-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(139,92,246,0.7);
+    box-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 40px rgba(139,92,246,0.2);
+    flex-shrink: 0;
+  }
+
+  .card-top-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+  }
+
+  .card-title {
+    font-size: 10px;
+    color: rgba(196,181,253,0.8);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .card-id-badge {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 9px;
+    color: rgba(139,92,246,0.9);
+    font-family: 'Courier New', monospace;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.25);
+    border-radius: 4px;
+    padding: 1px 6px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Divider */
+  .card-divider {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    margin: 14px 16px 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+  }
+
+  /* About text sections – fills remaining vertical space */
+  .card-about {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    padding: 14px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .about-section { /* each section */ }
+
+  .about-heading {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .about-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .wechat-dot  { background: #07C160; }
+  .alipay-dot  { background: #8b5cf6; }
+
+  .about-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 6px 0;
+    line-height: 1.5;
+  }
+
+  .about-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .about-list li {
+    font-size: 13px;
+    color: rgba(196,181,253,0.75);
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 10px;
+    padding: 3px 8px;
+    line-height: 1.4;
+  }
+
+  /* Bottom row: chip + site – pinned to bottom by flex column parent */
+  .card-bottom-row {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-top: 1px solid rgba(139,92,246,0.15);
+    margin-top: 14px;
+  }
+
+  .card-chip-mini svg {
+    width: 38px;
+    height: 28px;
+    display: block;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+
+  .card-site-text {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== Back face content ===== */
+  .back-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .back-title {
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  /* ===== Payment tabs ===== */
+  .pay-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pay-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.6);
+    transition: all 0.2s;
+  }
+
+  .pay-tab:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+  }
+
+  .pay-tab-wechat-active {
+    background: #07C160 !important;
+    border-color: #07C160 !important;
+    color: white !important;
+  }
+
+  .pay-tab-alipay-active {
+    background: #1677FF !important;
+    border-color: #1677FF !important;
+    color: white !important;
+  }
+
+  .pay-tab-crypto-active {
+    background: #F7931A !important;
+    border-color: #F7931A !important;
+    color: white !important;
+  }
+
+  .tab-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ===== QR codes ===== */
+  .qr-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  .qr-box {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 200px;
+  }
+
+  .qr-svg {
+    width: 160px;
+    height: 160px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .qr-wallet {
+    font-size: 9px;
+    color: #9ca3af;
+    margin-top: 2px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .qr-label {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+
+  /* ===== Crypto address card ===== */
+  .crypto-box {
+    background: rgba(247,147,26,0.06);
+    border: 1px solid rgba(247,147,26,0.25);
+    border-radius: 12px;
+    padding: 16px 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .crypto-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .crypto-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #F7931A;
+  }
+
+  .crypto-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .crypto-addr-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(247,147,26,0.2);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+
+  .crypto-addr {
+    font-size: 10px;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: rgba(247,147,26,0.15);
+    border: 1px solid rgba(247,147,26,0.3);
+    color: #F7931A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+  }
+
+  .copy-btn:hover {
+    background: rgba(247,147,26,0.3);
+  }
+
+  .copy-btn.copied {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: white;
+  }
+
+  .crypto-note {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .pay-note {
+    font-size: 11px;
+    color: rgba(196,181,253,0.7);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* ===== Flip back button ===== */
+  .flip-back-btn {
+    position: relative;
+    z-index: 10;
+    display: block;
+    margin: 12px auto 0;
+    padding: 7px 18px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .flip-back-btn:hover {
+    background: rgba(255,255,255,0.18);
+    color: white;
+  }
+
+  /* ===== Small flip icon on card corner ===== */
+  .card-flip-icon {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: rgba(255,255,255,0.6);
+    padding: 0;
+  }
+
+  .card-flip-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .card-flip-icon:hover {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.4);
+    color: white;
+    transform: rotate(20deg) scale(1.1);
+  }
+
+  /* ===== Dark mode list markers ===== */
   .dark .prose ul > li::marker {
     color: #9ca3af;
   }
-</style> 
+
+  /* ===== Mobile ===== */
+  @media (max-width: 1023px) {
+    .card-wrapper {
+      width: 280px;
+      height: 450px;
+    }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sceneOuter  = document.getElementById('card-scene-outer');
+    const tiltInner   = document.getElementById('card-tilt-inner');
+    const cardWrapper = document.getElementById('card-wrapper');
+    const btnFlip     = document.getElementById('btn-flip');
+    const btnFlipBack = document.getElementById('btn-flip-back');
+    const btnWechat   = document.getElementById('btn-wechat');
+    const btnAlipay   = document.getElementById('btn-alipay');
+    const btnCrypto   = document.getElementById('btn-crypto');
+    const qrWechat    = document.getElementById('qr-wechat');
+    const qrAlipay    = document.getElementById('qr-alipay');
+    const qrCrypto    = document.getElementById('qr-crypto');
+
+    // Helper: deactivate all tabs
+    function clearTabs() {
+      [btnWechat, btnAlipay, btnCrypto].forEach(b =>
+        b?.classList.remove('pay-tab-wechat-active', 'pay-tab-alipay-active', 'pay-tab-crypto-active')
+      );
+      [qrWechat, qrAlipay, qrCrypto].forEach(q => { if (q) q.style.display = 'none'; });
+    }
+
+    if (!tiltInner || !cardWrapper) return;
+
+    // ── Flip ──────────────────────────────────────────────────────────────
+    function doFlip(e) {
+      if (e) e.stopPropagation();
+      // Pause sway during the flip so the clip looks natural
+      tiltInner.classList.add('flipping');
+      cardWrapper.classList.toggle('is-flipped');
+      // Resume sway after the flip transition (700ms) completes
+      setTimeout(() => tiltInner.classList.remove('flipping'), 750);
+    }
+
+    document.getElementById('btn-flip-front')?.addEventListener('click', doFlip);
+    document.getElementById('btn-flip-back')?.addEventListener('click', doFlip);
+
+    // ── Mouse tilt (applied to tiltInner so lanyard + card move together) ──
+    sceneOuter?.addEventListener('mousemove', (e) => {
+      const rect = sceneOuter.getBoundingClientRect();
+      const x  = e.clientX - rect.left;
+      const y  = e.clientY - rect.top;
+      const cx = rect.width  / 2;
+      const cy = rect.height / 2;
+
+      const maxT = 12;
+      const ry = ((x - cx) / cx) * maxT;
+      const rx = -((y - cy) / cy) * maxT;
+
+      // Pause CSS sway and apply mouse tilt to the tilt container
+      tiltInner.classList.add('tilting');
+      tiltInner.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+      // Glare vars
+      sceneOuter.style.setProperty('--glare-x', (x / rect.width  * 100) + '%');
+      sceneOuter.style.setProperty('--glare-y', (y / rect.height * 100) + '%');
+    });
+
+    sceneOuter?.addEventListener('mouseleave', () => {
+      // Resume CSS sway animation
+      tiltInner.classList.remove('tilting');
+      tiltInner.style.transform = '';
+    });
+
+    // ── Payment tabs ────────────────────────────────────────────────────────
+    btnWechat?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearTabs();
+      btnWechat.classList.add('pay-tab-wechat-active');
+      if (qrWechat) qrWechat.style.display = 'block';
+    });
+
+    btnAlipay?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearTabs();
+      btnAlipay.classList.add('pay-tab-alipay-active');
+      if (qrAlipay) qrAlipay.style.display = 'block';
+    });
+
+    btnCrypto?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearTabs();
+      btnCrypto.classList.add('pay-tab-crypto-active');
+      if (qrCrypto) qrCrypto.style.display = 'block';
+    });
+
+    // ── Copy BTC address ─────────────────────────────────────────────────────
+    document.getElementById('btn-copy-addr')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const addr = document.getElementById('btc-addr')?.textContent?.trim();
+      if (!addr) return;
+      navigator.clipboard.writeText(addr).then(() => {
+        const btn = document.getElementById('btn-copy-addr');
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+        }, 1500);
+      });
+    });
+  });
+</script>
