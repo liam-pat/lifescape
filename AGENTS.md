@@ -17,6 +17,8 @@ Key notes:
 - The container runs `npm run dev --host` (hot reload). Code changes take effect on save — **no restart needed**.
 - If you change `package.json`, `astro.config.mjs`, or `tailwind.config.mjs`, **restart the container** (`docker-compose -f docker-compose.local.yml restart`).
 - Do NOT use `npm run dev` or `npm run preview` for UI acceptance; they are fallbacks only.
+- **Pagefind Search in Dev Mode**: Pagefind search files are generated at build time. To make search work in dev mode (`http://life.orb.local`), run `docker-compose -f docker-compose.local.yml exec lifescape npm run build` (or `npm run build` inside the workspace) once to generate the `dist/pagefind` directory. The custom Vite middleware in `astro.config.mjs` will serve search assets from `dist/pagefind` in dev mode.
+
 
 ## Coding Style & Naming Conventions
 - Follow existing formatting: 2-space indent in `.mjs/.ts/.json`, tabs in `.astro` markup.
