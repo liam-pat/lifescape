@@ -24,6 +24,12 @@ Key notes:
 - Collection slugs derive from filenames; avoid uppercase or spaces.
 
 ## Git Commit & Pull Request Guidelines
-- Use Conventional Commit prefixes: `feat:`, `fix:`, etc.
+- Use Conventional Commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`, `style:`, etc.
+- **Workflow for code changes**:
+  1. Create a new branch: `git checkout -b <branch-type>/<short-description>` (e.g., `refactor/post-components-grid`).
+  2. Stage your changes: `git add <files>` or `git add .`.
+  3. Commit with a Conventional Commit message: `git commit -m "<type>: <brief description>"`.
+  4. Push the branch to remote: `git push -u origin <branch-name>`.
+  5. Open the GitHub repository URL (`https://github.com/liam-pat/lifescape`) to create and submit the Pull Request.
 - PRs should include a brief summary, linked issue (if any), and screenshots for UI changes.
 - Include verification steps (e.g., `npm run build`).
