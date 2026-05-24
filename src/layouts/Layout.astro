@@ -37,6 +37,11 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 			};
 		</script>
 		<style is:global>
+			/* Always reserve scrollbar gutter to prevent layout shift during animations */
+			html {
+				scrollbar-gutter: stable;
+			}
+
 			/* Typewriter effect styles - 改進版本 */
 			.typewriter {
 				display: block;
