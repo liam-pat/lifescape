@@ -1,18 +1,11 @@
----
-// Define the interface for the window object
-interface Window {
-  openSearchPopup?: () => void;
-  PagefindUI?: any;
-  pagefind?: any;
-}
-
-// Define the interface for the Pagefind module
-interface PagefindModule {
-  SearchUI: new (options: any) => any;
-}
----
-
-<div id="search-popup" class="fixed inset-0 z-50 hidden">
+<div
+  id="search-popup"
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="站内搜索"
+  aria-hidden="true"
+>
   <!-- Backdrop with blur effect -->
   <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" id="search-backdrop"></div>
   
@@ -26,13 +19,13 @@ interface PagefindModule {
             type="text" 
             id="search-input" 
             class="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-700 border-none rounded-md focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none dark:text-white"
-            placeholder="Searching..."
+            placeholder="输入关键词搜索"
             autocomplete="off"
           />
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 absolute left-3 top-2.5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
           </svg>
-          <button id="search-close" class="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+          <button type="button" id="search-close" class="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" aria-label="关闭搜索">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
@@ -41,22 +34,20 @@ interface PagefindModule {
       </div>
       
       <!-- Search results -->
-      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4">
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4" aria-live="polite">
         <div class="text-center text-gray-500 dark:text-gray-400 py-8">
-          <p>Input keywords to search</p>
+          <p>输入关键词开始搜索</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 預加載 Pagefind 腳本 -->
-<script is:inline type="module" src="/pagefind/pagefind.js"></script>
-
 <script is:inline>
-  // We'll load Pagefind when the search is opened to avoid loading it unnecessarily
-  let pagefindLoaded = false;
   let pagefindInstance = null;
+  let pagefindPromise = null;
+  let searchRequestId = 0;
+  let previousFocus = null;
 
   // Elements
   const searchPopup = document.getElementById('search-popup');
@@ -90,7 +81,7 @@ interface PagefindModule {
     const wrapper = createMessageBlock(message, 'error');
     const detail = document.createElement('p');
     detail.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
-    detail.textContent = error instanceof Error ? error.message : '未知錯誤';
+    detail.textContent = error instanceof Error ? error.message : '未知错误';
     wrapper.appendChild(detail);
     searchResults.replaceChildren(wrapper);
   }
@@ -122,7 +113,7 @@ interface PagefindModule {
     const fragment = document.createDocumentFragment();
     const summary = document.createElement('div');
     summary.className = 'mb-4 text-gray-500 dark:text-gray-400';
-    summary.textContent = `找到 ${results.length} 個符合「${query}」的結果`;
+    summary.textContent = `找到 ${results.length} 个符合“${query}”的结果`;
     fragment.appendChild(summary);
 
     results.forEach((data) => {
@@ -137,12 +128,12 @@ interface PagefindModule {
       link.href = normalizeResultUrl(data?.url);
       link.textContent = typeof data?.meta?.title === 'string' && data.meta.title.trim()
         ? data.meta.title
-        : '無標題';
+        : '无标题';
       heading.appendChild(link);
 
       const excerpt = document.createElement('p');
       excerpt.className = 'text-gray-600 dark:text-gray-300 text-sm mb-2';
-      excerpt.textContent = typeof data?.excerpt === 'string' ? data.excerpt : '';
+      excerpt.textContent = typeof data?.plain_excerpt === 'string' ? data.plain_excerpt : '';
 
       const tags = document.createElement('div');
       tags.className = 'flex gap-2';
@@ -160,114 +151,82 @@ interface PagefindModule {
     searchResults.replaceChildren(fragment);
   }
 
-  // Function to load Pagefind
   async function loadPagefind() {
-    if (!pagefindLoaded) {
-      try {
-        console.log('開始加載 Pagefind...');
-        
-        // 初始化 Pagefind
-        if (window.pagefind) {
-          console.log('Using window.pagefind');
-          pagefindInstance = window.pagefind;
-        } else {
-          console.log('Loading pagefind from module');
-          pagefindInstance = await import('/pagefind/pagefind.js');
-        }
-        
-        // 初始化搜索
-        await pagefindInstance.init();
-        console.log('Pagefind 初始化完成');
-        
-        // 添加輸入事件監聽器
-        if (searchInput) {
-          searchInput.addEventListener('input', debounce(handleSearch, 300));
-        }
-        
-        pagefindLoaded = true;
-      } catch (error) {
-        console.error('Error loading Pagefind:', error);
-        if (!searchResults) return;
+    if (pagefindInstance) return pagefindInstance;
+    if (pagefindPromise) return pagefindPromise;
 
-        const wrapper = createMessageBlock('搜尋功能載入失敗', 'error');
-        const detail = document.createElement('p');
-        detail.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
-        detail.textContent = error instanceof Error ? error.message : '未知錯誤';
+    pagefindPromise = import('/pagefind/pagefind.js')
+      .then(async (pagefind) => {
+        await pagefind.init();
+        pagefindInstance = pagefind;
+        return pagefind;
+      })
+      .catch((error) => {
+        pagefindPromise = null;
+        console.error('Pagefind 加载失败:', error);
+        setResultsError('搜索功能加载失败', error);
+      });
 
-        const debugButton = document.createElement('button');
-        debugButton.className = 'mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600';
-        debugButton.textContent = '顯示調試信息';
-        debugButton.addEventListener('click', () => {
-          const debugInfo = {
-            pagefindLoaded,
-            pagefindInstance: !!pagefindInstance,
-            windowPagefind: !!window.pagefind,
-            navigator: navigator.userAgent
-          };
-          alert('調試信息: ' + JSON.stringify(debugInfo, null, 2));
-        });
-
-        wrapper.append(detail, debugButton);
-        searchResults.replaceChildren(wrapper);
-      }
-    }
+    return pagefindPromise;
   }
-  
-  // 防抖函數
+
   function debounce(func, wait) {
     let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
+    return (...args) => {
       clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
+      timeout = setTimeout(() => func(...args), wait);
     };
   }
-  
-  // 處理搜索
-  async function handleSearch() {
-    if (!pagefindInstance || !searchInput || !searchResults) return;
-    
+
+  async function handleSearch(requestId) {
+    if (requestId !== searchRequestId || !pagefindInstance || !searchInput || !searchResults) return;
+
     const query = searchInput.value.trim();
-    
+
     if (!query) {
-      setResultsMessage('輸入關鍵字開始搜尋');
+      setResultsMessage('输入关键词开始搜索');
       return;
     }
-    
-    setResultsMessage('搜尋中...');
-    
+
+    setResultsMessage('搜索中...');
+
     try {
-      console.log('搜索詞:', query);
       const search = await pagefindInstance.search(query);
-      console.log('搜索結果:', search);
-      
+      if (requestId !== searchRequestId) return;
+
       if (search.results.length === 0) {
-        setResultsMessage(`找不到符合「${query}」的結果`);
+        setResultsMessage(`找不到符合“${query}”的结果`);
         return;
       }
 
       const resultData = await Promise.all(search.results.map((result) => result.data()));
+      if (requestId !== searchRequestId) return;
       renderSearchResults(resultData, query);
     } catch (error) {
-      console.error('搜索錯誤:', error);
-      setResultsError('搜尋過程中發生錯誤', error);
+      if (requestId !== searchRequestId) return;
+      console.error('搜索失败:', error);
+      setResultsError('搜索过程中发生错误', error);
     }
   }
+
+  const debouncedSearch = debounce(handleSearch, 300);
 
   // Function to open search popup
   function openSearchPopup() {
     if (searchPopup) {
+      previousFocus = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
       searchPopup.classList.remove('hidden');
+      searchPopup.setAttribute('aria-hidden', 'false');
       document.body.classList.add('overflow-hidden');
+      searchInput?.focus();
       
-      // Load Pagefind when search is opened
-      loadPagefind().then(() => {
-        // Focus the search input after Pagefind is loaded
-        if (searchInput) {
-          searchInput.focus();
+      loadPagefind().then((pagefind) => {
+        if (!pagefind) return;
+        if (searchInput?.value.trim()) {
+          const requestId = ++searchRequestId;
+          debouncedSearch(requestId);
         }
       });
     }
@@ -276,7 +235,9 @@ interface PagefindModule {
   // Function to close search popup
   function closeSearchPopup() {
     if (searchPopup) {
+      searchRequestId++;
       searchPopup.classList.add('hidden');
+      searchPopup.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('overflow-hidden');
       
       // Clear the search input
@@ -286,55 +247,43 @@ interface PagefindModule {
       
       // Reset search results
       if (searchResults) {
-        setResultsMessage('輸入關鍵字開始搜尋');
+        setResultsMessage('输入关键词开始搜索');
       }
+      previousFocus?.focus();
+      previousFocus = null;
     }
   }
 
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', () => {
-    // Close search when clicking on backdrop
-    searchBackdrop?.addEventListener('click', closeSearchPopup);
-    
-    // Close search when clicking close button
-    searchClose?.addEventListener('click', closeSearchPopup);
-    
-    // Close search when pressing Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && searchPopup && !searchPopup.classList.contains('hidden')) {
-        closeSearchPopup();
-      }
-    });
-    
-    // Expose the openSearchPopup function to the global scope
-    // so it can be called from other components
-    window.openSearchPopup = openSearchPopup;
+  function trapFocus(event) {
+    if (event.key !== 'Tab' || !searchPopup || searchPopup.classList.contains('hidden')) return;
+
+    const focusable = Array.from(
+      searchPopup.querySelectorAll('a[href], button:not([disabled]), input:not([disabled])')
+    ).filter((element) => element.getClientRects().length > 0);
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  searchBackdrop?.addEventListener('click', closeSearchPopup);
+  searchClose?.addEventListener('click', closeSearchPopup);
+  searchInput?.addEventListener('input', () => {
+    const requestId = ++searchRequestId;
+    debouncedSearch(requestId);
   });
+  document.addEventListener('keydown', (event) => {
+    trapFocus(event);
+    if (event.key === 'Escape' && searchPopup && !searchPopup.classList.contains('hidden')) {
+      closeSearchPopup();
+    }
+  });
+  window.openSearchPopup = openSearchPopup;
 </script>
-
-<style>
-  /* Custom styles for search results */
-  #search-results a {
-    color: #2563eb;
-    text-decoration: none;
-  }
-  
-  #search-results a:hover {
-    text-decoration: underline;
-  }
-  
-  .dark #search-results a {
-    color: #60a5fa;
-  }
-  
-  #search-results p {
-    margin: 0.5rem 0;
-  }
-</style>
-
-<script is:inline>
-  // Make TypeScript happy with the global function
-  if (!window.openSearchPopup) {
-    window.openSearchPopup = function() {};
-  }
-</script> 

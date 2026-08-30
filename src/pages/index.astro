@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import PostGrid from '../components/PostGrid.astro';
 
-// 获取最新的生活分享和读书笔记
+// Get the latest posts.
 const lifeEntries = await getCollection('life');
 const readingEntries = await getCollection('reading');
 

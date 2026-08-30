@@ -1,9 +1,7 @@
----
----
-<!-- 容器增加微弱的背景和模糊，營造玻璃質感 -->
+<!-- Add a subtle glass background. -->
 <div id="reading-progress-container" class="fixed top-0 left-0 w-full h-1.5 z-[100] pointer-events-none bg-white/20 dark:bg-black/20 backdrop-blur-sm">
-  <!-- 使用 transform 而非 width 以確保 60fps 流暢度 -->
-  <div id="reading-progress-bar" class="h-full bg-gradient-to-r from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-400 shadow-[0_0_8px_rgba(147,51,234,0.6)] origin-left will-change-transform scale-x-0 transition-transform duration-100 ease-out"></div>
+  <!-- Use transform for smooth updates. -->
+  <div id="reading-progress-bar" class="h-full bg-gradient-to-r from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-400 shadow-[0_0_8px_rgba(147,51,234,0.6)] origin-left will-change-transform transition-transform duration-100 ease-out" style="transform: scaleX(0);"></div>
 </div>
 
 <script is:inline>
@@ -17,7 +15,7 @@
     const updateProgress = () => {
       const state = window.readingProgressState;
       
-      // 確保在所有路徑下最後都重置 ticking 標記，避免 Deadlock
+      // Always release the update lock.
       if (!state.bar || !state.article) {
         state.ticking = false;
         return;
@@ -49,7 +47,7 @@
 
     const init = () => {
       window.readingProgressState.bar = document.getElementById('reading-progress-bar');
-      // 默认寻找 article 标签，也可以根据需要调整选择器
+      // Track the article by default.
       window.readingProgressState.article = document.querySelector('article');
       
       if (window.readingProgressState.bar) {
@@ -67,4 +65,3 @@
     init();
   })();
 </script>
-

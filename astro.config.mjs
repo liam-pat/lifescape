@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import { unified } from '@astrojs/markdown-remark';
+import tailwindcss from '@tailwindcss/vite';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeRaw from 'rehype-raw';
 import rehypeLazyImages from './src/lib/rehype-lazy-images.mjs';
@@ -10,19 +11,18 @@ import path from 'node:path';
 
 export default defineConfig({
   site: 'https://life.biyongyao.com',
-  integrations: [
-    tailwind()
-  ],
   markdown: {
-    remarkPlugins: [remarkBreaks],
-    rehypePlugins: [
-      rehypeRaw,
-      [rehypeExternalLinks, { 
-        target: '_blank',
-        rel: ['nofollow', 'noopener', 'noreferrer']
-      }],
-      rehypeLazyImages
-    ],
+    processor: unified({
+      remarkPlugins: [remarkBreaks],
+      rehypePlugins: [
+        rehypeRaw,
+        [rehypeExternalLinks, { 
+          target: '_blank',
+          rel: ['nofollow', 'noopener', 'noreferrer']
+        }],
+        rehypeLazyImages
+      ]
+    }),
     shikiConfig: {
       theme: 'github-light',
       wrap: true
@@ -34,13 +34,31 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      tailwindcss(),
       {
         name: 'serve-pagefind',
         configureServer(server) {
+          const pagefindRoot = path.resolve(process.cwd(), 'dist', 'pagefind');
+
           server.middlewares.use((req, res, next) => {
             if (req.url && req.url.startsWith('/pagefind/')) {
-              const urlPath = req.url.split('?')[0];
-              const filePath = path.join(process.cwd(), 'dist', urlPath);
+              const requestPath = req.url.split('?')[0].slice('/pagefind/'.length);
+              let filePath;
+
+              try {
+                filePath = path.resolve(pagefindRoot, decodeURIComponent(requestPath));
+              } catch {
+                res.statusCode = 400;
+                res.end('Bad Request');
+                return;
+              }
+
+              if (!filePath.startsWith(`${pagefindRoot}${path.sep}`)) {
+                res.statusCode = 403;
+                res.end('Forbidden');
+                return;
+              }
+
               if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
                 const ext = path.extname(filePath);
                 const contentType = {
@@ -61,4 +79,3 @@ export default defineConfig({
     ]
   }
 });
-

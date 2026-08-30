@@ -1,12 +1,17 @@
----
----
-
-<div data-image-modal class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out">
+<div
+	data-image-modal
+	class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out"
+	role="dialog"
+	aria-modal="true"
+	aria-label="图片预览"
+	aria-hidden="true"
+	tabindex="-1"
+>
 	<div data-modal-wrapper class="modal-image-wrapper">
 		<img data-modal-image class="object-contain" src="" alt="" />
 		<video data-modal-video class="object-contain" muted playsinline></video>
 		<div data-modal-hdr class="hdr-badge hidden">HDR</div>
-		<button data-modal-live-btn class="live-photo-btn hidden"><span class="live-photo-dot"></span>LIVE</button>
+		<button type="button" data-modal-live-btn class="live-photo-btn hidden" aria-label="播放 Live Photo"><span class="live-photo-dot"></span>LIVE</button>
 	</div>
 	<div data-modal-meta class="image-meta" aria-live="polite">
 		<span data-modal-meta-text></span>
@@ -102,11 +107,6 @@
     bottom: 1.1rem;
   }
 
-  [data-image-modal] .image-meta__key {
-    color: #9ca3af;
-    font-weight: 400;
-  }
-
   @media (max-width: 768px) {
     [data-image-modal] {
       padding: 0.75rem;
@@ -131,8 +131,9 @@
 
 <script>
   import { getExifData, formatExifData } from '../lib/exif';
+  import { getLivePhotoVideoSources, playLivePhoto } from '../lib/live-photo';
 
-  // 獲取所有文章中的圖片
+  // Find all article images.
   const images = document.querySelectorAll('.prose img');
   const modal = document.querySelector('[data-image-modal]') as HTMLDivElement | null;
   const modalImg = modal?.querySelector('[data-modal-image]') as HTMLImageElement | null;
@@ -143,13 +144,49 @@
   const metaText = modal?.querySelector('[data-modal-meta-text]') as HTMLSpanElement | null;
   
   let activeSrc = '';
-  let currentVideoSrc = '';
+  let currentVideoSources: string[] = [];
   let isVideoPlaying = false;
+  let hideMetaTimer: number | undefined;
+  let previousFocus: HTMLElement | null = null;
+  let playbackController: AbortController | null = null;
+  const inertElements = new Set<HTMLElement>();
 
   if (modal && modalImg && metaBox && metaText) {
+    const setBackgroundInert = () => {
+      let current: HTMLElement = modal;
+
+      while (current.parentElement) {
+        for (const sibling of current.parentElement.children) {
+          if (sibling !== current && sibling instanceof HTMLElement && !sibling.inert) {
+            sibling.inert = true;
+            inertElements.add(sibling);
+          }
+        }
+
+        if (current.parentElement === document.body) break;
+        current = current.parentElement;
+      }
+    };
+
+    const restoreBackground = () => {
+      inertElements.forEach((element) => {
+        element.inert = false;
+      });
+      inertElements.clear();
+    };
+
+    const stopPlayback = () => {
+      playbackController?.abort();
+      playbackController = null;
+      modalVideo?.pause();
+      modalVideo?.classList.remove('is-playing');
+      modalLiveBtn?.classList.remove('is-playing-btn');
+      isVideoPlaying = false;
+    };
+
     const setMetaState = (text: string, isVisible: boolean) => {
       metaText.textContent = text;
-      // 清空任何動態添加的子元素（如 key-value pairs），只保留文本
+      // Remove old metadata fields.
       while (metaText.firstElementChild) {
         metaText.firstElementChild.remove();
       }
@@ -166,7 +203,7 @@
           if (index > 0) fragment.appendChild(document.createTextNode(' · '));
           
           const key = document.createElement('span');
-          key.className = 'image-meta__key';
+          key.className = 'font-normal text-gray-400';
           key.textContent = field.key;
           
           const value = document.createElement('strong');
@@ -180,6 +217,14 @@
     };
 
     const openModal = async (img: HTMLImageElement) => {
+      if (hideMetaTimer !== undefined) {
+        window.clearTimeout(hideMetaTimer);
+        hideMetaTimer = undefined;
+      }
+
+      previousFocus = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
       activeSrc = img.src;
       modalImg.src = img.src;
       modalImg.alt = img.alt;
@@ -192,20 +237,23 @@
 
       if (isLive && modalLiveBtn) {
         modalLiveBtn.classList.remove('hidden');
-        currentVideoSrc = img.src.replace(/\.[a-zA-Z0-9]+$/, '.mov');
+        currentVideoSources = getLivePhotoVideoSources(img.src);
       } else if (modalLiveBtn) {
         modalLiveBtn.classList.add('hidden');
-        currentVideoSrc = '';
+        currentVideoSources = [];
       }
       
       modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      setBackgroundInert();
+      modal.focus();
 
       setMetaState('Reading metadata...', true);
 
       const meta = await getExifData(activeSrc);
       
-      // 防止在異步加載期間切換了圖片或關閉了模態框
+      // Ignore stale metadata.
       if (activeSrc !== img.src || !modal.classList.contains('is-open')) return;
 
       if (!meta) {
@@ -224,27 +272,40 @@
 
     const closeModal = () => {
       modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       activeSrc = '';
+      stopPlayback();
+      restoreBackground();
       
       if (modalVideo) {
-        modalVideo.pause();
-        modalVideo.classList.remove('is-playing');
-        if (modalLiveBtn) modalLiveBtn.classList.remove('is-playing-btn');
-        isVideoPlaying = false;
-        // 釋放 video 資源，避免瀏覽器持續持有解碼器和 buffer 導致卡頓
+        // Release the video resources.
         modalVideo.removeAttribute('src');
-        modalVideo.load(); // 觸發 HTMLMediaElement reset，完整釋放資源
+        modalVideo.load(); // Reset the media element.
       }
       
-      // 延遲隱藏 meta，配合 CSS 漸變
-      setTimeout(() => setMetaState('', false), 200);
+      // Hide metadata after the fade.
+      hideMetaTimer = window.setTimeout(() => {
+        setMetaState('', false);
+        hideMetaTimer = undefined;
+      }, 200);
+      previousFocus?.focus();
+      previousFocus = null;
     };
 
-    // 事件綁定
+    // Bind image events.
     images.forEach(img => {
       if (img instanceof HTMLImageElement) {
         img.addEventListener('click', () => openModal(img));
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', img.alt ? `查看大图：${img.alt}` : '查看大图');
+        img.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openModal(img);
+          }
+        });
       }
     });
 
@@ -253,7 +314,7 @@
     if (modalVideo) modalVideo.addEventListener('click', closeModal);
 
     if (modalLiveBtn && modalVideo) {
-      // 播放結束後自動恢復（與 inline LIVE 一致：播一次停止）
+      // Reset after one playback.
       modalVideo.addEventListener('ended', () => {
         modalVideo.classList.remove('is-playing');
         modalLiveBtn.classList.remove('is-playing-btn');
@@ -262,40 +323,46 @@
 
       modalLiveBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (!isVideoPlaying) {
-          if (modalVideo.src !== currentVideoSrc) {
-            modalVideo.src = currentVideoSrc;
-          }
-          modalVideo.play().then(() => {
-            modalVideo.classList.add('is-playing');
-            modalLiveBtn.classList.add('is-playing-btn');
-            isVideoPlaying = true;
-          }).catch(err => {
-            modalVideo.src = currentVideoSrc.replace(/\.[a-zA-Z0-9]+$/, '.MOV');
-            modalVideo.play().then(() => {
-               modalVideo.classList.add('is-playing');
-               modalLiveBtn.classList.add('is-playing-btn');
-               isVideoPlaying = true;
-            }).catch(e2 => {
-               modalVideo.src = currentVideoSrc.replace(/\.[a-zA-Z0-9]+$/, '.mp4');
-               modalVideo.play().then(() => {
-                  modalVideo.classList.add('is-playing');
-                  modalLiveBtn.classList.add('is-playing-btn');
-                  isVideoPlaying = true;
-               }).catch(console.error);
+        if (!isVideoPlaying && !playbackController) {
+          const controller = new AbortController();
+          playbackController = controller;
+
+          playLivePhoto(modalVideo, currentVideoSources, controller.signal)
+            .then(() => {
+              if (controller.signal.aborted || !modal.classList.contains('is-open')) return;
+              modalVideo.classList.add('is-playing');
+              modalLiveBtn.classList.add('is-playing-btn');
+              isVideoPlaying = true;
+            })
+            .catch((error) => {
+              if (!controller.signal.aborted) console.error('Playback failed.', error);
+            })
+            .finally(() => {
+              if (playbackController === controller) playbackController = null;
             });
-          });
         } else {
-          modalVideo.pause();
+          stopPlayback();
           modalVideo.currentTime = 0;
-          modalVideo.classList.remove('is-playing');
-          modalLiveBtn.classList.remove('is-playing-btn');
-          isVideoPlaying = false;
         }
       });
     }
 
     document.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab' && modal.classList.contains('is-open')) {
+        const focusable = [
+          modal,
+          ...Array.from(modal.querySelectorAll<HTMLElement>('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'))
+            .filter((element) => element.getClientRects().length > 0),
+        ];
+        const currentIndex = focusable.indexOf(document.activeElement as HTMLElement);
+        const nextIndex = e.shiftKey
+          ? (currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1)
+          : (currentIndex === focusable.length - 1 ? 0 : currentIndex + 1);
+
+        e.preventDefault();
+        focusable[nextIndex]?.focus();
+      }
+
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
         closeModal();
       }

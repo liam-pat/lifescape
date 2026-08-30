@@ -4,8 +4,9 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const currentYear = new Date().getFullYear();
 import SearchPopup from '../components/SearchPopup.astro';
-import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
+import '../styles/global.css';
 ---
 
 <!DOCTYPE html>
@@ -17,11 +18,11 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 		<link rel="icon" href="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/public/life/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
-		<!-- LXGW WenKai Screen 字體 -->
+		<!-- LXGW WenKai Screen font -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreenr.css" />
 		<title>{title}</title>
 		<script is:inline>
-			// 设置默认主题为日间模式
+			// Use light mode by default.
 			if (!('theme' in localStorage)) {
 				localStorage.theme = 'light';
 				document.documentElement.classList.remove('dark');
@@ -30,24 +31,19 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 			} else {
 				document.documentElement.classList.remove('dark');
 			}
-
-			// 声明全局搜索函数
-			window.openSearchPopup = window.openSearchPopup || function() {
-				console.log('Search popup function not yet initialized');
-			};
-		</script>
+			</script>
 		<style is:global>
 			/* Always reserve scrollbar gutter to prevent layout shift during animations */
 			html {
 				scrollbar-gutter: stable;
 			}
 
-			/* Typewriter effect styles - 改進版本 */
+			/* Typewriter effect */
 			.typewriter {
 				display: block;
 				max-width: 100%;
 				line-height: 1.5;
-				min-height: 3em; /* 固定最小高度 */
+				min-height: 3em; /* Keep the layout stable. */
 				position: relative;
 			}
 
@@ -57,11 +53,11 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 				margin: 0;
 				white-space: pre-wrap;
 				overflow-wrap: break-word;
-				visibility: hidden; /* 初始隱藏文字 */
+				visibility: hidden; /* Hide text at first. */
 			}
 
 			.typewriter-text.typing {
-				visibility: visible; /* 打字時顯示文字 */
+				visibility: visible; /* Show text while typing. */
 			}
 
 			.typewriter-cursor {
@@ -75,7 +71,7 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 			}
 			
 			.typewriter-cursor.hide {
-				display: none; /* 隱藏光標 */
+				display: none; /* Hide the cursor. */
 			}
 
 			@keyframes blink-caret {
@@ -85,12 +81,12 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 
 			@media (max-width: 768px) {
 				.typewriter {
-					min-height: 6em; /* 增加移動端的最小高度，確保有足夠空間顯示多行文字 */
+					min-height: 6em; /* Reserve space on mobile. */
 				}
 				
 				.typewriter-text {
 					width: 100%;
-					font-size: 0.9em; /* 稍微縮小字體大小，以適應更多文字 */
+					font-size: 0.9em; /* Fit longer mobile text. */
 				}
 			}
 		</style>
@@ -105,15 +101,15 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 						</a>
 					</div>
 
-					{/* 桌面版导航 */}
+					{/* Desktop navigation */}
 					<div class="hidden md:flex md:items-center md:space-x-6">
-						<a href="/life" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href="/life/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
 							Life
 						</a>
-						<a href="/reading" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href="/reading/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
 							Reading
 						</a>
-						<a href="/about" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href="/about/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
 							ME
 						</a>
 						<a href="https://weekly.biyongyao.com" target="_blank" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
@@ -127,7 +123,7 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 							</svg>
 							<span class="ml-1">RSS</span>
 						</a>
-						<!-- 搜索按钮 -->
+						<!-- Search button -->
 						<button id="search-button" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -136,9 +132,9 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 						</button>
 					</div>
 
-					{/* 手機版菜單按鈕 */}
+					{/* Mobile menu button */}
 					<div class="flex items-center md:hidden">
-						<!-- 搜索按钮（移动版） -->
+						<!-- Mobile search button -->
 						<button id="search-button-mobile" class="p-2 mr-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -152,16 +148,16 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 					</div>
 				</div>
 
-				{/* 手機版下拉菜單 */}
+				{/* Mobile menu */}
 				<div class="mobile-menu hidden md:hidden">
 					<div class="pt-2 pb-3 space-y-1">
-						<a href="/life" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href="/life/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
 							Life
 						</a>
-						<a href="/reading" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href="/reading/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
 							Reading
 						</a>
-						<a href="/about" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href="/about/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
 							ME
 						</a>
 						<a href="/rss.xml" class="flex items-center px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
@@ -181,53 +177,52 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 
 		<footer class="bg-white dark:bg-gray-800 mt-12 py-6">
 			<div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
-				<p>&copy; 2025 VERSION.ME</p>
+					<p>&copy; {currentYear} VERSION.ME</p>
 			</div>
 		</footer>
 
-		<!-- 主题切换按钮 -->
+		<!-- Theme button -->
 		<button id="theme-toggle" class="fixed bottom-6 right-6 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow">
-			<!-- 亮色模式图标 -->
+			<!-- Light mode icon -->
 			<svg class="w-6 h-6 text-gray-800 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
 			</svg>
-			<!-- 暗色模式图标 -->
+			<!-- Dark mode icon -->
 			<svg class="hidden w-6 h-6 text-gray-200 dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
 			</svg>
 		</button>
 
-		<!-- 搜索弹窗组件 -->
+		<!-- Search popup -->
 		<SearchPopup />
-		<LivePhotoRenderer />
 
 		<script is:inline>
-			// 手機版菜單切換
+			// Toggle the mobile menu.
 			document.addEventListener('DOMContentLoaded', () => {
 				const button = document.querySelector('.mobile-menu-button');
 				const menu = document.querySelector('.mobile-menu');
 
-				// 處理打字機效果 - 改進版本
+				// Run the typewriter effect.
 				const typewriterTexts = document.querySelectorAll('.typewriter-text');
 				typewriterTexts.forEach(text => {
 					const fullText = text.textContent || '';
 					let currentText = '';
 					let index = 0;
 					
-					// 創建光標元素
+					// Create the cursor.
 					const cursor = document.createElement('span');
 					cursor.className = 'typewriter-cursor';
 					
-					// 清空原始文字並添加光標
+					// Replace the source text.
 					text.textContent = '';
 					text.parentNode.insertBefore(cursor, text.nextSibling);
 					
-					// 延遲開始打字
+					// Start after a short delay.
 					setTimeout(() => {
-						// 添加 typing 類以顯示文字
+						// Show the text.
 						text.classList.add('typing');
 						
-						// 設置打字間隔
+						// Type one character at a time.
 						const typingInterval = setInterval(() => {
 							if (index < fullText.length) {
 								currentText += fullText.charAt(index);
@@ -236,12 +231,12 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 							} else {
 								clearInterval(typingInterval);
 								
-								// 打字完成後 2 秒鐘隱藏光標
+								// Hide the cursor after typing.
 								setTimeout(() => {
 									cursor.classList.add('hide');
 								}, 2000);
 							}
-						}, 100); // 固定速度，可調整
+						}, 100); // Fixed typing speed.
 					}, 500);
 				});
 
@@ -251,10 +246,10 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 					button.setAttribute('aria-expanded', (!expanded).toString());
 				});
 
-				// 主题切换功能
+				// Set up theme switching.
 				const themeToggle = document.getElementById('theme-toggle');
 				
-				// 切换主题
+				// Toggle the theme.
 				themeToggle?.addEventListener('click', () => {
 					if (document.documentElement.classList.contains('dark')) {
 						document.documentElement.classList.remove('dark');
@@ -265,18 +260,18 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 					}
 				});
 
-				// 搜索功能
+				// Set up search.
 				const searchButton = document.getElementById('search-button');
 				const searchButtonMobile = document.getElementById('search-button-mobile');
 				
-				// 点击搜索按钮打开搜索弹窗
+				// Open search from the desktop button.
 				searchButton?.addEventListener('click', () => {
 					if (typeof window.openSearchPopup === 'function') {
 						window.openSearchPopup();
 					}
 				});
 				
-				// 移动版搜索按钮
+				// Open search from the mobile button.
 				searchButtonMobile?.addEventListener('click', () => {
 					if (typeof window.openSearchPopup === 'function') {
 						window.openSearchPopup();
@@ -285,4 +280,4 @@ import LivePhotoRenderer from '../components/LivePhotoRenderer.astro';
 			});
 		</script>
 	</body>
-</html> 
+</html>

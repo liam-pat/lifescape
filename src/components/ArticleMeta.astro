@@ -1,0 +1,27 @@
+---
+import { formatShanghaiDate } from '../lib/date';
+import type { PostEntry } from '../lib/content';
+
+interface Props {
+	entry: PostEntry;
+	tagClass: string;
+}
+
+const { entry, tagClass } = Astro.props;
+---
+
+<time datetime={entry.data.date.toISOString()} class="shrink-0">
+	{formatShanghaiDate(entry.data.date)}
+</time>
+{entry.data.tags.length > 0 && (
+	<div
+		class="flex flex-wrap gap-1.5 md:gap-2"
+		data-pagefind-meta={`tags:${entry.data.tags.join(',')}`}
+	>
+		{entry.data.tags.map((tag) => (
+			<span class={`${tagClass} text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1 rounded-full`}>
+				{tag}
+			</span>
+		))}
+	</div>
+)}

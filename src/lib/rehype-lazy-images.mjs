@@ -14,13 +14,13 @@ export default function rehypeLazyImages() {
         if (typeof srcStr === 'string' || typeof altStr === 'string') {
           // Parse specific hashes from both src and alt
           const hasLive = srcStr.includes('#live') || altStr.includes('#live');
-          // iPhone HEIC 圖片幾乎都含有 HDR Gain Map，自動標記為 HDR
-          // 也保留手動 #hdr 標記以支援其他格式
+          // Mark iPhone HEIC images as HDR.
+          // Keep #hdr for other formats.
           const isHeic = /\.heic($|\?|#)/i.test(srcStr);
           const hasHdr = isHeic || srcStr.includes('#hdr') || altStr.includes('#hdr');
 
           if (hasLive || hasHdr) {
-            // 在 hast 中，data-* 屬性需改為 camelCase
+            // HAST uses camelCase for data attributes.
             if (hasLive) {
               node.properties.dataLive = 'true';
             }

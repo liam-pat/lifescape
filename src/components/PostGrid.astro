@@ -1,8 +1,9 @@
 ---
 import PostCard from './PostCard.astro';
+import type { PostEntry } from '../lib/content';
 
 interface Props {
-	entries: any[];
+	entries: PostEntry[];
 	showCollectionPrefix?: boolean;
 }
 

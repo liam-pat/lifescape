@@ -117,10 +117,10 @@ import Layout from '../layouts/Layout.astro';
                   src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/public/life/favicon.ico"
                   alt="Avatar"
                   class="card-avatar"
-                  onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2240%22 r=%2228%22 fill=%22%237c3aed%22/><ellipse cx=%2250%22 cy=%2285%22 rx=%2238%22 ry=%2225%22 fill=%22%237c3aed%22/></svg>'"
+                  onerror="this.setAttribute('src', 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2240%22 r=%2228%22 fill=%22%237c3aed%22/><ellipse cx=%2250%22 cy=%2285%22 rx=%2238%22 ry=%2225%22 fill=%22%237c3aed%22/></svg>')"
                 />
                 <div class="card-top-info">
-                  <div class="card-name">畢生 Liam</div>
+                  <div class="card-name">毕生 Liam</div>
                   <div class="card-title">Creator · Developer</div>
                   <div class="card-id-badge">VER-2024-001</div>
                 </div>
@@ -138,21 +138,21 @@ import Layout from '../layouts/Layout.astro';
                   </div>
                   <p class="about-desc">这是一个分享生活 &amp; 读书心得的空间。</p>
                   <ul class="about-list">
-                    <li>對人生的感悟</li>
-                    <li>讀書思考 &amp; 心得</li>
-                    <li>个人每個階段的成长</li>
+                    <li>对人生的感悟</li>
+                    <li>读书思考 &amp; 心得</li>
+                    <li>个人每个阶段的成长</li>
                   </ul>
                 </div>
 
                 <div class="about-section">
                   <div class="about-heading">
                     <span class="about-dot alipay-dot"></span>
-                    為什麼會存在？
+                    为什么会存在？
                   </div>
                   <ul class="about-list">
                     <li>整理思绪，深化理解</li>
                     <li>记录成长，留下足迹</li>
-                    <li>二次閱讀，找回上次理解</li>
+                    <li>二次阅读，找回上次理解</li>
                   </ul>
                 </div>
               </div>
@@ -213,10 +213,6 @@ import Layout from '../layouts/Layout.astro';
                       <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M21.422 15.358c-2.693-1.022-4.528-1.728-5.496-2.096a12.518 12.518 0 0 0 1.638-4.598H21v-1.5h-4.5V5.908h-1.656v1.256H9.188v1.5h5.656c-.243 1.266-.672 2.47-1.266 3.564C11.4 11.4 8.882 10.212 7.31 9.596c-2.167-.87-3.54-.192-4.195 1.154-.6 1.248-.3 3.204 2.49 4.674C7.23 16.42 9.2 17.01 11.156 17.05c-1.068 1.326-2.4 2.4-4.02 3.096L8.19 21.6c1.956-.9 3.618-2.22 4.908-3.876 2.376.78 5.082 1.794 6.288 2.382.288.144.564.216.828.216 1.188 0 2.004-.888 2.4-1.836.552-1.32.306-2.508-1.192-3.128zm-9.48.936c-1.764 0-3.456-.492-4.5-1.032-1.65-.864-2.208-2.016-1.776-2.94.252-.528.726-.756 1.32-.756.384 0 .81.096 1.284.288 1.476.588 3.72 1.62 5.988 2.928-.624.348-1.416.512-2.316.512z"/></svg>
                       支付宝
                     </button>
-                    <!-- <button id="btn-crypto" class="pay-tab" type="button">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zM14.204 7.8l-.89-2.57-1.497.52.87 2.51a14.27 14.27 0 0 0-1.17.41l-.87-2.5-1.5.52.89 2.57c-.29.13-.58.26-.85.4l-.01-.01-2.07.72.5 1.6s1.11-.4 1.09-.37c.61-.21.91.16.99.44l1.09 3.14c.06.01.14.03.23.06l-.23-.06c-.01.03-.01.05 0 .07l-1.08 3.12c-.1.29-.37.67-1.01.48.02.03-1.09.38-1.09.38l-.33 1.67 2.06-.71c.37-.13.74-.26 1.1-.39l.9 2.59 1.5-.52-.89-2.57c.39-.12.79-.25 1.16-.38l.88 2.55 1.5-.52-.9-2.59c2.47-.97 4.14-2.72 3.72-5.03-.33-1.84-1.57-2.69-3.01-2.89.68-.59 1.05-1.48.77-2.72zm-1.13 6.32c.44 1.27-.77 2.48-3.08 3.27l-1.1-3.18c2.31-.79 3.74-.37 4.18.91zm-1.1-3.62c.39 1.13-.64 2.19-2.63 2.86l-1-2.89c1.99-.67 3.24-.27 3.63.03z"/></svg>
-                      加密
-                    </button> -->
                   </div>
 
                   <!-- QR codes -->
@@ -230,22 +226,6 @@ import Layout from '../layouts/Layout.astro';
 							<img src="https://hk-saver.s3.ap-east-1.amazonaws.com/images/payments/alipay-2026.jpg" alt="支付宝收款码" class="qr-img" />
                       <p class="qr-label">支付宝扫码付款</p>
                     </div>
-                    <!-- <div id="qr-crypto" class="crypto-box" style="display:none">
-                      <div class="crypto-logo">
-                        <svg viewBox="0 0 24 24" fill="#F7931A" width="28" height="28"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zM14.204 7.8l-.89-2.57-1.497.52.87 2.51a14.27 14.27 0 0 0-1.17.41l-.87-2.5-1.5.52.89 2.57c-.29.13-.58.26-.85.4l-.01-.01-2.07.72.5 1.6s1.11-.4 1.09-.37c.61-.21.91.16.99.44l1.09 3.14c.06.01.14.03.23.06l-.23-.06c-.01.03-.01.05 0 .07l-1.08 3.12c-.1.29-.37.67-1.01.48.02.03-1.09.38-1.09.38l-.33 1.67 2.06-.71c.37-.13.74-.26 1.1-.39l.9 2.59 1.5-.52-.89-2.57c.39-.12.79-.25 1.16-.38l.88 2.55 1.5-.52-.9-2.59c2.47-.97 4.14-2.72 3.72-5.03-.33-1.84-1.57-2.69-3.01-2.89.68-.59 1.05-1.48.77-2.72zm-1.13 6.32c.44 1.27-.77 2.48-3.08 3.27l-1.1-3.18c2.31-.79 3.74-.37 4.18.91zm-1.1-3.62c.39 1.13-.64 2.19-2.63 2.86l-1-2.89c1.99-.67 3.24-.27 3.63.03z"/></svg>
-                        <span class="crypto-name">Bitcoin (BTC)</span>
-                      </div>
-                      <p class="crypto-label">转账地址</p>
-                      <div class="crypto-addr-row">
-                        <span id="btc-addr" class="crypto-addr">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-                        <button id="btn-copy-addr" class="copy-btn" type="button" title="复制地址">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                            <rect x="9" y="9" width="13" height="13" rx="2"/>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                          </svg>
-                        </button>
-                      </div>
-                    </div> -->
                   </div>
 
                   <p class="pay-note">扫码后输入任意金额即可 💜</p>
@@ -264,7 +244,7 @@ import Layout from '../layouts/Layout.astro';
           </div><!-- end card-tilt-inner -->
         </div><!-- end card-scene-outer -->
 
-      </div><!-- end right col -->
+
 
     </div><!-- end grid -->
   </main>
@@ -1080,7 +1060,7 @@ import Layout from '../layouts/Layout.astro';
         const clientY = rect.top + rect.height * 0.38;
 
         try {
-          // 利用矩阵逆变换，获取精确的 SVG 空间坐标
+          // Convert the point to SVG coordinates.
           const pt = crackSvg.createSVGPoint();
           pt.x = clientX;
           pt.y = clientY;
@@ -1092,7 +1072,7 @@ import Layout from '../layouts/Layout.astro';
             crackGroup.setAttribute('transform', `translate(${dx.toFixed(1)}, ${dy.toFixed(1)})`);
           }
         } catch (e) {
-          // 健壮性降级方案：如果矩阵变换失败，使用原比例公式转换并应用 translate
+          // Fall back to viewport scaling.
           const dx = ((clientX) / window.innerWidth * 1440) - 720;
           const dy = ((clientY) / window.innerHeight * 900) - 400;
           crackGroup.setAttribute('transform', `translate(${dx.toFixed(0)}, ${dy.toFixed(0)})`);
@@ -1101,7 +1081,7 @@ import Layout from '../layouts/Layout.astro';
 
       // Sound synthesis
       try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const AudioCtx = window.AudioContext || Reflect.get(window, 'webkitAudioContext');
         if (AudioCtx) {
           const audioCtx = new AudioCtx();
           // Low thud
@@ -1171,7 +1151,7 @@ import Layout from '../layouts/Layout.astro';
       overlay.style.display = '';
       overlay.classList.remove('fading', 'impact');
       crackSvg.classList.remove('visible');
-      crackGroup?.removeAttribute('transform'); // 重置裂纹偏移量
+      crackGroup?.removeAttribute('transform'); // Reset the crack offset.
       flash.classList.remove('flash', 'flash-out');
       sceneEl.classList.remove('settled', 'throwing');
       sceneEl.style.opacity = '0';

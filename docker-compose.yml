@@ -6,7 +6,4 @@ services:
     container_name: lifescape
     restart: unless-stopped
     ports:
-      - "4321:4321"
-    environment:
-      - NODE_ENV=production
-    command: npm run preview -- --host
+      - "4321:80"

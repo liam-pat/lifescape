@@ -17,14 +17,14 @@ export const getExifData = async (src: string): Promise<ExifData | null> => {
   if (exifCache.has(src)) return exifCache.get(src) || null;
   
   const normalized = src.split('?')[0].toLowerCase();
-  // 只嘗試解析 jpg/jpeg，其他格式通常不含 EXIF 或 exifr 支持不佳
+  // Read EXIF only from JPEG files.
   if (!normalized.endsWith('.jpg') && !normalized.endsWith('.jpeg')) {
     exifCache.set(src, null);
     return null;
   }
 
   try {
-    // 動態導入 exifr 以減少初始包大小
+    // Load exifr on demand.
     const { parse } = await import('exifr');
     const raw = await parse(src, {
       pick: [

@@ -1,12 +1,16 @@
 services:
   lifescape:
-    image: node:20
+    image: node:22
     container_name: lifescape-dev
     labels:
       - dev.orbstack.domains=life.orb.local
     volumes:
       - "./:/lifescape"
+      - lifescape_node_modules:/lifescape/node_modules
     working_dir: "/lifescape"
-    command: sh -c "npm install && npm run dev -- --host"
+    command: sh -c "npm ci && npm run dev -- --host"
     ports:
       - 4321:4321
+
+volumes:
+  lifescape_node_modules:

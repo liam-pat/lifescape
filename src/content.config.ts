@@ -1,8 +1,10 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-// 定義生活分享的集合架構
+// Define the life collection.
 const lifeCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/life' }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -12,9 +14,9 @@ const lifeCollection = defineCollection({
   }),
 });
 
-// 定義讀書筆記的集合架構
+// Define the reading collection.
 const readingCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/reading' }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -28,8 +30,8 @@ const readingCollection = defineCollection({
   }),
 });
 
-// 導出集合配置
+// Export all collections.
 export const collections = {
   'life': lifeCollection,
   'reading': readingCollection,
-}; 
+};
