@@ -1,1215 +1,173 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const topics = [
+	{
+		index: '01',
+		title: 'Life',
+		description: '记录旅途、选择与日常，也记录每个阶段看待世界的方式。',
+		href: '/life/',
+		accent: 'bg-purple-500',
+	},
+	{
+		index: '02',
+		title: 'Reading',
+		description: '留下读书时真正触动我的观点，方便日后重新理解与审视。',
+		href: '/reading/',
+		accent: 'bg-blue-500',
+	},
+	{
+		index: '03',
+		title: 'Technology',
+		description: '整理开发实践、解决问题的过程，以及值得反复使用的方法。',
+		href: '/technology/',
+		accent: 'bg-emerald-500',
+	},
+];
+
+const reasons = [
+	{
+		number: '01',
+		title: '整理',
+		description: '把模糊的想法写清楚，往往也是重新认识它的过程。',
+	},
+	{
+		number: '02',
+		title: '记录',
+		description: '给经历留下坐标，看看自己在不同阶段如何思考与选择。',
+	},
+	{
+		number: '03',
+		title: '重读',
+		description: '在需要的时候回到这里，找回当时的经验和理解。',
+	},
+];
 ---
 
-<Layout title="About Me">
+<Layout title="About · VERSION.ME">
+	<main>
+		<section class="bg-black text-white">
+			<div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-[minmax(0,1fr)_18rem] md:items-end md:py-24">
+				<div class="max-w-3xl">
+					<p class="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">
+						About / VERSION.ME
+					</p>
+					<h1 class="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
+						Mr.Pat <span class="text-gray-500">Liam</span>
+					</h1>
+					<p class="mt-7 max-w-2xl text-lg leading-8 text-gray-300 md:text-xl">
+						Creator &amp; Developer。这里记录生活、阅读与技术，也记录我理解世界的方式。
+					</p>
+				</div>
 
-  <!-- ===== Screen Crack Overlay ===== -->
-  <div id="crack-overlay" aria-hidden="true">
-    <!-- White impact flash -->
-    <div id="crack-flash"></div>
-    <!-- SVG crack lines -->
-    <svg id="crack-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <g id="crack-group">
-        <!-- Main radial cracks from impact center -->
-        <g id="crack-lines" stroke="white" stroke-linecap="round" fill="none">
-          <!-- Primary long cracks -->
-          <path d="M720,400 L340,80" stroke-width="2.5" opacity="0.9"/>
-          <path d="M720,400 L1100,60" stroke-width="2" opacity="0.85"/>
-          <path d="M720,400 L1420,320" stroke-width="2.2" opacity="0.9"/>
-          <path d="M720,400 L1380,700" stroke-width="2" opacity="0.8"/>
-          <path d="M720,400 L900,900" stroke-width="2.5" opacity="0.9"/>
-          <path d="M720,400 L420,880" stroke-width="2" opacity="0.85"/>
-          <path d="M720,400 L40,650" stroke-width="2.2" opacity="0.9"/>
-          <path d="M720,400 L20,200" stroke-width="2" opacity="0.8"/>
-          <!-- Secondary branches off primary cracks -->
-          <path d="M600,260 L480,30" stroke-width="1.2" opacity="0.6"/>
-          <path d="M600,260 L310,180" stroke-width="1" opacity="0.55"/>
-          <path d="M850,200 L980,10" stroke-width="1.2" opacity="0.6"/>
-          <path d="M850,200 L1200,120" stroke-width="1" opacity="0.5"/>
-          <path d="M1100,340 L1380,200" stroke-width="1.2" opacity="0.6"/>
-          <path d="M1180,560 L1440,480" stroke-width="1" opacity="0.55"/>
-          <path d="M1050,720 L1300,850" stroke-width="1.2" opacity="0.6"/>
-          <path d="M820,700 L740,900" stroke-width="1" opacity="0.5"/>
-          <path d="M600,720 L380,900" stroke-width="1.2" opacity="0.6"/>
-          <path d="M440,640 L100,820" stroke-width="1" opacity="0.55"/>
-          <path d="M260,500 L0,620" stroke-width="1.2" opacity="0.6"/>
-          <path d="M200,330 L0,250" stroke-width="1" opacity="0.5"/>
-          <path d="M340,180 L120,40" stroke-width="1.2" opacity="0.6"/>
-          <!-- Tertiary micro-cracks -->
-          <path d="M520,160 L440,60" stroke-width="0.7" opacity="0.4"/>
-          <path d="M470,320 L320,240" stroke-width="0.7" opacity="0.4"/>
-          <path d="M900,160 L820,40" stroke-width="0.7" opacity="0.4"/>
-          <path d="M1000,280 L1150,180" stroke-width="0.7" opacity="0.4"/>
-          <path d="M1260,440 L1400,360" stroke-width="0.7" opacity="0.4"/>
-          <path d="M1200,640 L1360,720" stroke-width="0.7" opacity="0.4"/>
-          <path d="M940,800 L1060,900" stroke-width="0.7" opacity="0.4"/>
-          <path d="M680,820 L600,900" stroke-width="0.7" opacity="0.4"/>
-          <path d="M480,780 L300,900" stroke-width="0.7" opacity="0.4"/>
-          <path d="M320,620 L140,740" stroke-width="0.7" opacity="0.4"/>
-          <path d="M160,440 L20,520" stroke-width="0.7" opacity="0.4"/>
-          <path d="M220,260 L60,160" stroke-width="0.7" opacity="0.4"/>
-        </g>
-        <!-- Impact center glow circle -->
-        <circle id="crack-center" cx="720" cy="400" r="28" fill="none" stroke="white" stroke-width="3" opacity="0.9"/>
-        <circle cx="720" cy="400" r="12" fill="white" opacity="0.7"/>
-        <!-- Shatter chunks near center -->
-        <g stroke="white" stroke-width="0.8" fill="rgba(255,255,255,0.04)" opacity="0.7">
-          <polygon points="720,400 680,360 700,320 740,340"/>
-          <polygon points="720,400 760,370 790,400 760,430"/>
-          <polygon points="720,400 690,440 660,420 670,380"/>
-          <polygon points="720,400 740,450 710,470 690,440"/>
-        </g>
-      </g>
-    </svg>
-  </div>
-  <div class="bg-black py-10 mb-8">
-    <div class="max-w-7xl mx-auto px-4">
-      <h1 class="text-white text-4xl md:text-5xl font-bold mb-4">About Me</h1>
-      <div class="h-28 md:h-16">
-        <p class="text-gray-300 text-xl md:text-2xl font-medium typewriter">
-          <span class="typewriter-text">每个人都会经历这个阶段，看见一座山，就想知道山后面是什么。</span>
-        </p>
-      </div>
-    </div>
-  </div>
+				<div class="border-l border-gray-700 pl-5">
+					<p class="text-sm uppercase tracking-[0.2em] text-gray-500">A note to myself</p>
+					<p class="mt-3 text-base leading-7 text-gray-300">
+						看见一座山，就想知道山后面是什么。
+					</p>
+				</div>
+			</div>
+		</section>
 
-  <main class="max-w-7xl mx-auto px-4 py-8 overflow-x-hidden">
-    <!-- Centered single-column layout -->
-    <div class="flex flex-col items-center" style="min-height: 900px">
+		<section class="mx-auto max-w-7xl px-4 py-14 md:py-20">
+			<div class="grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16">
+				<div>
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+						This space
+					</p>
+					<h2 class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+						我在这里写什么
+					</h2>
+					<p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+						不追求完整答案，只保留真实经历和当下值得记住的思考。
+					</p>
+				</div>
 
-      <!-- Scene: perspective root (mouse events here) -->
-      <div class="card-scene-outer" id="card-scene-outer" style="opacity:0">
+				<div class="divide-y divide-gray-300 border-y border-gray-300 dark:divide-gray-700 dark:border-gray-700">
+					{topics.map((topic) => (
+						<a
+							href={topic.href}
+							class="group grid gap-4 py-6 transition-colors hover:bg-white/60 dark:hover:bg-gray-800/40 sm:grid-cols-[3rem_10rem_minmax(0,1fr)_2rem] sm:items-center sm:px-3"
+						>
+							<div class="flex items-center gap-3 sm:block">
+								<span class={`inline-block h-2.5 w-2.5 rounded-full ${topic.accent}`}></span>
+								<span class="text-sm tabular-nums text-gray-400 sm:hidden">{topic.index}</span>
+							</div>
+							<h3 class="text-xl font-semibold text-gray-900 dark:text-white">{topic.title}</h3>
+							<p class="text-base leading-7 text-gray-600 dark:text-gray-300">{topic.description}</p>
+							<span class="hidden text-xl text-gray-400 transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true">→</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
 
-        <div class="card-tilt-inner" id="card-tilt-inner">
+		<section class="border-y border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800">
+			<div class="mx-auto max-w-7xl px-4 py-14 md:py-20">
+				<div class="grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16">
+					<div>
+						<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+							Why write
+						</p>
+						<h2 class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+							为什么写下来
+						</h2>
+					</div>
 
-          <!-- Lanyard ribbon -->
-          <div class="lanyard-ribbon">
-            <span class="lanyard-text">VERSION.ME</span>
-          </div>
+					<ol class="grid gap-px overflow-hidden rounded-lg border border-gray-300 bg-gray-300 dark:border-gray-700 dark:bg-gray-700 md:grid-cols-3">
+						{reasons.map((reason) => (
+							<li class="bg-[#E8E8E8] p-6 dark:bg-gray-900 md:p-7">
+								<span class="text-sm font-semibold tabular-nums text-gray-400">{reason.number}</span>
+								<h3 class="mt-8 text-xl font-semibold text-gray-900 dark:text-white">{reason.title}</h3>
+								<p class="mt-3 text-base leading-7 text-gray-600 dark:text-gray-300">{reason.description}</p>
+							</li>
+						))}
+					</ol>
+				</div>
+			</div>
+		</section>
 
-          <!-- Metal clip -->
-          <div class="lanyard-clip">
-            <div class="clip-ring"></div>
-          </div>
+		<section class="mx-auto max-w-7xl px-4 py-14 md:py-20">
+			<div class="grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16">
+				<div>
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+						Support
+					</p>
+					<h2 class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+						请我喝杯咖啡
+					</h2>
+					<p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+						如果这里的内容曾经帮到你，可以用一杯咖啡支持我继续写下去。
+					</p>
+				</div>
 
-          <div class="card-wrapper" id="card-wrapper">
-
-            <!-- ===== CARD FRONT ===== -->
-            <div class="badge-card card-front">
-              <div class="holo-layer"></div>
-              <div class="glare-layer"></div>
-
-              <!-- Slot bar -->
-              <div class="card-slot-bar">
-                <div class="slot-hole"></div>
-              </div>
-
-              <!-- Header strip -->
-              <div class="card-header-strip">
-                <span class="org-name">VERSION.ME</span>
-                <span class="card-year">2024</span>
-              </div>
-
-              <!-- Top row: avatar left + name/info right -->
-              <div class="card-top-row">
-                <img
-                  src="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/public/life/favicon.ico"
-                  alt="Avatar"
-                  class="card-avatar"
-                  onerror="this.setAttribute('src', 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2240%22 r=%2228%22 fill=%22%237c3aed%22/><ellipse cx=%2250%22 cy=%2285%22 rx=%2238%22 ry=%2225%22 fill=%22%237c3aed%22/></svg>')"
-                />
-                <div class="card-top-info">
-                  <div class="card-name">毕生 Liam</div>
-                  <div class="card-title">Creator · Developer</div>
-                  <div class="card-id-badge">VER-2024-001</div>
-                </div>
-              </div>
-
-              <!-- Divider -->
-              <div class="card-divider"></div>
-
-              <!-- About sections -->
-              <div class="card-about">
-                <div class="about-section">
-                  <div class="about-heading">
-                    <span class="about-dot wechat-dot"></span>
-                    欢迎来到 VERSION.ME
-                  </div>
-                  <p class="about-desc">这是一个分享生活 &amp; 读书心得的空间。</p>
-                  <ul class="about-list">
-                    <li>对人生的感悟</li>
-                    <li>读书思考 &amp; 心得</li>
-                    <li>个人每个阶段的成长</li>
-                  </ul>
-                </div>
-
-                <div class="about-section">
-                  <div class="about-heading">
-                    <span class="about-dot alipay-dot"></span>
-                    为什么会存在？
-                  </div>
-                  <ul class="about-list">
-                    <li>整理思绪，深化理解</li>
-                    <li>记录成长，留下足迹</li>
-                    <li>二次阅读，找回上次理解</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Bottom: chip + site row -->
-              <div class="card-bottom-row">
-                <div class="card-chip-mini">
-                  <svg viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="30" rx="4" fill="url(#chipGrad2)"/>
-                    <line x1="0" y1="10" x2="40" y2="10" stroke="#b8860b" stroke-width="0.8"/>
-                    <line x1="0" y1="20" x2="40" y2="20" stroke="#b8860b" stroke-width="0.8"/>
-                    <line x1="13" y1="0" x2="13" y2="30" stroke="#b8860b" stroke-width="0.8"/>
-                    <line x1="27" y1="0" x2="27" y2="30" stroke="#b8860b" stroke-width="0.8"/>
-                    <rect x="13" y="10" width="14" height="10" rx="2" fill="#d4a017" opacity="0.6"/>
-                    <defs>
-                      <linearGradient id="chipGrad2" x1="0" y1="0" x2="40" y2="30" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#f5c842"/>
-                        <stop offset="50%" stop-color="#d4a017"/>
-                        <stop offset="100%" stop-color="#b8860b"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                <div class="card-site-text">life.biyongyao.com</div>
-              </div>
-
-              <!-- Flip icon -->
-              <button id="btn-flip-front" class="card-flip-icon" type="button" title="翻转工卡">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M1 4v6h6"/>
-                  <path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
-                  </svg>
-                </button>
-              </div><!-- end card-front -->
-
-              <!-- ===== CARD BACK ===== -->
-              <div class="badge-card card-back">
-                <div class="holo-layer"></div>
-                <div class="glare-layer"></div>
-
-                <!-- Back header -->
-                <div class="card-header-strip">
-                  <span class="org-name">VERSION.ME</span>
-                  <span class="card-year">支付</span>
-                </div>
-
-                <!-- Payment content -->
-                <div class="back-content">
-                  <p class="back-title">请我喝杯咖啡 ☕</p>
-
-                  <!-- Payment tabs -->
-                  <div class="pay-tabs">
-                    <button id="btn-wechat" class="pay-tab pay-tab-wechat-active" type="button">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.11.24-.245 0-.06-.023-.12-.04-.177l-.324-1.233a.491.491 0 0 1 .177-.554 5.89 5.89 0 0 0 2.5-4.615c.043-3.478-3.049-6.075-6.86-6.13zm-3.308 2.818c.536 0 .969.44.969.984a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.544.433-.984.969-.984zm6.615 0c.536 0 .969.44.969.984a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.544.433-.984.969-.984z"/></svg>
-                      微信
-                    </button>
-                    <button id="btn-alipay" class="pay-tab" type="button">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="tab-icon"><path d="M21.422 15.358c-2.693-1.022-4.528-1.728-5.496-2.096a12.518 12.518 0 0 0 1.638-4.598H21v-1.5h-4.5V5.908h-1.656v1.256H9.188v1.5h5.656c-.243 1.266-.672 2.47-1.266 3.564C11.4 11.4 8.882 10.212 7.31 9.596c-2.167-.87-3.54-.192-4.195 1.154-.6 1.248-.3 3.204 2.49 4.674C7.23 16.42 9.2 17.01 11.156 17.05c-1.068 1.326-2.4 2.4-4.02 3.096L8.19 21.6c1.956-.9 3.618-2.22 4.908-3.876 2.376.78 5.082 1.794 6.288 2.382.288.144.564.216.828.216 1.188 0 2.004-.888 2.4-1.836.552-1.32.306-2.508-1.192-3.128zm-9.48.936c-1.764 0-3.456-.492-4.5-1.032-1.65-.864-2.208-2.016-1.776-2.94.252-.528.726-.756 1.32-.756.384 0 .81.096 1.284.288 1.476.588 3.72 1.62 5.988 2.928-.624.348-1.416.512-2.316.512z"/></svg>
-                      支付宝
-                    </button>
-                  </div>
-
-                  <!-- QR codes -->
-                  <div class="qr-container">
-                    <div id="qr-wechat" class="qr-box">
-                      <img src="https://hk-saver.s3.ap-east-1.amazonaws.com/images/payments/wechatpay-2026.jpg" alt="微信收款码" class="qr-img" />
-                      <p class="qr-label">微信扫码付款</p>
-                    </div>
-
-                    <div id="qr-alipay" class="qr-box" style="display:none">
-							<img src="https://hk-saver.s3.ap-east-1.amazonaws.com/images/payments/alipay-2026.jpg" alt="支付宝收款码" class="qr-img" />
-                      <p class="qr-label">支付宝扫码付款</p>
-                    </div>
-                  </div>
-
-                  <p class="pay-note">扫码后输入任意金额即可 💜</p>
-                </div>
-
-                <!-- Small flip icon button (bottom-right corner of back) -->
-                <button id="btn-flip-back" class="card-flip-icon" type="button" title="翻转工卡">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M23 4v6h-6"/>
-                    <path d="M20.49 15a9 9 0 1 1-.49-3.51"/>
-                  </svg>
-                </button>
-              </div><!-- end card-back -->
-
-            </div><!-- end card-wrapper -->
-          </div><!-- end card-tilt-inner -->
-        </div><!-- end card-scene-outer -->
-
-
-
-    </div><!-- end grid -->
-  </main>
+				<details class="group rounded-lg border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-base font-semibold text-gray-900 marker:hidden dark:text-white md:px-7">
+						<span>查看赞赏方式</span>
+						<span class="text-xl text-gray-400 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+					</summary>
+					<div class="grid gap-4 border-t border-gray-200 p-5 dark:border-gray-700 md:grid-cols-2 md:p-7">
+						<figure class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-900">
+							<img
+								src="https://hk-saver.s3.ap-east-1.amazonaws.com/images/payments/wechatpay-2026.jpg"
+								alt="微信收款码"
+								class="mx-auto aspect-square w-full max-w-56 rounded-md object-contain"
+								loading="lazy"
+							/>
+							<figcaption class="mt-3 text-sm text-gray-600 dark:text-gray-300">微信</figcaption>
+						</figure>
+						<figure class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-900">
+							<img
+								src="https://hk-saver.s3.ap-east-1.amazonaws.com/images/payments/alipay-2026.jpg"
+								alt="支付宝收款码"
+								class="mx-auto aspect-square w-full max-w-56 rounded-md object-contain"
+								loading="lazy"
+							/>
+							<figcaption class="mt-3 text-sm text-gray-600 dark:text-gray-300">支付宝</figcaption>
+						</figure>
+					</div>
+				</details>
+			</div>
+		</section>
+	</main>
 </Layout>
-
-<style>
-  /* ===== Screen Crack Overlay ===== */
-  #crack-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0;
-  }
-
-  #crack-overlay.impact {
-    opacity: 1;
-  }
-
-  #crack-overlay.fading {
-    transition: opacity 1.8s ease-out;
-    opacity: 0;
-  }
-
-  #crack-flash {
-    position: absolute;
-    inset: 0;
-    background: white;
-    opacity: 0;
-    transition: opacity 0.06s;
-  }
-
-  #crack-flash.flash {
-    opacity: 0.92;
-  }
-
-  #crack-flash.flash-out {
-    opacity: 0;
-    transition: opacity 0.25s ease-out;
-  }
-
-  #crack-svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.08s;
-    /* Subtle blue tint to cracks for glass effect */
-    filter: drop-shadow(0 0 6px rgba(180,220,255,0.9)) drop-shadow(0 0 2px white);
-  }
-
-  #crack-svg.visible {
-    opacity: 1;
-  }
-
-  /* Screen shake keyframe */
-  @keyframes screen-shake {
-    0%   { transform: translate(0, 0); }
-    25%  { transform: translate(-10px, -8px) rotate(-0.4deg); }
-    50%  { transform: translate(8px, 10px) rotate(0.4deg); }
-    75%  { transform: translate(-6px, 4px) rotate(-0.2deg); }
-    100% { transform: translate(0, 0); }
-  }
-
-  body.shaking {
-    animation: screen-shake 0.55s cubic-bezier(.36,.07,.19,.97) both;
-  }
-
-  /* ===== Card throw-in animation ===== */
-  @keyframes card-throw-in {
-    0% {
-      transform: translate(200vw, -140vh) rotate(540deg) scale(0.4);
-      opacity: 0;
-      filter: blur(18px);
-    }
-    30% {
-      opacity: 1;
-      filter: blur(8px);
-    }
-    70% {
-      filter: blur(2px);
-    }
-    80% {
-      transform: translate(0, 0) rotate(-12deg) scale(1.15);
-      filter: blur(0px);
-    }
-    88% {
-      transform: translate(0, 0) rotate(6deg) scale(0.96);
-    }
-    94% {
-      transform: translate(0, 0) rotate(-3deg) scale(1.02);
-    }
-    100% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-      filter: blur(0px);
-    }
-  }
-
-  .card-scene-outer.throwing {
-    animation: card-throw-in 0.75s cubic-bezier(0.18, 0.89, 0.32, 1.1) both;
-    opacity: 1 !important;
-  }
-
-  .card-scene-outer.settled {
-    opacity: 1;
-  }
-
-  /* Vignette layer behind cracks for depth */
-  #crack-overlay::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.55) 100%);
-    opacity: 0;
-    transition: opacity 0.12s;
-  }
-  #crack-overlay.impact::before {
-    opacity: 1;
-  }
-  /* .fading sets parent opacity → 0, so ::before disappears with it — no extra rule needed */
-
-  /* ===== Scene ===== */
-  .card-scene-outer {
-    /* Provides the 3D perspective for the tilt-inner */
-    perspective: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    user-select: none;
-  }
-
-  /*
-    card-tilt-inner:
-    - Contains both lanyard AND card-wrapper
-    - JS writes tilt transform here
-    - CSS sway animation here (overridden by JS on hover)
-    - NO preserve-3d: lanyard clip stays flat 2D, no tearing during flip
-  */
-  .card-tilt-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* NO transform-style: preserve-3d here — clip must stay flat */
-    transform-origin: top center;
-    animation: lanyard-sway 4s ease-in-out infinite;
-    transition: transform 0.12s ease-out;
-  }
-
-  /* When JS is tilting or card is flipping, pause the CSS sway animation */
-  .card-tilt-inner.tilting,
-  .card-tilt-inner.flipping {
-    animation-play-state: paused;
-  }
-
-  @keyframes lanyard-sway {
-    0%, 100% { transform: rotateZ(-1deg); }
-    50%       { transform: rotateZ(1deg);  }
-  }
-
-  /* ===== Lanyard ===== */
-  .lanyard-ribbon {
-    width: 28px;
-    height: 120px;
-    background: linear-gradient(to bottom, #6d28d9, #7c3aed, #8b5cf6);
-    border-radius: 4px 4px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: inset 2px 0 4px rgba(0,0,0,0.2), inset -2px 0 4px rgba(0,0,0,0.2);
-  }
-
-  .lanyard-text {
-    font-size: 7px;
-    font-weight: 700;
-    color: rgba(196,181,253,0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    writing-mode: vertical-rl;
-  }
-
-  /* ===== Lanyard Clip ===== */
-  .lanyard-clip {
-    width: 32px;
-    height: 20px;
-    background: linear-gradient(135deg, #d1d5db, #9ca3af, #6b7280);
-    border-radius: 4px;
-    margin-top: -2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-
-  .clip-ring {
-    width: 14px;
-    height: 10px;
-    border: 2.5px solid #4b5563;
-    border-radius: 50%;
-    background: transparent;
-  }
-
-  /* ===== Card Wrapper ===== */
-  .card-wrapper {
-    width: 300px;
-    height: 520px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    margin-top: -2px;
-  }
-
-  .card-wrapper.is-flipped {
-    transform: perspective(900px) rotateY(180deg);
-  }
-
-  /* ===== Card Faces ===== */
-  .badge-card {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(145deg, #1e1b4b, #2d1b69, #1a1a3e);
-    box-shadow:
-      0 25px 60px rgba(0,0,0,0.5),
-      0 8px 20px rgba(109,40,217,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.1);
-    border: 1px solid rgba(139,92,246,0.3);
-    /* Make card a flex column so content fills top-to-bottom */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Decorative radial glow in upper portion of card */
-  .card-front::before {
-    content: '';
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* 
-    Key fix for tab click issue:
-    The back face is rotated away and visually hidden, but it still
-    intercepts pointer events. Disable pointer-events on the face
-    that is currently NOT showing.
-  */
-  .card-front {
-    pointer-events: auto;
-  }
-  .card-back {
-    transform: rotateY(180deg);
-    pointer-events: none;
-    /* back face also flex column */
-    display: flex;
-    flex-direction: column;
-  }
-  /* When flipped: front is hidden, disable its events; back is visible, enable events */
-  .card-wrapper.is-flipped .card-front {
-    pointer-events: none;
-  }
-  .card-wrapper.is-flipped .card-back {
-    pointer-events: auto;
-  }
-
-  /* ===== Holographic layers ===== */
-  .holo-layer {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      115deg,
-      transparent 0%,
-      rgba(255,100,255,0.05) 20%,
-      rgba(100,200,255,0.08) 40%,
-      rgba(255,255,100,0.05) 60%,
-      rgba(100,255,150,0.08) 80%,
-      transparent 100%
-    );
-    mix-blend-mode: color-dodge;
-    pointer-events: none;
-    z-index: 1;
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .glare-layer {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      circle at var(--glare-x, 50%) var(--glare-y, 30%),
-      rgba(255,255,255,0.12) 0%,
-      transparent 60%
-    );
-    pointer-events: none;
-    z-index: 2;
-    border-radius: inherit;
-  }
-
-  .card-scene-outer:hover .holo-layer {
-    opacity: 1;
-  }
-
-  /* ===== Slot bar ===== */
-  .card-slot-bar {
-    position: relative;
-    z-index: 3;
-    flex-shrink: 0;
-    height: 24px;
-    background: rgba(0,0,0,0.4);
-    border-bottom: 1px solid rgba(139,92,246,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .slot-hole {
-    width: 18px;
-    height: 8px;
-    border-radius: 4px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid rgba(139,92,246,0.5);
-  }
-
-  /* ===== Header strip ===== */
-  .card-header-strip {
-    position: relative;
-    z-index: 3;
-    flex-shrink: 0;
-    height: 32px;
-    background: linear-gradient(90deg, #6d28d9, #7c3aed);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 14px;
-  }
-
-  .org-name {
-    font-size: 12px;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .card-year {
-    font-size: 11px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 500;
-  }
-
-  /* ===== Compact front layout ===== */
-
-  /* Top row: avatar left, info right */
-  .card-top-row {
-    position: relative;
-    z-index: 3;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 16px 0;
-  }
-
-  .card-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(139,92,246,0.7);
-    box-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 40px rgba(139,92,246,0.2);
-    flex-shrink: 0;
-  }
-
-  .card-top-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .card-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 0.03em;
-    line-height: 1.2;
-  }
-
-  .card-title {
-    font-size: 10px;
-    color: rgba(196,181,253,0.8);
-    margin-top: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .card-id-badge {
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 9px;
-    color: rgba(139,92,246,0.9);
-    font-family: 'Courier New', monospace;
-    background: rgba(139,92,246,0.1);
-    border: 1px solid rgba(139,92,246,0.25);
-    border-radius: 4px;
-    padding: 1px 6px;
-    letter-spacing: 0.08em;
-  }
-
-  /* Divider */
-  .card-divider {
-    position: relative;
-    z-index: 3;
-    flex-shrink: 0;
-    margin: 14px 16px 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
-  }
-
-  /* About text sections – fills remaining vertical space */
-  .card-about {
-    position: relative;
-    z-index: 3;
-    flex: 1;
-    padding: 14px 16px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .about-section { /* each section */ }
-
-  .about-heading {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 0.03em;
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-
-  .about-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .wechat-dot  { background: #07C160; }
-  .alipay-dot  { background: #8b5cf6; }
-
-  .about-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.45);
-    margin: 0 0 6px 0;
-    line-height: 1.5;
-  }
-
-  .about-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .about-list li {
-    font-size: 13px;
-    color: rgba(196,181,253,0.75);
-    background: rgba(139,92,246,0.1);
-    border: 1px solid rgba(139,92,246,0.2);
-    border-radius: 10px;
-    padding: 3px 8px;
-    line-height: 1.4;
-  }
-
-  /* Bottom row: chip + site – pinned to bottom by flex column parent */
-  .card-bottom-row {
-    position: relative;
-    z-index: 3;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 16px;
-    border-top: 1px solid rgba(139,92,246,0.15);
-    margin-top: 14px;
-  }
-
-  .card-chip-mini svg {
-    width: 38px;
-    height: 28px;
-    display: block;
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  }
-
-  .card-site-text {
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.06em;
-  }
-
-  /* ===== Back face content ===== */
-  .back-content {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
-  }
-
-  .back-title {
-    font-size: 15px;
-    color: white;
-    font-weight: 600;
-    margin-bottom: 14px;
-  }
-
-  /* ===== Payment tabs ===== */
-  .pay-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 10;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .pay-tab {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.05);
-    color: rgba(255,255,255,0.6);
-    transition: all 0.2s;
-  }
-
-  .pay-tab:hover {
-    background: rgba(255,255,255,0.12);
-    color: white;
-  }
-
-  .pay-tab-wechat-active {
-    background: #07C160 !important;
-    border-color: #07C160 !important;
-    color: white !important;
-  }
-
-  .pay-tab-alipay-active {
-    background: #1677FF !important;
-    border-color: #1677FF !important;
-    color: white !important;
-  }
-
-  .pay-tab-crypto-active {
-    background: #F7931A !important;
-    border-color: #F7931A !important;
-    color: white !important;
-  }
-
-  .tab-icon {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-
-  /* ===== QR codes ===== */
-  .qr-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 10;
-  }
-
-  .qr-box {
-    background: white;
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    text-align: center;
-    width: 200px;
-  }
-
-  .qr-svg,
-  .qr-img {
-    width: 160px;
-    height: 160px;
-    display: block;
-    margin: 0 auto;
-    object-fit: contain;
-    border-radius: 6px;
-  }
-
-  .qr-wallet {
-    font-size: 9px;
-    color: #9ca3af;
-    margin-top: 2px;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.05em;
-  }
-
-  .qr-label {
-    font-size: 11px;
-    color: #6b7280;
-    margin-top: 6px;
-  }
-
-  /* ===== Crypto address card ===== */
-  .crypto-box {
-    background: rgba(247,147,26,0.06);
-    border: 1px solid rgba(247,147,26,0.25);
-    border-radius: 12px;
-    padding: 16px 14px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .crypto-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .crypto-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #F7931A;
-  }
-
-  .crypto-label {
-    font-size: 10px;
-    color: rgba(255,255,255,0.4);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-
-  .crypto-addr-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(247,147,26,0.2);
-    border-radius: 8px;
-    padding: 8px 10px;
-  }
-
-  .crypto-addr {
-    font-size: 10px;
-    color: rgba(255,255,255,0.75);
-    font-family: 'Courier New', monospace;
-    word-break: break-all;
-    flex: 1;
-    line-height: 1.5;
-  }
-
-  .copy-btn {
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 6px;
-    background: rgba(247,147,26,0.15);
-    border: 1px solid rgba(247,147,26,0.3);
-    color: #F7931A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 0;
-  }
-
-  .copy-btn:hover {
-    background: rgba(247,147,26,0.3);
-  }
-
-  .copy-btn.copied {
-    background: #22c55e;
-    border-color: #22c55e;
-    color: white;
-  }
-
-  .crypto-note {
-    font-size: 10px;
-    color: rgba(255,255,255,0.3);
-    margin-top: 8px;
-    text-align: center;
-  }
-
-  .pay-note {
-    font-size: 11px;
-    color: rgba(196,181,253,0.7);
-    margin-top: 12px;
-    text-align: center;
-  }
-
-  /* ===== Flip back button ===== */
-  .flip-back-btn {
-    position: relative;
-    z-index: 10;
-    display: block;
-    margin: 12px auto 0;
-    padding: 7px 18px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    color: rgba(255,255,255,0.7);
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .flip-back-btn:hover {
-    background: rgba(255,255,255,0.18);
-    color: white;
-  }
-
-  /* ===== Small flip icon on card corner ===== */
-  .card-flip-icon {
-    position: absolute;
-    bottom: 14px;
-    right: 14px;
-    z-index: 10;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: rgba(255,255,255,0.6);
-    padding: 0;
-  }
-
-  .card-flip-icon svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .card-flip-icon:hover {
-    background: rgba(255,255,255,0.22);
-    border-color: rgba(255,255,255,0.4);
-    color: white;
-    transform: rotate(20deg) scale(1.1);
-  }
-
-  /* ===== Dark mode list markers ===== */
-  .dark .prose ul > li::marker {
-    color: #9ca3af;
-  }
-
-  /* ===== Mobile ===== */
-  @media (max-width: 1023px) {
-    .card-wrapper {
-      width: 280px;
-      height: 450px;
-    }
-  }
-</style>
-
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    // ── Element refs (single source of truth) ────────────────────────────
-    const sceneEl     = document.getElementById('card-scene-outer');
-    const tiltInner   = document.getElementById('card-tilt-inner');
-    const cardWrapper = document.getElementById('card-wrapper');
-    const overlay     = document.getElementById('crack-overlay');
-    const flash       = document.getElementById('crack-flash');
-    const crackSvg    = document.getElementById('crack-svg');
-    const crackGroup   = document.getElementById('crack-group');
-    const btnWechat   = document.getElementById('btn-wechat');
-    const btnAlipay   = document.getElementById('btn-alipay');
-    const btnCrypto   = document.getElementById('btn-crypto');
-    const qrWechat    = document.getElementById('qr-wechat');
-    const qrAlipay    = document.getElementById('qr-alipay');
-    const qrCrypto    = document.getElementById('qr-crypto');
-
-    if (!tiltInner || !cardWrapper) return;
-
-    // ── Card throw + screen smash ─────────────────────────────────────────
-    function triggerImpact() {
-      // Position crack origin over the card
-      if (crackGroup && sceneEl && crackSvg) {
-        const rect = sceneEl.getBoundingClientRect();
-        const clientX = rect.left + rect.width / 2;
-        const clientY = rect.top + rect.height * 0.38;
-
-        try {
-          // Convert the point to SVG coordinates.
-          const pt = crackSvg.createSVGPoint();
-          pt.x = clientX;
-          pt.y = clientY;
-          const ctm = crackSvg.getScreenCTM();
-          if (ctm) {
-            const svgPoint = pt.matrixTransform(ctm.inverse());
-            const dx = svgPoint.x - 720;
-            const dy = svgPoint.y - 400;
-            crackGroup.setAttribute('transform', `translate(${dx.toFixed(1)}, ${dy.toFixed(1)})`);
-          }
-        } catch (e) {
-          // Fall back to viewport scaling.
-          const dx = ((clientX) / window.innerWidth * 1440) - 720;
-          const dy = ((clientY) / window.innerHeight * 900) - 400;
-          crackGroup.setAttribute('transform', `translate(${dx.toFixed(0)}, ${dy.toFixed(0)})`);
-        }
-      }
-
-      // Sound synthesis
-      try {
-        const AudioCtx = window.AudioContext || Reflect.get(window, 'webkitAudioContext');
-        if (AudioCtx) {
-          const audioCtx = new AudioCtx();
-          // Low thud
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(120, audioCtx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.18);
-          gain.gain.setValueAtTime(0.9, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-          osc.connect(gain); gain.connect(audioCtx.destination);
-          osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-          // Crack snap (filtered noise)
-          const bufSize = audioCtx.sampleRate * 0.15;
-          const noiseBuffer = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
-          const data = noiseBuffer.getChannelData(0);
-          for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
-          const noiseSource = audioCtx.createBufferSource();
-          noiseSource.buffer = noiseBuffer;
-          const noiseGain = audioCtx.createGain();
-          noiseGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
-          noiseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-          const hpf = audioCtx.createBiquadFilter();
-          hpf.type = 'highpass'; hpf.frequency.value = 1800;
-          noiseSource.connect(hpf); hpf.connect(noiseGain); noiseGain.connect(audioCtx.destination);
-          noiseSource.start(); noiseSource.stop(audioCtx.currentTime + 0.15);
-        }
-      } catch(e) { /* audio not critical */ }
-
-      // Visual
-      overlay.classList.add('impact');
-      flash.classList.add('flash');
-      document.body.classList.add('shaking');
-      setTimeout(() => document.body.classList.remove('shaking'), 600);
-      setTimeout(() => {
-        flash.classList.remove('flash');
-        flash.classList.add('flash-out');
-        crackSvg.classList.add('visible');
-      }, 55);
-    }
-
-    function runThrowSequence() {
-      if (!sceneEl || !overlay) return;
-      // Lock scroll synchronously — before any frame renders
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-
-      // Flat timeline (all relative to T=0)
-      const T = 300;
-      setTimeout(() => sceneEl.classList.add('throwing'),         T);
-      setTimeout(() => triggerImpact(),                           T + 680);
-      setTimeout(() => {
-        overlay.classList.add('fading');
-        sceneEl.classList.remove('throwing');
-        sceneEl.style.opacity = ''; // clear inline opacity:0 so .settled wins
-        sceneEl.classList.add('settled');
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-      },                                                          T + 680 + 950);
-      setTimeout(() => overlay.style.display = 'none',           T + 680 + 2900);
-    }
-
-    runThrowSequence();
-
-    // Double-click to replay
-    sceneEl?.addEventListener('dblclick', () => {
-      overlay.style.display = '';
-      overlay.classList.remove('fading', 'impact');
-      crackSvg.classList.remove('visible');
-      crackGroup?.removeAttribute('transform'); // Reset the crack offset.
-      flash.classList.remove('flash', 'flash-out');
-      sceneEl.classList.remove('settled', 'throwing');
-      sceneEl.style.opacity = '0';
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-      setTimeout(runThrowSequence, 100);
-    });
-
-    // ── Card flip ─────────────────────────────────────────────────────────
-    function doFlip(e) {
-      if (e) e.stopPropagation();
-      tiltInner.classList.add('flipping');
-      cardWrapper.classList.toggle('is-flipped');
-      setTimeout(() => tiltInner.classList.remove('flipping'), 750);
-    }
-    document.getElementById('btn-flip-front')?.addEventListener('click', doFlip);
-    document.getElementById('btn-flip-back')?.addEventListener('click', doFlip);
-
-    // ── Mouse tilt ────────────────────────────────────────────────────────
-    sceneEl?.addEventListener('mousemove', (e) => {
-      const rect = sceneEl.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      tiltInner.classList.add('tilting');
-      tiltInner.style.transform = `rotateX(${-((y - rect.height / 2) / (rect.height / 2)) * 12}deg) rotateY(${((x - rect.width / 2) / (rect.width / 2)) * 12}deg)`;
-      sceneEl.style.setProperty('--glare-x', (x / rect.width  * 100) + '%');
-      sceneEl.style.setProperty('--glare-y', (y / rect.height * 100) + '%');
-    });
-    sceneEl?.addEventListener('mouseleave', () => {
-      tiltInner.classList.remove('tilting');
-      tiltInner.style.transform = '';
-    });
-
-    // ── Payment tabs ──────────────────────────────────────────────────────
-    function clearTabs() {
-      [btnWechat, btnAlipay, btnCrypto].forEach(b =>
-        b?.classList.remove('pay-tab-wechat-active', 'pay-tab-alipay-active', 'pay-tab-crypto-active')
-      );
-      [qrWechat, qrAlipay, qrCrypto].forEach(q => { if (q) q.style.display = 'none'; });
-    }
-    btnWechat?.addEventListener('click', (e) => { e.stopPropagation(); clearTabs(); btnWechat.classList.add('pay-tab-wechat-active'); if (qrWechat) qrWechat.style.display = 'block'; });
-    btnAlipay?.addEventListener('click', (e) => { e.stopPropagation(); clearTabs(); btnAlipay.classList.add('pay-tab-alipay-active'); if (qrAlipay) qrAlipay.style.display = 'block'; });
-    btnCrypto?.addEventListener('click', (e) => { e.stopPropagation(); clearTabs(); btnCrypto.classList.add('pay-tab-crypto-active'); if (qrCrypto) qrCrypto.style.display = 'block'; });
-
-    // ── Copy BTC address ──────────────────────────────────────────────────
-    document.getElementById('btn-copy-addr')?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const addr = document.getElementById('btc-addr')?.textContent?.trim();
-      if (!addr) return;
-      navigator.clipboard.writeText(addr).then(() => {
-        const btn = document.getElementById('btn-copy-addr');
-        btn.classList.add('copied');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>`;
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
-        }, 1500);
-      });
-    });
-  });
-</script>

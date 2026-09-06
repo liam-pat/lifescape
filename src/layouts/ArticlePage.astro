@@ -21,26 +21,42 @@ interface Props {
 const { entry, headings } = Astro.props;
 const isReading = entry.collection === 'reading';
 const readingEntry = isReading ? entry as CollectionEntry<'reading'> : null;
-const allEntries = isReading
+const allEntries: PostEntry[] = entry.collection === 'reading'
 	? await getCollection('reading')
-	: await getCollection('life');
+	: entry.collection === 'technology'
+		? await getCollection('technology')
+		: await getCollection('life');
 const latestEntries = allEntries
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 10);
 const seriesEntries = latestEntries.some((item) => item.id === entry.id)
 	? latestEntries
 	: [entry, ...latestEntries];
-const seriesPath = isReading ? 'reading' : 'life';
-const seriesTitle = isReading ? 'Latest Readings' : 'Latest Lifes';
-const tagClass = isReading
-	? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100'
-	: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100';
+const collectionMeta = {
+	life: {
+		seriesTitle: 'Latest Lifes',
+		tagClass: 'border-blue-200 bg-blue-100 text-blue-800 dark:border-blue-800 dark:bg-blue-900 dark:text-blue-100',
+	},
+	reading: {
+		seriesTitle: 'Latest Readings',
+		tagClass: 'border-green-200 bg-green-100 text-green-800 dark:border-green-800 dark:bg-green-900 dark:text-green-100',
+	},
+	technology: {
+		seriesTitle: 'Latest Technologies',
+		tagClass: 'border-emerald-200 bg-emerald-100 text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-100',
+	},
+} as const;
+const seriesPath = entry.collection;
+const { seriesTitle, tagClass } = collectionMeta[entry.collection];
+const pageTitle = readingEntry?.data.subtitle
+	? `${entry.data.title}：${readingEntry.data.subtitle}`
+	: entry.data.title;
 
 const tocItems = headings.filter(({ depth }) => depth >= 1 && depth <= 4);
 const tocIndent = (depth: number) => `toc-depth-${depth}`;
 ---
 
-<Layout title={entry.data.title}>
+<Layout title={pageTitle}>
 	<main class="max-w-screen-2xl mx-auto px-4 py-8">
 		<div class="lg:flex lg:gap-2">
 			{tocItems.length > 0 && (
@@ -73,6 +89,13 @@ const tocIndent = (depth: number) => `toc-depth-${depth}`;
 							<h1 class="text-2xl md:text-4xl font-bold mb-3 md:mb-4 dark:text-white">
 								{entry.data.title}
 							</h1>
+							{readingEntry?.data.subtitle && (
+								<div class="not-prose -mt-1 mb-5 border-l-2 border-blue-500 bg-gradient-to-r from-blue-50/90 to-transparent px-4 py-2 dark:border-blue-400 dark:from-blue-950/50">
+									<p class="text-base font-medium leading-7 text-blue-800 dark:text-blue-200 md:text-lg">
+										{readingEntry.data.subtitle}
+									</p>
+								</div>
+							)}
 							{readingEntry ? (
 								<div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400 text-sm md:text-base">
 									<div class="flex flex-wrap items-center gap-2 md:gap-4">

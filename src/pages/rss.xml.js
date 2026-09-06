@@ -4,17 +4,20 @@ import { getCollection } from 'astro:content';
 export async function GET(context) {
   const lifeEntries = await getCollection('life');
   const readingEntries = await getCollection('reading');
+  const technologyEntries = await getCollection('technology');
 
   // Sort all posts by date.
-  const allPosts = [...lifeEntries, ...readingEntries]
+  const allPosts = [...lifeEntries, ...readingEntries, ...technologyEntries]
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   return rss({
     title: 'Mr.Pat lifescape',
-    description: '分享生活点滴与读书心得',
+    description: '分享生活点滴、读书心得与技术实践',
     site: context.site,
     items: allPosts.map((post) => ({
-      title: post.data.title,
+      title: post.collection === 'reading' && post.data.subtitle
+        ? `${post.data.title}：${post.data.subtitle}`
+        : post.data.title,
       pubDate: post.data.date,
       description: post.data.description,
       link: `/${post.collection}/${post.id}/`,

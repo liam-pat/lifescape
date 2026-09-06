@@ -18,8 +18,11 @@ const { entry, tagClass } = Astro.props;
 		class="flex flex-wrap gap-1.5 md:gap-2"
 		data-pagefind-meta={`tags:${entry.data.tags.join(',')}`}
 	>
-		{entry.data.tags.map((tag) => (
-			<span class={`${tagClass} text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1 rounded-full`}>
+		{entry.data.tags.map((tag, index) => (
+			<span
+				class={`tag-glint inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-wide md:px-3 md:text-sm ${tagClass}`}
+				style={`--tag-glint-delay: ${index * 180}ms`}
+			>
 				{tag}
 			</span>
 		))}

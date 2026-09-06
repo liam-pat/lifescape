@@ -1,5 +1,6 @@
 ---
-title: "《甩掉眼镜》: 如何自然改善视力（用自然方法改善视力）"
+title: "《甩掉眼镜》"
+subtitle: "如何自然改善视力（用自然方法改善视力）"
 date: 2024-10-05
 book:
   title: "Give up your glass"

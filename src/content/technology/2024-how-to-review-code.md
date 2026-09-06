@@ -2,7 +2,7 @@
 title: "How To Review Code"
 date: 2024-08-05
 description: "How 2 review code, 减少 developer 与 reviewer 的冲突，建立良好的沟通。"
-tags: ["life","work"]
+tags: ["technology","work"]
 ---
 
 > 根據自己的經驗跟 [別人](https://www.hitzhangjie.pro/blog/2019-09-10-%E5%A6%82%E4%BD%95%E6%9B%B4%E5%A5%BD%E5%9C%B0%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81review/#what-do-code-reviewers-look-for)遇到的問題總結的 code review

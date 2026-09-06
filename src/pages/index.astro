@@ -6,8 +6,9 @@ import PostGrid from '../components/PostGrid.astro';
 // Get the latest posts.
 const lifeEntries = await getCollection('life');
 const readingEntries = await getCollection('reading');
+const technologyEntries = await getCollection('technology');
 
-const allEntries = [...lifeEntries, ...readingEntries].sort((a, b) => 
+const allEntries = [...lifeEntries, ...readingEntries, ...technologyEntries].sort((a, b) =>
   b.data.date.valueOf() - a.data.date.valueOf()
 ).slice(0, 10);
 ---

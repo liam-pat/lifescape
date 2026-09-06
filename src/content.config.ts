@@ -14,11 +14,24 @@ const lifeCollection = defineCollection({
   }),
 });
 
+// Define the technology collection.
+const technologyCollection = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/technology' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    description: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    image: z.string().optional(),
+  }),
+});
+
 // Define the reading collection.
 const readingCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/reading' }),
   schema: z.object({
     title: z.string(),
+    subtitle: z.string().optional(),
     date: z.date(),
     book: z.object({
       title: z.string(),
@@ -34,4 +47,5 @@ const readingCollection = defineCollection({
 export const collections = {
   'life': lifeCollection,
   'reading': readingCollection,
+  'technology': technologyCollection,
 };

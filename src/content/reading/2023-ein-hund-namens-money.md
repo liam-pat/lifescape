@@ -1,5 +1,6 @@
 ---
-title: "《小狗钱钱》：财富与幸福指南"
+title: "《小狗钱钱》"
+subtitle: "财富与幸福指南"
 date: 2023-05-05
 book:
   title: "Ein Hund Namens Money"

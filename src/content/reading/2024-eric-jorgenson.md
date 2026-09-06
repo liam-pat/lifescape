@@ -1,5 +1,6 @@
 ---
-title: "《纳瓦尔宝典》：财富与幸福指南"
+title: "《纳瓦尔宝典》"
+subtitle: "财富与幸福指南"
 date: 2024-08-05
 book:
   title: "Eric Jorgenson"

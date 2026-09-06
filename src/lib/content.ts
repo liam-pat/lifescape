@@ -1,3 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 
-export type PostEntry = CollectionEntry<'life'> | CollectionEntry<'reading'>;
+export type PostEntry =
+  | CollectionEntry<'life'>
+  | CollectionEntry<'reading'>
+  | CollectionEntry<'technology'>;

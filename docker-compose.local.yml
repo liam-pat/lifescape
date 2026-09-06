@@ -1,6 +1,6 @@
 services:
   lifescape:
-    image: node:22
+    image: node:24
     container_name: lifescape-dev
     labels:
       - dev.orbstack.domains=life.orb.local
