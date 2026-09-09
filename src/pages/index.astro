@@ -1,31 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
-import PostGrid from '../components/PostGrid.astro';
-
-// Get the latest posts.
-const lifeEntries = await getCollection('life');
-const readingEntries = await getCollection('reading');
-const technologyEntries = await getCollection('technology');
-
-const allEntries = [...lifeEntries, ...readingEntries, ...technologyEntries].sort((a, b) =>
-  b.data.date.valueOf() - a.data.date.valueOf()
-).slice(0, 10);
+import HomePage from '../components/HomePage.astro';
 ---
 
-<Layout title="VERSION.ME">
-	<div class="bg-black py-10 mb-8">
-		<div class="max-w-7xl mx-auto px-4">
-			<h1 class="text-white text-4xl md:text-5xl font-bold mb-4">VERSION.ME</h1>
-			<div class="h-28 md:h-16">
-				<p class="text-gray-300 text-base md:text-lg font-medium typewriter">
-					<span class="typewriter-text">Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose.</span>
-				</p>
-			</div>
-		</div>
-	</div>
-
-	<main class="max-w-7xl mx-auto px-4">
-		<PostGrid entries={allEntries} showCollectionPrefix />
-	</main>
-</Layout>
+<HomePage locale="zh" />

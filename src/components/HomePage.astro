@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import type { PostEntry } from '../lib/content';
+import type { Locale } from '../lib/i18n';
+import Layout from '../layouts/Layout.astro';
+import PostGrid from './PostGrid.astro';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const lifeEntries = await getCollection('life', ({ data }) => data.lang === locale);
+const readingEntries = await getCollection('reading', ({ data }) => data.lang === locale);
+const technologyEntries = await getCollection('technology', ({ data }) => data.lang === locale);
+const allEntries: PostEntry[] = [...lifeEntries, ...readingEntries, ...technologyEntries]
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 10);
+const alternatePath = locale === 'zh' ? '/en/' : '/';
+const emptyMessage = locale === 'zh'
+	? '内容整理中。'
+	: 'English articles are on the way.';
+---
+
+<Layout title="VERSION.ME" locale={locale} alternatePath={alternatePath}>
+	<div class="mb-8 bg-black py-10 dark:bg-night-hero">
+		<div class="mx-auto max-w-7xl px-4">
+			<h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">VERSION.ME</h1>
+			<div class="h-28 md:h-16">
+				<p class="typewriter text-base font-medium text-gray-300 md:text-lg">
+					<span class="typewriter-text">Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose.</span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<main class="mx-auto max-w-7xl px-4">
+		{allEntries.length > 0 ? (
+			<PostGrid entries={allEntries} locale={locale} showCollectionPrefix />
+		) : (
+			<p class="rounded-lg bg-white px-5 py-8 text-center text-gray-600 shadow-sm dark:border dark:border-night-border dark:bg-night-surface dark:text-night-body">
+				{emptyMessage}
+			</p>
+		)}
+	</main>
+</Layout>

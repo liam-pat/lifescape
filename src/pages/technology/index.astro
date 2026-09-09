@@ -1,33 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import PostGrid from '../../components/PostGrid.astro';
+import CollectionPage from '../../components/CollectionPage.astro';
 
-const technologyEntries = await getCollection('technology');
-const sortedEntries = technologyEntries.sort((a, b) =>
-  b.data.date.valueOf() - a.data.date.valueOf()
-);
+const technologyEntries = await getCollection('technology', ({ data }) => data.lang === 'zh');
 ---
 
-<Layout title="My Technology">
-	<div class="bg-black py-10 mb-8">
-		<div class="max-w-7xl mx-auto px-4">
-			<h1 class="text-white text-4xl md:text-5xl font-bold mb-4">Technology</h1>
-			<div class="h-28 md:h-16">
-				<p class="text-gray-300 text-xl md:text-2xl font-medium typewriter">
-					<span class="typewriter-text">记录技术实践、问题与解决方案。</span>
-				</p>
-			</div>
-		</div>
-	</div>
-
-	<main class="max-w-7xl mx-auto px-4">
-		{sortedEntries.length > 0 ? (
-			<PostGrid entries={sortedEntries} />
-		) : (
-			<p class="rounded-lg bg-white px-5 py-8 text-center text-gray-600 shadow-sm dark:bg-gray-800 dark:text-gray-300">
-				技术文章整理中。
-			</p>
-		)}
-	</main>
-</Layout>
+<CollectionPage
+	entries={technologyEntries}
+	locale="zh"
+	title="My Technology"
+	heading="Technology"
+	intro="记录技术实践、问题与解决方案。"
+	emptyMessage="技术文章整理中。"
+	alternatePath="/en/technology/"
+/>

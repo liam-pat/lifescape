@@ -1,31 +1,44 @@
+---
+import { ui, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'zh' } = Astro.props;
+const messages = ui[locale].search;
+---
+
 <div
   id="search-popup"
   class="fixed inset-0 z-50 hidden"
   role="dialog"
   aria-modal="true"
-  aria-label="站内搜索"
+  aria-label={messages.dialogLabel}
   aria-hidden="true"
+  data-locale={locale}
+  data-messages={JSON.stringify(messages)}
 >
   <!-- Backdrop with blur effect -->
   <div class="absolute inset-0 bg-black/30 backdrop-blur-sm" id="search-backdrop"></div>
   
   <!-- Search container positioned at 1/4 from the top -->
   <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+    <div class="overflow-hidden rounded-lg bg-white shadow-xl dark:border dark:border-night-border dark:bg-night-surface dark:shadow-black/50">
       <!-- Search input -->
-      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div class="border-b border-gray-200 p-4 dark:border-night-border">
         <div class="relative">
           <input 
             type="text" 
             id="search-input" 
-            class="w-full px-4 py-2 pl-10 bg-gray-100 dark:bg-gray-700 border-none rounded-md focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none dark:text-white"
-            placeholder="输入关键词搜索"
+            class="w-full rounded-md border-none bg-gray-100 px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-night-elevated dark:text-night-text dark:focus:ring-blue-400"
+            placeholder={messages.placeholder}
             autocomplete="off"
           />
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 absolute left-3 top-2.5" viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-2.5 h-5 w-5 text-gray-500 dark:text-night-muted" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
           </svg>
-          <button type="button" id="search-close" class="absolute right-3 top-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" aria-label="关闭搜索">
+          <button type="button" id="search-close" class="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700 dark:text-night-muted dark:hover:text-night-text" aria-label={messages.closeLabel}>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
@@ -35,8 +48,8 @@
       
       <!-- Search results -->
       <div id="search-results" class="max-h-[60vh] overflow-y-auto p-4" aria-live="polite">
-        <div class="text-center text-gray-500 dark:text-gray-400 py-8">
-          <p>输入关键词开始搜索</p>
+        <div class="py-8 text-center text-gray-500 dark:text-night-muted">
+          <p>{messages.prompt}</p>
         </div>
       </div>
     </div>
@@ -55,13 +68,29 @@
   const searchInput = document.getElementById('search-input');
   const searchClose = document.getElementById('search-close');
   const searchResults = document.getElementById('search-results');
+  const searchLocale = searchPopup?.dataset.locale === 'en' ? 'en' : 'zh';
+  let searchMessages = {};
+
+  try {
+    searchMessages = JSON.parse(searchPopup?.dataset.messages || '{}');
+  } catch {
+    searchMessages = {};
+  }
+
+  function message(key, replacements = {}) {
+    const template = typeof searchMessages[key] === 'string' ? searchMessages[key] : key;
+    return Object.entries(replacements).reduce(
+      (text, [name, value]) => text.replaceAll(`{${name}}`, String(value)),
+      template,
+    );
+  }
 
   function createMessageBlock(message, tone = 'normal') {
     const wrapper = document.createElement('div');
     wrapper.className = `text-center py-8 ${
       tone === 'error'
         ? 'text-red-500 dark:text-red-400'
-        : 'text-gray-500 dark:text-gray-400'
+        : 'text-gray-500 dark:text-night-muted'
     }`;
 
     const text = document.createElement('p');
@@ -80,8 +109,8 @@
 
     const wrapper = createMessageBlock(message, 'error');
     const detail = document.createElement('p');
-    detail.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
-    detail.textContent = error instanceof Error ? error.message : '未知错误';
+    detail.className = 'mt-2 text-sm text-gray-500 dark:text-night-muted';
+    detail.textContent = error instanceof Error ? error.message : message('unknownError');
     wrapper.appendChild(detail);
     searchResults.replaceChildren(wrapper);
   }
@@ -102,7 +131,7 @@
 
   function createTagPill(tag) {
     const pill = document.createElement('span');
-    pill.className = 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs px-2 py-0.5 rounded-full';
+    pill.className = 'rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800 dark:bg-blue-950/45 dark:text-blue-100';
     pill.textContent = tag;
     return pill;
   }
@@ -112,27 +141,27 @@
 
     const fragment = document.createDocumentFragment();
     const summary = document.createElement('div');
-    summary.className = 'mb-4 text-gray-500 dark:text-gray-400';
-    summary.textContent = `找到 ${results.length} 个符合“${query}”的结果`;
+    summary.className = 'mb-4 text-gray-500 dark:text-night-muted';
+    summary.textContent = message('found', { count: results.length, query });
     fragment.appendChild(summary);
 
     results.forEach((data) => {
       const item = document.createElement('div');
-      item.className = 'mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0';
+      item.className = 'mb-6 border-b border-gray-200 pb-6 last:border-0 dark:border-night-border';
 
       const heading = document.createElement('h3');
       heading.className = 'text-lg font-semibold mb-2';
 
       const link = document.createElement('a');
-      link.className = 'text-blue-600 dark:text-blue-400 hover:underline';
+      link.className = 'text-blue-600 hover:underline dark:text-blue-300';
       link.href = normalizeResultUrl(data?.url);
       link.textContent = typeof data?.meta?.title === 'string' && data.meta.title.trim()
         ? data.meta.title
-        : '无标题';
+        : message('untitled');
       heading.appendChild(link);
 
       const excerpt = document.createElement('p');
-      excerpt.className = 'text-gray-600 dark:text-gray-300 text-sm mb-2';
+      excerpt.className = 'mb-2 text-sm text-gray-600 dark:text-night-body';
       excerpt.textContent = typeof data?.plain_excerpt === 'string' ? data.plain_excerpt : '';
 
       const tags = document.createElement('div');
@@ -163,8 +192,8 @@
       })
       .catch((error) => {
         pagefindPromise = null;
-        console.error('Pagefind 加载失败:', error);
-        setResultsError('搜索功能加载失败', error);
+        console.error('Pagefind failed to load:', error);
+        setResultsError(message('loadError'), error);
       });
 
     return pagefindPromise;
@@ -184,18 +213,20 @@
     const query = searchInput.value.trim();
 
     if (!query) {
-      setResultsMessage('输入关键词开始搜索');
+      setResultsMessage(message('prompt'));
       return;
     }
 
-    setResultsMessage('搜索中...');
+    setResultsMessage(message('searching'));
 
     try {
-      const search = await pagefindInstance.search(query);
+      const search = await pagefindInstance.search(query, {
+        filters: { language: searchLocale },
+      });
       if (requestId !== searchRequestId) return;
 
       if (search.results.length === 0) {
-        setResultsMessage(`找不到符合“${query}”的结果`);
+        setResultsMessage(message('notFound', { query }));
         return;
       }
 
@@ -204,8 +235,8 @@
       renderSearchResults(resultData, query);
     } catch (error) {
       if (requestId !== searchRequestId) return;
-      console.error('搜索失败:', error);
-      setResultsError('搜索过程中发生错误', error);
+      console.error('Search failed:', error);
+      setResultsError(message('searchError'), error);
     }
   }
 
@@ -247,7 +278,7 @@
       
       // Reset search results
       if (searchResults) {
-        setResultsMessage('输入关键词开始搜索');
+        setResultsMessage(message('prompt'));
       }
       previousFocus?.focus();
       previousFocus = null;

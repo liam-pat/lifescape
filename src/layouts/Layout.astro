@@ -1,23 +1,57 @@
 ---
+import SearchPopup from '../components/SearchPopup.astro';
+import {
+	getAlternateLocale,
+	localeLanguageTags,
+	localizePath,
+	ui,
+	type Locale,
+} from '../lib/i18n';
+import '../styles/global.css';
+
 interface Props {
 	title: string;
+	description?: string;
+	locale?: Locale;
+	alternatePath?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	locale = 'zh',
+	description = ui[locale].siteDescription,
+	alternatePath,
+} = Astro.props;
+const copy = ui[locale];
+const alternateLocale = getAlternateLocale(locale);
 const currentYear = new Date().getFullYear();
-import SearchPopup from '../components/SearchPopup.astro';
-import '../styles/global.css';
+const siteBase = Astro.site ?? Astro.url;
+const canonicalUrl = new URL(Astro.url.pathname, siteBase);
+const alternateUrl = alternatePath ? new URL(alternatePath, siteBase) : null;
+const xDefaultUrl = locale === 'zh' ? canonicalUrl : alternateUrl;
+const homePath = localizePath(locale, '/');
+const lifePath = localizePath(locale, '/life/');
+const readingPath = localizePath(locale, '/reading/');
+const technologyPath = localizePath(locale, '/technology/');
+const aboutPath = localizePath(locale, '/about/');
+const rssPath = localizePath(locale, '/rss.xml');
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang={localeLanguageTags[locale]}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="生活、阅读与技术分享">
+		<meta name="description" content={description}>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" href="https://gz-blog-storage-1252787757.cos.ap-guangzhou.myqcloud.com/public/life/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="alternate" hreflang={localeLanguageTags[locale]} href={canonicalUrl} />
+		{alternateUrl && (
+			<link rel="alternate" hreflang={localeLanguageTags[alternateLocale]} href={alternateUrl} />
+		)}
+		{xDefaultUrl && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href={rssPath} />
 		<!-- LXGW WenKai Screen font -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreenr.css" />
 		<title>{title}</title>
@@ -91,34 +125,34 @@ import '../styles/global.css';
 			}
 		</style>
 	</head>
-	<body class="bg-[#E8E8E8] dark:bg-gray-900 min-h-screen font-wenkai">
-		<nav class="bg-white dark:bg-gray-800 shadow-sm">
+	<body class="flex min-h-screen flex-col bg-[#E8E8E8] font-wenkai dark:bg-night-bg">
+		<nav class="bg-white dark:bg-night-surface shadow-sm dark:border-b dark:border-night-border">
 			<div class="max-w-7xl mx-auto px-4">
 				<div class="flex justify-between h-14">
 					<div class="flex items-center">
-						<a href="/" class="text-lg font-semibold text-gray-800 dark:text-white">
+						<a href={homePath} class="text-lg font-semibold text-gray-800 dark:text-night-text">
 							version.me
 						</a>
 					</div>
 
 					{/* Desktop navigation */}
 					<div class="hidden md:flex md:items-center md:space-x-6">
-						<a href="/life/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href={lifePath} class="text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text">
 							Life
 						</a>
-						<a href="/reading/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href={readingPath} class="text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text">
 							Reading
 						</a>
-						<a href="/technology/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href={technologyPath} class="text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text">
 							Technology
 						</a>
-						<a href="/about/" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href={aboutPath} class="text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text">
 							ME
 						</a>
-						<a href="https://weekly.biyongyao.com" target="_blank" class="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+						<a href="https://weekly.biyongyao.com" target="_blank" class="text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text">
 							Weekly
 						</a>
-						<a href="/rss.xml" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="RSS Feed">
+						<a href={rssPath} class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text" title="RSS Feed">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
 								<path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
 								<path d="M4 9a1 1 0 000 2c3.314 0 6 2.686 6 6a1 1 0 102 0c0-4.418-3.582-8-8-8z" />
@@ -127,7 +161,7 @@ import '../styles/global.css';
 							<span class="ml-1">RSS</span>
 						</a>
 						<!-- Search button -->
-						<button id="search-button" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
+						<button id="search-button" class="flex items-center text-sm text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text" title={copy.search.buttonLabel}>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
 							</svg>
@@ -138,12 +172,12 @@ import '../styles/global.css';
 					{/* Mobile menu button */}
 					<div class="flex items-center md:hidden">
 						<!-- Mobile search button -->
-						<button id="search-button-mobile" class="p-2 mr-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" title="搜索">
+						<button id="search-button-mobile" class="p-2 mr-2 text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:text-night-text" title={copy.search.buttonLabel}>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
 							</svg>
 						</button>
-						<button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none" aria-expanded="false">
+						<button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-100 focus:outline-none" aria-expanded="false" aria-label={copy.mobileMenuLabel}>
 							<svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 							</svg>
@@ -154,19 +188,19 @@ import '../styles/global.css';
 				{/* Mobile menu */}
 				<div class="mobile-menu hidden md:hidden">
 					<div class="pt-2 pb-3 space-y-1">
-						<a href="/life/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href={lifePath} class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-50 rounded-md">
 							Life
 						</a>
-						<a href="/reading/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href={readingPath} class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-50 rounded-md">
 							Reading
 						</a>
-						<a href="/technology/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href={technologyPath} class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-50 rounded-md">
 							Technology
 						</a>
-						<a href="/about/" class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href={aboutPath} class="block px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-50 rounded-md">
 							ME
 						</a>
-						<a href="/rss.xml" class="flex items-center px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md">
+						<a href={rssPath} class="flex items-center px-3 py-2 text-base text-gray-600 hover:text-gray-800 dark:text-night-muted dark:hover:bg-night-elevated dark:hover:text-night-text hover:bg-gray-50 rounded-md">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 								<path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
 								<path d="M4 9a1 1 0 000 2c3.314 0 6 2.686 6 6a1 1 0 102 0c0-4.418-3.582-8-8-8z" />
@@ -179,28 +213,42 @@ import '../styles/global.css';
 			</div>
 		</nav>
 
-		<slot />
+		<div class="flex-1">
+			<slot />
+		</div>
 
-		<footer class="bg-white dark:bg-gray-800 mt-12 py-6">
-			<div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+		<footer class="bg-white dark:bg-night-surface dark:border-t dark:border-night-border mt-12 py-6">
+			<div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-600 dark:text-night-muted">
 					<p>&copy; {currentYear} VERSION.ME</p>
 			</div>
 		</footer>
 
+		{/* Language button */}
+		{alternatePath && (
+			<a
+				href={alternatePath}
+				class="fixed bottom-6 left-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-bold tracking-wide text-gray-800 shadow-lg transition-shadow hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border dark:border-night-border dark:bg-night-elevated dark:text-night-text dark:shadow-black/40"
+				lang={localeLanguageTags[alternateLocale]}
+				aria-label={copy.switchLanguage}
+			>
+				{ui[alternateLocale].languageShortName}
+			</a>
+		)}
+
 		<!-- Theme button -->
-		<button id="theme-toggle" class="fixed bottom-6 right-6 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow">
+		<button id="theme-toggle" class="fixed bottom-6 right-6 p-2 bg-white dark:border dark:border-night-border dark:bg-night-elevated rounded-full shadow-lg dark:shadow-black/40 hover:shadow-xl transition-shadow" aria-label={copy.themeToggleLabel}>
 			<!-- Light mode icon -->
 			<svg class="w-6 h-6 text-gray-800 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
 			</svg>
 			<!-- Dark mode icon -->
-			<svg class="hidden w-6 h-6 text-gray-200 dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<svg class="hidden w-6 h-6 text-night-text dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
 			</svg>
 		</button>
 
 		<!-- Search popup -->
-		<SearchPopup />
+		<SearchPopup locale={locale} />
 
 		<script is:inline>
 			// Toggle the mobile menu.

@@ -1,27 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import PostGrid from '../../components/PostGrid.astro';
+import CollectionPage from '../../components/CollectionPage.astro';
 
-const lifeEntries = await getCollection('life');
-const sortedEntries = lifeEntries.sort((a, b) => 
-  b.data.date.valueOf() - a.data.date.valueOf()
-);
+const lifeEntries = await getCollection('life', ({ data }) => data.lang === 'zh');
 ---
 
-<Layout title="My Life">
-  <div class="bg-black py-10 mb-8">
-    <div class="max-w-7xl mx-auto px-4">
-      <h1 class="text-white text-4xl md:text-5xl font-bold mb-4">Life</h1>
-      <div class="h-28 md:h-16">
-        <p class="text-gray-300 text-xl md:text-2xl font-medium typewriter">
-          <span class="typewriter-text">这个世界只有一种成功，用自己喜欢的方式过一生。</span>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <main class="max-w-7xl mx-auto px-4">
-    <PostGrid entries={sortedEntries} />
-  </main>
-</Layout>
+<CollectionPage
+	entries={lifeEntries}
+	locale="zh"
+	title="My Life"
+	heading="Life"
+	intro="这个世界只有一种成功，用自己喜欢的方式过一生。"
+	emptyMessage="生活文章整理中。"
+	alternatePath="/en/life/"
+/>

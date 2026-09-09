@@ -6,6 +6,14 @@
 /* Custom font family */
 @theme {
   --font-wenkai: 'LXGW WenKai Screen R', sans-serif;
+  --color-night-bg: #0f1115;
+  --color-night-hero: #090b0e;
+  --color-night-surface: #181b21;
+  --color-night-elevated: #20242b;
+  --color-night-border: #303640;
+  --color-night-text: #f2f4f7;
+  --color-night-body: #c7cdd6;
+  --color-night-muted: #a8b0bc;
 }
 
 /* Dark mode: class-based strategy */
@@ -94,15 +102,37 @@
   margin-bottom: 1em;
 }
 
-/* Dark mode blockquote invert */
+/* Keep prose colors in the same neutral charcoal family as the page surfaces. */
+.dark .prose {
+  --tw-prose-body: var(--color-night-body);
+  --tw-prose-headings: var(--color-night-text);
+  --tw-prose-lead: var(--color-night-muted);
+  --tw-prose-links: #8eb7ff;
+  --tw-prose-bold: var(--color-night-text);
+  --tw-prose-counters: var(--color-night-muted);
+  --tw-prose-bullets: #727b88;
+  --tw-prose-hr: var(--color-night-border);
+  --tw-prose-quotes: var(--color-night-text);
+  --tw-prose-quote-borders: #8b7cf6;
+  --tw-prose-captions: var(--color-night-muted);
+  --tw-prose-kbd: var(--color-night-text);
+  --tw-prose-kbd-shadows: 242 244 247;
+  --tw-prose-code: #e7eaf0;
+  --tw-prose-pre-code: #d9dee7;
+  --tw-prose-pre-bg: #11151b;
+  --tw-prose-th-borders: #404752;
+  --tw-prose-td-borders: var(--color-night-border);
+}
+
+/* Dark mode blockquote */
 .dark .prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  background-color: #8B5CF6;
-  border-left-color: #A78BFA;
-  color: #ffffff;
+  background-color: #2b2742;
+  border-left-color: #8b7cf6;
+  color: var(--color-night-text);
 }
 
 .dark .prose :where(blockquote p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: #ffffff;
+  color: var(--color-night-text);
 }
 
 /* prose-xl overrides */

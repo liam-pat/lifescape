@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import CollectionPage from '../../../components/CollectionPage.astro';
+
+const technologyEntries = await getCollection('technology', ({ data }) => data.lang === 'en');
+---
+
+<CollectionPage
+	entries={technologyEntries}
+	locale="en"
+	title="My Technology"
+	heading="Technology"
+	intro="Development practices, problems, and solutions worth revisiting."
+	emptyMessage="English technology articles are on the way."
+	alternatePath="/technology/"
+/>
