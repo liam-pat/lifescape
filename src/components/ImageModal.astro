@@ -1,9 +1,21 @@
+---
+import { ui, type Locale } from '../lib/i18n';
+
+interface Props {
+	locale?: Locale;
+}
+
+const { locale = 'zh' } = Astro.props;
+const copy = ui[locale].image;
+---
+
 <div
 	data-image-modal
+	data-zoom-label={copy.zoomLabel}
 	class="fixed inset-0 z-50 items-center justify-center cursor-zoom-out"
 	role="dialog"
 	aria-modal="true"
-	aria-label="图片预览"
+	aria-label={copy.previewLabel}
 	aria-hidden="true"
 	tabindex="-1"
 >
@@ -11,7 +23,7 @@
 		<img data-modal-image class="object-contain" src="" alt="" />
 		<video data-modal-video class="object-contain" muted playsinline></video>
 		<div data-modal-hdr class="hdr-badge hidden">HDR</div>
-		<button type="button" data-modal-live-btn class="live-photo-btn hidden" aria-label="播放 Live Photo"><span class="live-photo-dot"></span>LIVE</button>
+		<button type="button" data-modal-live-btn class="live-photo-btn hidden" aria-label={copy.playLivePhotoLabel}><span class="live-photo-dot"></span>LIVE</button>
 	</div>
 	<div data-modal-meta class="image-meta" aria-live="polite">
 		<span data-modal-meta-text></span>
@@ -299,7 +311,8 @@
         img.addEventListener('click', () => openModal(img));
         img.tabIndex = 0;
         img.setAttribute('role', 'button');
-        img.setAttribute('aria-label', img.alt ? `查看大图：${img.alt}` : '查看大图');
+        const zoomLabel = modal.dataset.zoomLabel || 'View full-size image';
+        img.setAttribute('aria-label', img.alt ? `${zoomLabel}: ${img.alt}` : zoomLabel);
         img.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();

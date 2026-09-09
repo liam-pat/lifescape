@@ -1,28 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import PostGrid from '../../components/PostGrid.astro';
+import CollectionPage from '../../components/CollectionPage.astro';
 
-const readingEntries = await getCollection('reading');
-const sortedEntries = readingEntries.sort((a, b) => 
-  b.data.date.valueOf() - a.data.date.valueOf()
-);
+const readingEntries = await getCollection('reading', ({ data }) => data.lang === 'zh');
 ---
 
-<Layout title="My Reading">
-  <div class="bg-black py-10 mb-8">
-    <div class="max-w-7xl mx-auto px-4">
-      <h1 class="text-white text-4xl md:text-5xl font-bold mb-4">Reading</h1>
-      <div class="h-28 md:h-16">
-        <p class="text-gray-300 text-xl md:text-2xl font-medium typewriter">
-          <span class="typewriter-text">落叶寄相思，三叶不言中，送君三捆扎，吾愿等三季。<br>
-            我赠你当下春绿，夏红，秋黄；余生，妳欠我冬季白首。</span>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <main class="max-w-7xl mx-auto px-4">    
-    <PostGrid entries={sortedEntries} />
-  </main>
-</Layout>
+<CollectionPage
+	entries={readingEntries}
+	locale="zh"
+	title="My Reading"
+	heading="Reading"
+	intro={`落叶寄相思，三叶不言中，送君三捆扎，吾愿等三季。\n我赠你当下春绿，夏红，秋黄；余生，妳欠我冬季白首。`}
+	emptyMessage="读书文章整理中。"
+	alternatePath="/en/reading/"
+/>

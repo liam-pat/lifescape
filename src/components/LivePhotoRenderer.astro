@@ -132,7 +132,10 @@
         if (isLive) {
           const btn = document.createElement("button");
           btn.type = "button";
-          btn.setAttribute("aria-label", "播放 Live Photo");
+          btn.setAttribute(
+            "aria-label",
+            document.documentElement.lang.startsWith("en") ? "Play Live Photo" : "播放 Live Photo",
+          );
           btn.className = "live-photo-btn";
           btn.innerHTML = '<span class="live-photo-dot"></span>LIVE';
           container.appendChild(btn);

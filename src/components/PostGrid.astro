@@ -1,17 +1,19 @@
 ---
 import PostCard from './PostCard.astro';
 import type { PostEntry } from '../lib/content';
+import type { Locale } from '../lib/i18n';
 
 interface Props {
 	entries: PostEntry[];
+	locale?: Locale;
 	showCollectionPrefix?: boolean;
 }
 
-const { entries, showCollectionPrefix = false } = Astro.props;
+const { entries, locale = 'zh', showCollectionPrefix = false } = Astro.props;
 ---
 
 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 	{entries.map((entry) => (
-		<PostCard entry={entry} showCollectionPrefix={showCollectionPrefix} />
+		<PostCard entry={entry} locale={locale} showCollectionPrefix={showCollectionPrefix} />
 	))}
 </div>

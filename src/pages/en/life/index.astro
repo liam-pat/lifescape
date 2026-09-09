@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import CollectionPage from '../../../components/CollectionPage.astro';
+
+const lifeEntries = await getCollection('life', ({ data }) => data.lang === 'en');
+---
+
+<CollectionPage
+	entries={lifeEntries}
+	locale="en"
+	title="My Life"
+	heading="Life"
+	intro="There is only one success: to spend your life in your own way."
+	emptyMessage="English life stories are on the way."
+	alternatePath="/life/"
+/>

@@ -1,17 +1,19 @@
 ---
 import { formatShanghaiDate } from '../lib/date';
 import type { PostEntry } from '../lib/content';
+import type { Locale } from '../lib/i18n';
 
 interface Props {
 	entry: PostEntry;
+	locale?: Locale;
 	tagClass: string;
 }
 
-const { entry, tagClass } = Astro.props;
+const { entry, locale = entry.data.lang, tagClass } = Astro.props;
 ---
 
 <time datetime={entry.data.date.toISOString()} class="shrink-0">
-	{formatShanghaiDate(entry.data.date)}
+	{formatShanghaiDate(entry.data.date, locale)}
 </time>
 {entry.data.tags.length > 0 && (
 	<div

@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import CollectionPage from '../../../components/CollectionPage.astro';
+
+const readingEntries = await getCollection('reading', ({ data }) => data.lang === 'en');
+---
+
+<CollectionPage
+	entries={readingEntries}
+	locale="en"
+	title="My Reading"
+	heading="Reading"
+	intro="Notes on the books and ideas that stay with me."
+	emptyMessage="English reading notes are on the way."
+	alternatePath="/reading/"
+/>

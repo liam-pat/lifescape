@@ -1,11 +1,12 @@
 ---
 import { getCollection, render } from 'astro:content';
-import ArticlePage from '../../layouts/ArticlePage.astro';
+import ArticlePage from '../../../layouts/ArticlePage.astro';
+import { getPostSlug } from '../../../lib/content';
 
 export async function getStaticPaths() {
-	const entries = await getCollection('life', ({ data }) => data.lang === 'zh');
+	const entries = await getCollection('life', ({ data }) => data.lang === 'en');
 	return entries.map((entry) => ({
-		params: { slug: entry.id },
+		params: { slug: getPostSlug(entry) },
 		props: { entry },
 	}));
 }

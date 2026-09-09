@@ -30,7 +30,7 @@ export default defineConfig({
   },
   server: {
     host: true,
-    allowedHosts: ['localhost', 'life.orb.local','life.biyongyao.com','apartment.life.orb.local']
+    allowedHosts: ['localhost', 'life.orb.local', 'life.biyongyao.com', 'apartment.life.orb.local', 'host.docker.internal']
   },
   vite: {
     plugins: [
