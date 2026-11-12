@@ -30,13 +30,6 @@ When these sources change, update affected documentation and references in the s
 
 ## Current
 
-### [2026-11-12] Deliver life-translation Skill Update
-
-- Status: blocked on remote-push approval; skill changes and validation are complete.
-- Branch: codex/restore-translation-skill
-- Completed and verified: Renamed and refined the skill, updated active references, and passed metadata, local-reference, and whitespace checks.
-- Remaining / next step: Obtain explicit approval to push these changes to `liam-pat/lifescape`, then push the branch and open a PR. Automatic approval review rejected the push because it did not accept connected-account ownership evidence as destination authorization.
-
 ### [2026-09-14] License File Follow-up
 
 - Status: queued; an audit finding outside the completed workflow update.
