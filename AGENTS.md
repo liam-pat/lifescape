@@ -37,7 +37,7 @@ Use `docker-compose` as an equivalent spelling if the installed CLI requires it.
 
 ## Content and Skills
 
-- For requested article translations or synchronization, use [.agents/skills/article-english/SKILL.md](.agents/skills/article-english/SKILL.md). Editing a Chinese article alone does not automatically request a translation.
+- For requested article translations or synchronization, use [.agents/skills/life-translation/SKILL.md](.agents/skills/life-translation/SKILL.md). Editing a Chinese article alone does not automatically request a translation.
 - This repository uses `src/content/<collection>/en/` for English articles. Do not apply another blog's `src/pages/posts/` layout, filename rules, or `weekly` Docker service here.
 - Keep existing published filenames and URLs unless a rename is requested; use lowercase, space-free names for new articles.
 - Preserve functional media markers and asset URLs when editing content. Keep UI translations in `src/lib/i18n.ts`.
