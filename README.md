@@ -95,7 +95,7 @@ src/content/life/2025-01-journey.md     → /life/2025-01-journey/
 src/content/life/en/2025-01-journey.md  → /en/life/2025-01-journey/
 ```
 
-For AI-assisted translation, use the repository's [article-english skill](.agents/skills/article-english/SKILL.md). It covers voice, frontmatter, media, and language-link verification.
+For AI-assisted translation, use the repository's [life-translation skill](.agents/skills/life-translation/SKILL.md). It covers voice, frontmatter, media, and language-link verification.
 
 ## Contributing
 
